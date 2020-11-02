@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2be0fc704ef4fa24c8ba63358088a256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapTexture: {fileID: 2800000, guid: feff41712c2d50b45b04737f1b3993ce, type: 3}
+  mapTexture: {fileID: 2800000, guid: de9c1786b454ba94e980e919fe0c6484, type: 3}
   pixelColorMappings:
   - pixelColor: {r: 0, g: 0, b: 0, a: 1}
     prefab:

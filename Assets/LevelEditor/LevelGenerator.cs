@@ -51,10 +51,10 @@ public class LevelGenerator : MonoBehaviour
 				{
 					#region Picking Correct Wall Tile
 
-					Color rightPixel = Color.clear;   //pixel to right of current
-					Color topPixel = Color.clear;     //pixel above current
-					Color leftPixel = Color.clear;    //pixel to left of current
-					Color botPixel = Color.clear;	  //pixel below current
+					Color rightPixel = Color.black;   //pixel to right of current
+					Color topPixel = Color.black;     //pixel above current
+					Color leftPixel = Color.black;    //pixel to left of current
+					Color botPixel = Color.black;	  //pixel below current
 
 					if (x < mapTexture.width)
 						rightPixel = mapTexture.GetPixel(x + 1, y);
