@@ -1,5 +1,10 @@
+Level Layer
 #000000 - Black - Walls
 #FFFFFF - White - Floor
 #00FF00 - Green - Player
 #FF0000 - Red - Enemies
 #00FFFF - Teal - Exit
+#FFFF00 - Yellow - Rails
+
+Decorations Layer
+#000000 - Black - Wires
