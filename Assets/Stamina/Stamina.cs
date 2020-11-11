@@ -144,6 +144,7 @@ public class Stamina : MonoBehaviour
         physicalStamina = Mathf.Min(100 - universalStamina, physicalStamina);
         magicStamina = Mathf.Min(100 - magicStamina, magicStamina);
 
+        
         ui.UpdateValues(universalStamina / 100, physicalStamina / 100, magicStamina / 100);
 
         if (debugClicks)
@@ -164,6 +165,7 @@ public class Stamina : MonoBehaviour
         universalStamina = 100;
         magicStamina = 0;
         physicalStamina = 0;
+        
         ui = FindObjectOfType<StaminaUI>();
     }
 }
