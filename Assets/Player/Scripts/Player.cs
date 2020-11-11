@@ -55,8 +55,7 @@ public class Player : MonoBehaviour
         mouse_pos.x = mouse_pos.x - object_pos.x;
         mouse_pos.y = mouse_pos.y - object_pos.y;
         float angle = Mathf.Atan2(mouse_pos.y, mouse_pos.x) * Mathf.Rad2Deg;
-        playerGameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));    
-        
+        playerGameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));        
     }
 
     //This will check if the user has pressed an "Action Key" which includes firing a weapon, ability or some other use
@@ -67,14 +66,10 @@ public class Player : MonoBehaviour
             if (playerStamina.Attack(20, false))
             {
                 //Paramater for rotation
-                GameObject newObject = Instantiate(fireballPrefab, playerGameObject.transform);
+                GameObject newObject = Instantiate(fireballPrefab, 
+                    playerGameObject.transform.position + transform.right * 1f, 
+                    playerGameObject.transform.rotation);
                 Fireball newFireball = newObject.GetComponent<Fireball>();
-                
-                Quaternion rotationQuaternion = playerGameObject.transform.rotation;
-                newFireball.ChangeRotation(rotationQuaternion);
-                
-                newFireball.FireballRigid = newFireball.GetComponent<Rigidbody>();
-
             }
         }
     }

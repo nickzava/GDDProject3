@@ -2,57 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fireball : MonoBehaviour
+public class Fireball : Projectile
 {
-    public Vector3 rotationVector;
-    private const float SPEED = 3.0f;
-    private Rigidbody fireballRigid;
-    // Start is called before the first frame update
-
-    void Start()
+    protected override void OnCollisionEnter(Collision collision)
     {
-        
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-    /// <summary>
-    /// Rigidbody Property
-    /// </summary>
-    public Rigidbody FireballRigid
-    {
-        get
+        //check the type of collision before exploding
+        if(collision.collider.CompareTag("enemy") || collision.collider.CompareTag("floor"))
         {
-            return fireballRigid;
-        }
-        set
-        {
-            fireballRigid = value;
+            Explode(collision.gameObject.GetComponent<EnemyBase>());
         }
     }
-    /// <summary>
-    /// Changes rotation and velocity at the start
-    /// </summary>
-    /// <param name="fireballRotation"></param>
-    public void ChangeRotation(Quaternion fireballRotation)
+
+    private void Explode(EnemyBase directHitTarget = null)
     {
-        fireballRigid.transform.rotation = fireballRotation;
+        //Do bonus damage to direct hits
+        if(directHitTarget)
+            //directHitTakesDamage
 
-        //Apply force instead of setting velocity
-        fireballRigid.velocity = transform.forward * SPEED;
+        //Do fireball things
 
-    }
-    //This will be used for collision detection
-    public void HitDetection()
-    {
 
-    }
-    //This is where the fireball does damage on collision
-    public void Explode()
-    {
-
+        //destroy the projectile
+        Destroy(gameObject);
     }
 }
