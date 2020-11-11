@@ -129,10 +129,14 @@ public class Stamina : MonoBehaviour
                 if (physicalStamina > 0)
                 {
                     physicalStamina -= Time.deltaTime * staminaPerSecond;
+                    if (physicalStamina < 0)
+                        physicalStamina = 0;
                 }
                 else if (magicStamina > 0)
                 {
                     magicStamina -= Time.deltaTime * staminaPerSecond;
+                    if (magicStamina < 0)
+                        magicStamina = 0;
                 }
             }
         }

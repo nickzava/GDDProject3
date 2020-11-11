@@ -24,18 +24,13 @@ public class StaminaUI : MonoBehaviour
     {
         uni = uni < 0 ? 0 : uni;
         SetBarPosition(uniImage, uni);
-        SetBarPosition(magicImage, magic, magicTrans, uni);
-        SetBarPosition(physImage, phys, physTrans , uni);
+        SetBarPosition(magicImage, magic == 0 ? 0 : magic + uni);
+        SetBarPosition(physImage, phys == 0 ? 0 : phys + uni);
     }
 
-    private void SetBarPosition(Image img, float percentage, RectTransform trans = null, float startPercentage = 0)
+    private void SetBarPosition(Image img, float percentage)
     {
         img.fillAmount = percentage;
-        if(trans)
-        {
-            //763 is the width of the bar in pixels
-            trans.anchoredPosition = new Vector3(offset* startPercentage,0,0) ;
-        }
     }
 
     private void Start()
@@ -43,8 +38,8 @@ public class StaminaUI : MonoBehaviour
         uniImage = uniBar.GetComponent<Image>();
         physImage = physBar.GetComponent<Image>();
         magicImage = magicBar.GetComponent<Image>();
-        uniTrans = uniBar.GetComponent<RectTransform>();
-        physTrans = physBar.GetComponent<RectTransform>();
-        magicTrans = magicBar.GetComponent<RectTransform>();
+        //uniTrans = uniBar.GetComponent<RectTransform>();
+        //physTrans = physBar.GetComponent<RectTransform>();
+        //magicTrans = magicBar.GetComponent<RectTransform>();
     }
 }
