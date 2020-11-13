@@ -393,28 +393,55 @@ public class LevelGenerator : MonoBehaviour
 		foreach (var pair in floorTiles)
 		{
 			//load bump map
-			Texture2D normal = LoadNormalMap(pair.Key);
+			Vector2 location = pair.Key;
+			Texture2D normal = LoadNormalMap(location);
 
 			//modify normals
 			int width = normal.width;
 			int height = normal.height;
+			float offset = 1.0f / width;
 			if (normals == null)
 				normals = new Color[width * height];
-			float pVal;
+			Vector3 norm;
+			float xLocation;
+			float yLocation;
+
+			float GetHeightDiffX()
+			{
+				return Mathf.PerlinNoise(xLocation + offset, yLocation) -
+						Mathf.PerlinNoise(xLocation - offset, yLocation);
+			}
+			float GetHeightDiffY()
+			{
+				return Mathf.PerlinNoise(xLocation, yLocation + offset) -
+						Mathf.PerlinNoise(xLocation, yLocation - offset);
+			}
+
 			for(int x = 0; x < width; x++)
 			{
 				for(int y = 0; y < height; y++)
 				{
 					int index = (x + y*width);
-					pVal = Mathf.PerlinNoise(pair.Key.x + (float)x/width, pair.Key.y + (float)y / height);
-					normals[index] =new Vector4(Mathf.Sin(pVal), Mathf.Cos(pVal), 1,0).normalized + new Vector4(0.5f,0.5f,0.5f,0.9f);
+					xLocation = location.x + (float)x / width;
+					yLocation = location.y + (float)y / height;
+					norm = Vector3.Cross(
+						new Vector3(0,
+						2 * offset,
+						GetHeightDiffY()
+						), 
+						new Vector3(
+						2* offset,
+						0,
+						GetHeightDiffX())
+						).normalized;
+					normals[index] =new Vector4(norm.x,norm.y,norm.z,0)/2 + new Vector4(0.5f,0.5f,0.5f,0.9f);
 				}
 			}
 			normal.SetPixels(0, 0, width, height, normals);
 			normal.Apply(false);
 
 			//set material
-			pair.Value.GetComponent<MeshRenderer>().material=LoadMaterial(pair.Key,normal);
+			pair.Value.GetComponent<MeshRenderer>().material=LoadMaterial(location,normal);
 		}
 	}
 }
