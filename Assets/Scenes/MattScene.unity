@@ -367,6 +367,9 @@ MonoBehaviour:
   generateNormalMaps: 1
   defaultNormalMap: {fileID: 2800000, guid: 362abf0081f5186418fbb71021093a5b, type: 3}
   defaultMaterial: {fileID: 2100000, guid: d3ec429a1facd0142a62d781857a3f36, type: 2}
+  pathFindingNode: {fileID: 4264912831294452105, guid: 116f67cc0aca1d9419022f18c4540053,
+    type: 3}
+  nodeList: []
 --- !u!4 &1998745139
 Transform:
   m_ObjectHideFlags: 0

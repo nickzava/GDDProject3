@@ -1,21 +1,42 @@
-﻿using Boo.Lang;
-using System.Collections;
+﻿using System.Collections.Generic;
 using System.Net.Http.Headers;
 using UnityEngine;
+using UnityEditor;
 public class LevelGenerator : MonoBehaviour
 {
+	[Header("Base Map")]
+	public string levelName;
 	public Texture2D mapTexture;
-	public Texture2D decorationLayer;
-	public PixelToObject[] pixelColorMappings;			//contains mappings for level layer
-	public PixelToObject[] decorationColorMappings;		//contains mappings for decoration layer
-	private Color pixelColor;
 	public GameObject floorPrefab;
+	private Color pixelColor;
+	public PixelToObject[] pixelColorMappings;          //contains mappings for level layer
+	[Header("Detail Map")]
+	public Texture2D decorationLayer;
+	public PixelToObject[] decorationColorMappings;
+	[Header("Normal Map Generation")]
+	public bool generateNormalMaps;
+	public Texture2D defaultNormalMap;
+	public Material defaultMaterial;
+	private string materialFolderPath;
+	private List<KeyValuePair<Vector2, GameObject>> floorTiles;
+	[Header("Path Finding")]
 	public GameObject pathFindingNode;
 	public List<GameObject> nodeList;
 	void Start()
 	{
-		nodeList = new List<GameObject>();
+		if (levelName == "")
+		{
+			Debug.LogError("Level name invalid, normals not generated");
+			generateNormalMaps = false;
+		}
+		name = levelName;
+
+		//check normal map conditions
+		if (generateNormalMaps)
+			generateNormalMaps = NormalMapInit();
+
 		GenerateLevel();
+		GenerateNormals();
 	}
 
 	void GenerateLevel()
@@ -28,6 +49,9 @@ public class LevelGenerator : MonoBehaviour
 				GenerateObject(i, j, false);
 			}
 		}
+
+		if (!decorationLayer)
+			return;
 
 		for (int i = 0; i < decorationLayer.width; i++)
 		{
@@ -62,11 +86,15 @@ public class LevelGenerator : MonoBehaviour
 				{
 					if (pixelColorMapping.prefab.Length == 1)
 					{
-
 						Vector2 position = new Vector2(x, y);
-						Instantiate(floorPrefab, position, Quaternion.identity, transform);     //if not a wall, floor needs to be 
-																								//spawned in addition to other objects
-						Instantiate(pixelColorMapping.prefab[0], position, Quaternion.identity, transform); //spawning any other object
+
+						GameObject floor = Instantiate(floorPrefab, position, Quaternion.identity, transform);     //if not a wall, floor needs to be 
+																										//spawned in addition to other objects
+						if (generateNormalMaps) //add tile to data structure to create normals later
+							floorTiles.Add(new KeyValuePair<Vector2, GameObject>(position, floor));
+
+						if (pixelColorMapping.prefab[0])
+							Instantiate(pixelColorMapping.prefab[0], position, Quaternion.identity, transform); //spawning any other object
 					}
 					else    //for deciding which wall type to create
 					{
@@ -336,11 +364,12 @@ public class LevelGenerator : MonoBehaviour
 		//create new assets
 		void CreateNewNormalMap(Vector2 pos)
 		{
-			string assetName = '/' + name + 'x' + pos.x.ToString() + 'y' + pos.y.ToString();
+			string assetName = '/' + name + pos.x.ToString() + '_' + pos.y.ToString();
 			AssetDatabase.CopyAsset(AssetDatabase.GetAssetPath(defaultMaterial), materialFolderPath + assetName + ".mat");
 			AssetDatabase.CopyAsset(AssetDatabase.GetAssetPath(defaultNormalMap), materialFolderPath + assetName + ".png");
 		}
 		AssetDatabase.StartAssetEditing();
+
 		foreach(var pair in floorTiles)
 		{
 			CreateNewNormalMap(pair.Key);
@@ -350,12 +379,12 @@ public class LevelGenerator : MonoBehaviour
 		//load assets
 		Texture2D LoadNormalMap(Vector2 pos)
 		{
-			string assetName = '/' + name + 'x' + pos.x.ToString() + 'y' + pos.y.ToString();
+			string assetName = '/' + name + pos.x.ToString() + '_' + pos.y.ToString();
 			return AssetDatabase.LoadAssetAtPath<Texture2D>(materialFolderPath + assetName + ".png");
 		}
 		Material LoadMaterial(Vector2 pos, Texture2D normalMap)
 		{
-			string assetName = '/' + name + 'x' + pos.x.ToString() + 'y' + pos.y.ToString();
+			string assetName = '/' + name + pos.x.ToString() + '_' + pos.y.ToString();
 			Material newMat = AssetDatabase.LoadAssetAtPath<Material>(materialFolderPath + assetName + ".mat");
 			newMat.SetTexture("_BumpMap", AssetDatabase.LoadAssetAtPath<Texture2D>(materialFolderPath + assetName + ".png"));
 			return newMat;
