@@ -1,4 +1,6 @@
-﻿using System.Net.Http.Headers;
+﻿using Boo.Lang;
+using System.Collections;
+using System.Net.Http.Headers;
 using UnityEngine;
 public class LevelGenerator : MonoBehaviour
 {
@@ -8,8 +10,11 @@ public class LevelGenerator : MonoBehaviour
 	public PixelToObject[] decorationColorMappings;		//contains mappings for decoration layer
 	private Color pixelColor;
 	public GameObject floorPrefab;
+	public GameObject pathFindingNode;
+	public List<GameObject> nodeList;
 	void Start()
 	{
+		nodeList = new List<GameObject>();
 		GenerateLevel();
 	}
 
@@ -91,18 +96,22 @@ public class LevelGenerator : MonoBehaviour
 							if (rightPixel != Color.black && topPixel != Color.black)
 							{
 								Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 0.0f));
+								nodeList.Add(Instantiate(pathFindingNode, new Vector2(x + 1, y + 1), Quaternion.identity, transform));	//adds pathfinding node on corner
 							}
 							else if (topPixel != Color.black && leftPixel != Color.black)
 							{
 								Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
+								nodeList.Add(Instantiate(pathFindingNode, new Vector2(x - 1, y + 1), Quaternion.identity, transform));  //adds pathfinding node on corner
 							}
 							else if (leftPixel != Color.black && botPixel != Color.black)
 							{
 								Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 180.0f));
+								nodeList.Add(Instantiate(pathFindingNode, new Vector2(x - 1, y - 1), Quaternion.identity, transform));  //adds pathfinding node on corner
 							}
 							else if (botPixel != Color.black && rightPixel != Color.black)
 							{
 								Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 270.0f));
+								nodeList.Add(Instantiate(pathFindingNode, new Vector2(x + 1, y - 1), Quaternion.identity, transform));  //adds pathfinding node on corner
 							}
 							else if (rightPixel != Color.black)
 							{
