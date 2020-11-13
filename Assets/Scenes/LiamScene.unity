@@ -188,6 +188,8 @@ MonoBehaviour:
     - {fileID: 47749541939643357, guid: ce6cca0299dd01245af42fd97b5f3208, type: 3}
   floorPrefab: {fileID: 1998550009473507075, guid: 0d6d2e252c4ca46438b2d42f3435661f,
     type: 3}
+  pathFindingNode: {fileID: 4264912831294452105, guid: 116f67cc0aca1d9419022f18c4540053,
+    type: 3}
 --- !u!4 &216643415
 Transform:
   m_ObjectHideFlags: 0
