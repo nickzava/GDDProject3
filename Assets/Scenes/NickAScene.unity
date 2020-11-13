@@ -574,6 +574,8 @@ MonoBehaviour:
   playerGameObject: {fileID: 1430544655}
   fireballPrefab: {fileID: 1280224198935072236, guid: 7a57126043e11564a962df5d686a5e9b,
     type: 3}
+  bulletPrefab: {fileID: 3486990674448790714, guid: 197a8b5e8d0d2a545bb05977b5806e97,
+    type: 3}
 --- !u!212 &1430544657
 SpriteRenderer:
   m_ObjectHideFlags: 0
