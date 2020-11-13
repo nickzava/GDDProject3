@@ -369,16 +369,44 @@ public class LevelGenerator : MonoBehaviour
 		AssetDatabase.StopAssetEditing();
 
 		//load assets
-		Material LoadMaterial(Vector2 pos)
+		Texture2D LoadNormalMap(Vector2 pos)
+		{
+			string assetName = '/' + name + 'x' + pos.x.ToString() + 'y' + pos.y.ToString();
+			return AssetDatabase.LoadAssetAtPath<Texture2D>(materialFolderPath + assetName + ".png");
+		}
+		Material LoadMaterial(Vector2 pos, Texture2D normalMap)
 		{
 			string assetName = '/' + name + 'x' + pos.x.ToString() + 'y' + pos.y.ToString();
 			Material newMat = AssetDatabase.LoadAssetAtPath<Material>(materialFolderPath + assetName + ".mat");
 			newMat.SetTexture("_BumpMap", AssetDatabase.LoadAssetAtPath<Texture2D>(materialFolderPath + assetName + ".png"));
 			return newMat;
 		}
+		Color[] normals = null;
 		foreach (var pair in floorTiles)
 		{
-			pair.Value.GetComponent<MeshRenderer>().material=LoadMaterial(pair.Key);
+			//load bump map
+			Texture2D normal = LoadNormalMap(pair.Key);
+
+			//modify normals
+			int width = normal.width;
+			int height = normal.height;
+			if (normals == null)
+				normals = new Color[width * height];
+			float pVal;
+			for(int x = 0; x < width; x++)
+			{
+				for(int y = 0; y < height; y++)
+				{
+					int index = (x + y*width);
+					pVal = Mathf.PerlinNoise(pair.Key.x + (float)x/width, pair.Key.y + (float)y / height);
+					normals[index] =new Vector4(Mathf.Sin(pVal), Mathf.Cos(pVal), 1,0).normalized + new Vector4(0.5f,0.5f,0.5f,0.9f);
+				}
+			}
+			normal.SetPixels(0, 0, width, height, normals);
+			normal.Apply(false);
+
+			//set material
+			pair.Value.GetComponent<MeshRenderer>().material=LoadMaterial(pair.Key,normal);
 		}
 	}
 }
