@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     const float SPEED = 4.0f;
     public GameObject playerGameObject;
     public GameObject fireballPrefab;
+    public GameObject bulletPrefab;
     private Stamina playerStamina;
     
     // Start is called before the first frame update
@@ -70,6 +71,17 @@ public class Player : MonoBehaviour
                     playerGameObject.transform.position + transform.right * 1f, 
                     playerGameObject.transform.rotation);
                 Fireball newFireball = newObject.GetComponent<Fireball>();
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Mouse1) == true)
+        {
+            if (playerStamina.Attack(20, true))
+            {
+                //Paramater for rotation
+                GameObject newObject = Instantiate(bulletPrefab,
+                    playerGameObject.transform.position + transform.right * 1f,
+                    playerGameObject.transform.rotation);
+                Gunshot newGunshot= newObject.GetComponent<Gunshot>();
             }
         }
     }
