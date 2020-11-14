@@ -6,6 +6,8 @@ public class LevelGenerator : MonoBehaviour
 {
 	[Header("Base Map")]
 	public string levelName;
+	public bool saveLevel;
+	private string mapPath;
 	public Texture2D mapTexture;
 	public GameObject floorPrefab;
 	private Color pixelColor;
@@ -24,19 +26,18 @@ public class LevelGenerator : MonoBehaviour
 	public List<GameObject> nodeList;
 	void Start()
 	{
-		if (levelName == "")
-		{
-			Debug.LogError("Level name invalid, normals not generated");
-			generateNormalMaps = false;
-		}
-		name = levelName;
-
-		//check normal map conditions
+		if (!ValidateName())
+			return;
 		if (generateNormalMaps)
 			generateNormalMaps = NormalMapInit();
-
 		GenerateLevel();
-		GenerateNormals();
+		if(generateNormalMaps)
+			GenerateNormals();
+		if (saveLevel)
+		{
+			GameObject saver = new GameObject();
+			saver.AddComponent<LevelSaver>().SaveLevel(gameObject, mapPath);
+		}
 	}
 
 	void GenerateLevel()
@@ -50,16 +51,36 @@ public class LevelGenerator : MonoBehaviour
 			}
 		}
 
-		if (!decorationLayer)
-			return;
-
-		for (int i = 0; i < decorationLayer.width; i++)
+		if (decorationLayer)
 		{
-			for (int j = 0; j < decorationLayer.height; j++)
+			for (int i = 0; i < decorationLayer.width; i++)
 			{
-				GenerateObject(i, j, true);
+				for (int j = 0; j < decorationLayer.height; j++)
+				{
+					GenerateObject(i, j, true);
+				}
 			}
 		}
+	}
+
+	private bool ValidateName()
+	{
+		name = levelName;
+		mapPath = "Assets/LevelPrefabs/" + name + ".prefab";
+		if (levelName == "")
+		{
+			Debug.LogError("Level name invalid, map not generated");
+			return false;
+		}
+		GameObject map = (AssetDatabase.LoadAssetAtPath<GameObject>(mapPath));
+		if (map != null)
+		{
+			Debug.LogError("No map generated, prefab already exists for map with name \"" + levelName + "\"");
+			Debug.Log("Loaded saved map");
+			Instantiate(map);
+			return false;
+		}
+		return true;
 	}
 
 	void GenerateObject(int x, int y, bool decoration)
@@ -389,6 +410,10 @@ public class LevelGenerator : MonoBehaviour
 			newMat.SetTexture("_BumpMap", AssetDatabase.LoadAssetAtPath<Texture2D>(materialFolderPath + assetName + ".png"));
 			return newMat;
 		}
+		
+		Vector2 NoiseTwoOffset = new Vector2((Random.value -.5f) * 10, (Random.value - .5f) * 10);
+		Vector2 NoiseThreeOffset = new Vector2((Random.value -.5f) * 10, (Random.value - .5f) * 10);
+		Vector2 NoiseFourOffset = new Vector2((Random.value -.5f) * 10, (Random.value - .5f) * 10);
 		Color[] normals = null;
 		foreach (var pair in floorTiles)
 		{
@@ -406,18 +431,15 @@ public class LevelGenerator : MonoBehaviour
 			float xLocation;
 			float yLocation;
 
-			float GetHeightDiffX()
+			float HeightMap(float x, float y)
 			{
-				return Mathf.PerlinNoise(xLocation + offset, yLocation) -
-						Mathf.PerlinNoise(xLocation - offset, yLocation);
-			}
-			float GetHeightDiffY()
-			{
-				return Mathf.PerlinNoise(xLocation, yLocation + offset) -
-						Mathf.PerlinNoise(xLocation, yLocation - offset);
+				const float scale = 45;
+				return Mathf.Min(
+					(Mathf.PerlinNoise(x * scale, y * scale) + Mathf.PerlinNoise((x + NoiseTwoOffset.x) * scale, (y + NoiseTwoOffset.y) * scale)) / 2
+					, 0.3f);
 			}
 
-			for(int x = 0; x < width; x++)
+			for (int x = 0; x < width; x++)
 			{
 				for(int y = 0; y < height; y++)
 				{
@@ -427,12 +449,12 @@ public class LevelGenerator : MonoBehaviour
 					norm = Vector3.Cross(
 						new Vector3(0,
 						2 * offset,
-						GetHeightDiffY()
+						HeightMap(xLocation,yLocation - offset) - HeightMap(xLocation, yLocation + offset)
 						), 
 						new Vector3(
 						2* offset,
 						0,
-						GetHeightDiffX())
+						HeightMap(xLocation - offset, yLocation) - HeightMap(xLocation + offset, yLocation))
 						).normalized;
 					normals[index] =new Vector4(norm.x,norm.y,norm.z,0)/2 + new Vector4(0.5f,0.5f,0.5f,0.9f);
 				}
