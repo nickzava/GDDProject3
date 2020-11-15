@@ -9,9 +9,11 @@ public class BasicAttack : MonoBehaviour
     float dist;
     Vector3 size;
     GameObject source;
-
+    float hitboxTime;
+    float elapsedTime;
     // Reference to the hitbox trigger
-    BoxCollider box;
+    PolygonCollider2D hitBox;
+    
 
     /// <summary>
     /// Initializer method, called by player/enemy who caused the attack to fill out paramaters
@@ -20,29 +22,39 @@ public class BasicAttack : MonoBehaviour
     /// <param name="_dam">Integer damage value</param>
     /// <param name="dist">Distance in front of the source, 0 will overlap with source</param>
     /// <param name="_size">Size of the hitbox</param>
-    public void init(GameObject _source, int _dam, float _dist, Vector3 _size)
+    public void init(GameObject _source, int _dam, float _dist, Vector3 _size, float _hitBoxTime = -1f)
     {
         source = _source;
         damage = _dam;
         size = _size;
         dist = _dist;
+        hitboxTime = _hitBoxTime;
 
-        box = gameObject.GetComponent<BoxCollider>();
+        hitBox = gameObject.GetComponent<PolygonCollider2D>();
+
 
         // Set up the basic properties of the hitbox, displace it according to distance paramater
-        box.transform.position = source.transform.position;
+        hitBox.transform.position = source.transform.position;
         Vector3 displacement = source.transform.forward * dist;
-        box.transform.position += displacement;
-        box.transform.rotation = source.transform.rotation;
+        hitBox.transform.position += displacement;
+        hitBox.transform.rotation = source.transform.rotation;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Updates the properties of the box to follow the source
-        box.transform.position = source.transform.position;
-        Vector3 displacement = source.transform.forward * dist;
-        box.transform.position += displacement;
-        box.transform.rotation = source.transform.rotation;
+        if (elapsedTime < hitboxTime || hitboxTime == -1f)
+        {
+            // Updates the properties of the box to follow the source
+            hitBox.transform.position = source.transform.position;
+            Vector3 displacement = source.transform.forward * dist;
+            hitBox.transform.position += displacement;
+            hitBox.transform.rotation = source.transform.rotation;
+        }
+        else
+        {
+            Destroy(this);
+        }
+        elapsedTime += Time.deltaTime;
     }
 }

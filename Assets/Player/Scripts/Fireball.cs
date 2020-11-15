@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Fireball : Projectile
 {
+
+    public GameObject attack;
     protected override void OnCollisionEnter(Collision collision)
     {
         //check the type of collision before exploding
-        if(collision.collider.CompareTag("enemy") || collision.collider.CompareTag("floor"))
+        
+        if(/*collision.collider.CompareTag("enemy") ||*/ collision.collider.CompareTag("floor"))
         {
             Explode(collision.gameObject.GetComponent<EnemyBase>());
         }
@@ -15,15 +18,19 @@ public class Fireball : Projectile
 
     private void Explode(EnemyBase directHitTarget = null)
     {
+        GameObject explosion = Instantiate(attack, gameObject.transform);
         //Do bonus damage to direct hits
-            if (directHitTarget) { 
-                //directHitTakesDamage
+        explosion.GetComponent<BasicAttack>().init(gameObject, 1, 1, new Vector3(1, 1, 1), 1f);
+        if (directHitTarget)
+        {
+            //directHitTakesDamage            
 
-            //Do fireball things
-
-
-            //destroy the projectile
-            Destroy(gameObject);
         }
+        //Do fireball things        
+
+        Debug.Log("we in here");
+        //destroy the projectile
+        Destroy(gameObject);
+        
     }
 }

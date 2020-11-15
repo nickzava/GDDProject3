@@ -98,6 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   damage: 0
+  attack: {fileID: 2998371757427219785, guid: f44935cce0eff3b4f96805e78f767e30, type: 3}
 --- !u!54 &8014316296044558013
 Rigidbody:
   m_ObjectHideFlags: 0
