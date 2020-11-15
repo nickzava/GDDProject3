@@ -360,7 +360,7 @@ public class LevelGenerator : MonoBehaviour
 	bool NormalMapInit()
 	{
 		floorTiles = new List<KeyValuePair<Vector2, GameObject>>();
-		materialFolderPath = "Assets/LevelEditor/Materials";
+		materialFolderPath = "Assets/LevelPrefabs/Materials";
 		try
 		{
 			if (AssetDatabase.IsValidFolder(materialFolderPath + '/' + name))
@@ -370,6 +370,11 @@ public class LevelGenerator : MonoBehaviour
 			}
 			string id = AssetDatabase.CreateFolder(materialFolderPath, name);
 			materialFolderPath = AssetDatabase.GUIDToAssetPath(id);
+			if(materialFolderPath == "")
+			{
+				Debug.LogError("Invalid Path");
+				return false;
+			}
 
 			return true;
 		}
@@ -382,44 +387,20 @@ public class LevelGenerator : MonoBehaviour
 
 	void GenerateNormals()
 	{
+		Vector2 NoiseTwoOffset = new Vector2((Random.value - .5f) * 10, (Random.value - .5f) * 10);
+		Vector2 NoiseThreeOffset = new Vector2((Random.value - .5f) * 10, (Random.value - .5f) * 10);
+		Vector2 NoiseFourOffset = new Vector2((Random.value - .5f) * 10, (Random.value - .5f) * 10);
+		Color[] normals = null;
+
 		//create new assets
-		void CreateNewNormalMap(Vector2 pos)
+		void InitMaterials(Vector2 pos)
 		{
 			string assetName = '/' + name + pos.x.ToString() + '_' + pos.y.ToString();
 			AssetDatabase.CopyAsset(AssetDatabase.GetAssetPath(defaultMaterial), materialFolderPath + assetName + ".mat");
-			AssetDatabase.CopyAsset(AssetDatabase.GetAssetPath(defaultNormalMap), materialFolderPath + assetName + ".png");
 		}
-		AssetDatabase.StartAssetEditing();
-
-		foreach(var pair in floorTiles)
+		Texture2D CreateNormalMap(Vector2 pos)
 		{
-			CreateNewNormalMap(pair.Key);
-		}
-		AssetDatabase.StopAssetEditing();
-
-		//load assets
-		Texture2D LoadNormalMap(Vector2 pos)
-		{
-			string assetName = '/' + name + pos.x.ToString() + '_' + pos.y.ToString();
-			return AssetDatabase.LoadAssetAtPath<Texture2D>(materialFolderPath + assetName + ".png");
-		}
-		Material LoadMaterial(Vector2 pos, Texture2D normalMap)
-		{
-			string assetName = '/' + name + pos.x.ToString() + '_' + pos.y.ToString();
-			Material newMat = AssetDatabase.LoadAssetAtPath<Material>(materialFolderPath + assetName + ".mat");
-			newMat.SetTexture("_BumpMap", AssetDatabase.LoadAssetAtPath<Texture2D>(materialFolderPath + assetName + ".png"));
-			return newMat;
-		}
-		
-		Vector2 NoiseTwoOffset = new Vector2((Random.value -.5f) * 10, (Random.value - .5f) * 10);
-		Vector2 NoiseThreeOffset = new Vector2((Random.value -.5f) * 10, (Random.value - .5f) * 10);
-		Vector2 NoiseFourOffset = new Vector2((Random.value -.5f) * 10, (Random.value - .5f) * 10);
-		Color[] normals = null;
-		foreach (var pair in floorTiles)
-		{
-			//load bump map
-			Vector2 location = pair.Key;
-			Texture2D normal = LoadNormalMap(location);
+			Texture2D normal = new Texture2D(defaultNormalMap.width, defaultNormalMap.height);
 
 			//modify normals
 			int width = normal.width;
@@ -433,38 +414,97 @@ public class LevelGenerator : MonoBehaviour
 
 			float HeightMap(float x, float y)
 			{
-				const float scale = 45;
+				const float scale = 30;
+				const float scale2 = 3;
+				const float scale3 = 45;
+				//return (Mathf.Atan((Mathf.PerlinNoise(x * scale2 + NoiseThreeOffset.x, y * scale2 + NoiseThreeOffset.y) - .5f) * 100)/ Mathf.PI + .5f);
 				return Mathf.Min(
-					(Mathf.PerlinNoise(x * scale, y * scale) + Mathf.PerlinNoise((x + NoiseTwoOffset.x) * scale, (y + NoiseTwoOffset.y) * scale)) / 2
-					, 0.3f);
+						(
+							Mathf.PerlinNoise(x * scale, y * scale) + 
+							Mathf.PerlinNoise((x + NoiseTwoOffset.x) * scale, (y + NoiseTwoOffset.y) * scale)
+						) / 2 +
+						(Mathf.Atan((Mathf.PerlinNoise(x * scale2 + NoiseThreeOffset.x, y * scale2 + NoiseThreeOffset.y) - .5f) * 100) / Mathf.PI + .5f)
+						, 0.4f)  +
+						Mathf.Min(
+							(Mathf.PerlinNoise(x * scale3, y * scale3) + 
+							Mathf.PerlinNoise((x + NoiseFourOffset.x) * scale3, (y + NoiseFourOffset.y) * scale3)) / 2
+						, 0.3f);
+
 			}
 
 			for (int x = 0; x < width; x++)
 			{
-				for(int y = 0; y < height; y++)
+				for (int y = 0; y < height; y++)
 				{
-					int index = (x + y*width);
-					xLocation = location.x + (float)x / width;
-					yLocation = location.y + (float)y / height;
+					int index = (x + y * width);
+					xLocation = pos.x + (float)x / width;
+					yLocation = pos.y + (float)y / height;
 					norm = Vector3.Cross(
 						new Vector3(0,
 						2 * offset,
-						HeightMap(xLocation,yLocation - offset) - HeightMap(xLocation, yLocation + offset)
-						), 
+						HeightMap(xLocation, yLocation - offset) - HeightMap(xLocation, yLocation + offset)
+						),
 						new Vector3(
-						2* offset,
+						2 * offset,
 						0,
 						HeightMap(xLocation - offset, yLocation) - HeightMap(xLocation + offset, yLocation))
 						).normalized;
-					normals[index] =new Vector4(norm.x,norm.y,norm.z,0)/2 + new Vector4(0.5f,0.5f,0.5f,0.9f);
+					normals[index] = new Vector4(norm.x, norm.y, norm.z, 0) / 2 + new Vector4(0.5f, 0.5f, 0.5f, 0.9f);
 				}
 			}
 			normal.SetPixels(0, 0, width, height, normals);
 			normal.Apply(false);
-
-			//set material
-			pair.Value.GetComponent<MeshRenderer>().material=LoadMaterial(location,normal);
+			
+			return normal;
 		}
+
+		//load assets
+		void AddNormalMapToDatabase(Vector2 pos, Texture2D toSave)
+		{
+			string assetName = '/' + name + pos.x.ToString() + '_' + pos.y.ToString() + ".png";
+			System.IO.File.WriteAllBytes(materialFolderPath + assetName, toSave.EncodeToPNG());
+			AssetDatabase.ImportAsset(materialFolderPath + assetName);
+		}
+		Texture2D LoadNormalMap(Vector2 pos)
+		{
+			string assetName = '/' + name + pos.x.ToString() + '_' + pos.y.ToString() + ".png";
+			return AssetDatabase.LoadAssetAtPath<Texture2D>(materialFolderPath + assetName);
+		}
+		Material LoadMaterial(Vector2 pos, Texture2D normalMap)
+		{
+			string assetName = '/' + name + pos.x.ToString() + '_' + pos.y.ToString();
+			Material newMat = AssetDatabase.LoadAssetAtPath<Material>(materialFolderPath + assetName + ".mat");
+			newMat.SetTexture("_BumpMap", AssetDatabase.LoadAssetAtPath<Texture2D>(materialFolderPath + assetName + ".png"));
+			return newMat;
+		}
+
+
+		AssetDatabase.StartAssetEditing();
+		Vector2 location;
+		foreach(var pair in floorTiles)
+		{
+			location = pair.Key;
+			InitMaterials(location);
+			AddNormalMapToDatabase(location, CreateNormalMap(location));
+		}
+		AssetDatabase.StopAssetEditing();
+		AssetDatabase.Refresh();
+
+		AssetDatabase.StartAssetEditing();
+		Texture2D loadedImage; 
+		foreach (var pair in floorTiles)
+		{
+			location = pair.Key;
+			loadedImage = LoadNormalMap(location);
+			pair.Value.GetComponent<MeshRenderer>().material = LoadMaterial(location, loadedImage);
+		}
+		AssetDatabase.StopAssetEditing();
+		AssetDatabase.Refresh();
+		AssetDatabase.SaveAssets();
+
+
+		
+		
 	}
 }
 
