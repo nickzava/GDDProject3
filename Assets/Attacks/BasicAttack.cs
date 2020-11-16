@@ -58,4 +58,18 @@ public class BasicAttack : MonoBehaviour
         }
         elapsedTime += Time.deltaTime;
     }
+
+    // Activates when another collider enters this hitbox, 
+    private void OnTriggerEnter(Collider other)
+    {
+        // If hit object is player, do damage
+        if (other.GetComponentInParent<Player>() != null)
+        {
+            // Reduce health here other.GetComponentInParent<Player>().
+        }
+
+
+        // Delete the hitbox projectile
+        Destroy(gameObject);
+    }
 }
