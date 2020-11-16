@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2998371757427219785
+--- !u!1 &598484571298845528
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6682941904637086618}
-  - component: {fileID: 7677445402253856041}
-  - component: {fileID: -6787221154391110890}
+  - component: {fileID: 7716368991851657466}
+  - component: {fileID: -9159777419010313120}
+  - component: {fileID: 2726483428191696995}
   m_Layer: 0
-  m_Name: fireballAttack
+  m_Name: caneAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6682941904637086618
+--- !u!4 &7716368991851657466
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2998371757427219785}
+  m_GameObject: {fileID: 598484571298845528}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,25 +32,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7677445402253856041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2998371757427219785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df60fce7c2f11b14898a65184a986b68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!60 &-6787221154391110890
+--- !u!60 &-9159777419010313120
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2998371757427219785}
+  m_GameObject: {fileID: 598484571298845528}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -69,11 +57,19 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.72523177, y: 0.36542213}
-      - {x: -0.77541447, y: -0.26323625}
-      - {x: -0.36681616, y: -0.7976854}
-      - {x: 0.58778536, y: -0.80901694}
-      - {x: 0.9340588, y: -0.34255826}
-      - {x: 0.9113955, y: 0.3316807}
-      - {x: 0.57144296, y: 0.84727514}
-      - {x: -0.25010854, y: 0.8586069}
+    - - {x: 0.7, y: -0.8}
+      - {x: 0.7, y: 0.8}
+      - {x: 0, y: 0.36}
+      - {x: 0, y: -0.36}
+--- !u!114 &2726483428191696995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598484571298845528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df60fce7c2f11b14898a65184a986b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

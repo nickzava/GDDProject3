@@ -24,8 +24,10 @@ public class Gunshot : Projectile
 
 
             //destroy the projectile
-            Destroy(gameObject);
+            
         }
+
+        Destroy(gameObject);
     }
 }
 

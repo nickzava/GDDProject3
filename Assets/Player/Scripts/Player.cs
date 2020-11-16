@@ -8,9 +8,12 @@ public class Player : MonoBehaviour
     public GameObject playerGameObject; //Player Game Object
     public GameObject fireballPrefab; //Fireball Prefab
     public GameObject bulletPrefab;  //Bullet Prefab
+    public GameObject canePrefab; //Cane Attack Prefab
+    public GameObject windPrefab; //Windblast Attack Prefab
     private Stamina playerStamina; //Stamina Object
     public bool invincible = false; //Used for shield
     private bool isDashing = false; //Used for dash
+    private const float gunshotSpeed = 15f; //Usedd for gunshot projectile speed
     
     // Start is called before the first frame update
     void Start()
@@ -66,10 +69,36 @@ public class Player : MonoBehaviour
     {
         if (isDashing == false)
         {
-            //Sheild Update
-            if (Input.GetKey(KeyCode.Space))
+            //SHIELD
+            //Inital Press
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (playerStamina.Attack(60f * Time.deltaTime, false)) ;                
+                if (playerStamina.Attack(15, false))
+                {
+                    invincible = true;
+                    playerGameObject.GetComponent<SpriteRenderer>().color = Color.blue; //Test for invincible color
+                }
+            }
+            //Shield Hold
+            else if (Input.GetKey(KeyCode.Space))
+            {
+                //Invincible == true makes it so that this attack can not be the first press of shield.
+                if (invincible == true && playerStamina.Attack(60f * Time.deltaTime, false))
+                {
+                }
+                //This will stop the hold from mattering until shield is pressed again
+                else
+                {
+                    invincible = false;
+                    playerGameObject.GetComponent<SpriteRenderer>().color = Color.white; //Test for invincible color
+                }
+            }
+            //Shield End
+            else if (Input.GetKeyUp(KeyCode.Space))
+            {
+                invincible = false;
+                playerGameObject.GetComponent<SpriteRenderer>().color = Color.white;
+
             }
             //FIREBALL
             if (Input.GetKeyDown(KeyCode.Q) == true)
@@ -91,25 +120,10 @@ public class Player : MonoBehaviour
                     //Paramater for rotation
                     GameObject newObject = Instantiate(bulletPrefab,
                         playerGameObject.transform.position + transform.right * 1f,
-                        playerGameObject.transform.rotation);
+                        playerGameObject.transform.rotation);                    
                     Gunshot newGunshot = newObject.GetComponent<Gunshot>();
+                    newGunshot.speed = gunshotSpeed; //Changes the speed of the gunshot to the proper amount.
                 }
-            }
-            //SHIELD
-            else if (Input.GetKeyDown(KeyCode.Space))
-            {
-                if (playerStamina.Attack(15, false))
-                {
-                    invincible = true;
-                    playerGameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-                }
-            }
-            //Determines when to stop the sheild and make the player damageable
-            else if (Input.GetKeyUp(KeyCode.Space))
-            {
-                invincible = false;
-                playerGameObject.GetComponent<SpriteRenderer>().color = Color.white;
-
             }
             //DASH 
             else if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -119,12 +133,32 @@ public class Player : MonoBehaviour
                     StartCoroutine("Dash");
                 }
             }
-            //Cane
-            else if (Input.GetKeyDown(KeyCode.LeftShift))
+            //CANE
+            else if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                if (playerStamina.Attack(20, true))
+                if (playerStamina.Attack(15, true))
                 {
-                    StartCoroutine("Dash");
+                    //Paramater for rotation
+                    GameObject newCane = Instantiate(canePrefab,
+                        playerGameObject.transform.position + transform.right * 1f,
+                        playerGameObject.transform.rotation);
+                    //Instantiate New Hitbox
+                    BasicAttack caneAttack = newCane.GetComponent<BasicAttack>();
+                    caneAttack.init(playerGameObject, 1, .15f, new Vector3(0, 0, 0), .1f);
+                }
+            }
+            //Wind Attack
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (playerStamina.Attack(15, false))
+                {
+                    //Paramater for rotation
+                    GameObject newWind = Instantiate(windPrefab,
+                        playerGameObject.transform.position + transform.right * 1f,
+                        playerGameObject.transform.rotation);
+                    //Instantiate new Hitbox
+                    BasicAttack caneAttack = newWind.GetComponent<BasicAttack>();
+                    caneAttack.init(playerGameObject, 1, 0f, new Vector3(0, 0, 0), .2f);
                 }
             }
         }
@@ -133,13 +167,16 @@ public class Player : MonoBehaviour
     //Dash Coroutine
     IEnumerator Dash()
     {
-        isDashing = true;
+        isDashing = true; 
 
         float secondsElapsed = 0;
+        //Getting target position
         Vector3 mouse_pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouse_pos.z = playerGameObject.transform.position.z;
         Vector3 initalPosition = (playerGameObject.transform.position);
         Vector3 targetPosition = (mouse_pos- initalPosition).normalized;
+
+        //Dash loop to make it smooth
         while(secondsElapsed < .3f)
         {
             secondsElapsed += Time.deltaTime;

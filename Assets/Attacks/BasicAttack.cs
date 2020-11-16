@@ -53,7 +53,8 @@ public class BasicAttack : MonoBehaviour
         }
         else
         {
-            Destroy(this);
+            Destroy(gameObject);
+            Debug.Log("Death");
         }
         elapsedTime += Time.deltaTime;
     }
