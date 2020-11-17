@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2809726895599832325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2809726895599832327}
+  - component: {fileID: 2809726895599832326}
+  m_Layer: 0
+  m_Name: LevelGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2809726895599832327
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2809726895599832325}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2809726895599832326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2809726895599832325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2be0fc704ef4fa24c8ba63358088a256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelName: 
+  saveLevel: 0
+  mapTexture: {fileID: 2800000, guid: 8cbe0d6cd02a7a54393f6514d86f38db, type: 3}
+  floorPrefab: {fileID: 1998550009473507075, guid: 0d6d2e252c4ca46438b2d42f3435661f,
+    type: 3}
+  pixelColorMappings:
+  - pixelColor: {r: 0, g: 0, b: 0, a: 1}
+    prefab:
+    - {fileID: 3408694786022435220, guid: 762ef5487106ce94e932639d721785f9, type: 3}
+    - {fileID: 4859158340840941537, guid: 758a1c3b32255314c95cdd7bdaf1c1e9, type: 3}
+    - {fileID: 8570167094157080027, guid: b54b1a0946763de4da37811f6a581e9b, type: 3}
+  - pixelColor: {r: 1, g: 0, b: 0, a: 1}
+    prefab:
+    - {fileID: 5985957107751883631, guid: 97b51891ea2f6754d935513accabf434, type: 3}
+  - pixelColor: {r: 1, g: 1, b: 1, a: 1}
+    prefab:
+    - {fileID: 1998550009473507075, guid: 0d6d2e252c4ca46438b2d42f3435661f, type: 3}
+  - pixelColor: {r: 0, g: 0, b: 0, a: 0}
+    prefab:
+    - {fileID: 8570167094157080027, guid: b54b1a0946763de4da37811f6a581e9b, type: 3}
+  - pixelColor: {r: 1, g: 1, b: 0, a: 1}
+    prefab:
+    - {fileID: 5664807248166010361, guid: 978969abb21b1e84fa1ac9b79d3b610f, type: 3}
+  - pixelColor: {r: 0, g: 1, b: 1, a: 1}
+    prefab:
+    - {fileID: 4388593158269153186, guid: 13a13e049e8cb724099b3d2b122fcd38, type: 3}
+  - pixelColor: {r: 0, g: 1, b: 0, a: 1}
+    prefab:
+    - {fileID: 5431508564574943700, guid: a69524f7046e8434498e580b34e05c11, type: 3}
+    - {fileID: 4226709942183157913, guid: 28a5b4360eb1d8b488135e3c8bcbaa6b, type: 3}
+    - {fileID: 3261310201412724653, guid: 63648b57ed7006847af030b38aeb369c, type: 3}
+    - {fileID: 4193968995727521466, guid: 4af973034b4576340a15357ee781c109, type: 3}
+  decorationLayer: {fileID: 2800000, guid: 158088ab171ba644cab6232bd22ac410, type: 3}
+  decorationColorMappings:
+  - pixelColor: {r: 0, g: 0, b: 0, a: 1}
+    prefab:
+    - {fileID: 6031658599321993993, guid: 317fa35ff1b32054b80ef17e1b66f769, type: 3}
+    - {fileID: 3142016711951667174, guid: e5967bb2f3aeb4b4088c0d2e3ab66199, type: 3}
+    - {fileID: 7315139112769415623, guid: 32861b98fdd20da4a8b791a6de058c18, type: 3}
+    - {fileID: 47749541939643357, guid: ce6cca0299dd01245af42fd97b5f3208, type: 3}
+  generateNormalMaps: 0
+  defaultNormalMap: {fileID: 0}
+  defaultMaterial: {fileID: 0}
+  pathFindingNode: {fileID: 4264912831294452105, guid: 116f67cc0aca1d9419022f18c4540053,
+    type: 3}
+  nodeList: []
