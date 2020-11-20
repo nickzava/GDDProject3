@@ -466,33 +466,32 @@ public class LevelGenerator : MonoBehaviour
 			float xLocation;
 			float yLocation;
 
-			float HeightMap(float x, float y)
+			float HeightMap(float xWithOffset, float yWithOffset,int x, int y)
 			{
 				const float scale = 30;
 				const float scale2 = 3;
 				const float scale3 = 45;
 
-				if (useLoaded)
+				int size = x+ y * width;
+				if (useLoaded && 
+					size >= 0 && 
+					size < loadedNormals.Length)
 				{
-					int size = (int)(x + y * width);
-					if (size < loadedNormals.Length && loadedNormals[size] != defaultColor)
-					{
-						float toReturn = loadedNormals[size][0];
-						return toReturn;
-					}
+					if(loadedNormals[size] != defaultColor)
+						return loadedNormals[size][0];
 				}
 
 				//return (Mathf.Atan((Mathf.PerlinNoise(x * scale2 + NoiseThreeOffset.x, y * scale2 + NoiseThreeOffset.y) - .5f) * 100)/ Mathf.PI + .5f);
 				return Mathf.Min(
 						(
-							Mathf.PerlinNoise(x * scale, y * scale) + 
-							Mathf.PerlinNoise((x + NoiseTwoOffset.x) * scale, (y + NoiseTwoOffset.y) * scale)
+							Mathf.PerlinNoise(xWithOffset * scale, yWithOffset * scale) + 
+							Mathf.PerlinNoise((xWithOffset + NoiseTwoOffset.x) * scale, (yWithOffset + NoiseTwoOffset.y) * scale)
 						) / 2 +
-						(Mathf.Atan((Mathf.PerlinNoise(x * scale2 + NoiseThreeOffset.x, y * scale2 + NoiseThreeOffset.y) - .5f) * 100) / Mathf.PI + .5f)
+						(Mathf.Atan((Mathf.PerlinNoise(xWithOffset * scale2 + NoiseThreeOffset.x, yWithOffset * scale2 + NoiseThreeOffset.y) - .5f) * 100) / Mathf.PI + .5f)
 						, 0.4f)  +
 						Mathf.Min(
-							(Mathf.PerlinNoise(x * scale3, y * scale3) + 
-							Mathf.PerlinNoise((x + NoiseFourOffset.x) * scale3, (y + NoiseFourOffset.y) * scale3)) / 2
+							(Mathf.PerlinNoise(xWithOffset * scale3, yWithOffset * scale3) + 
+							Mathf.PerlinNoise((xWithOffset + NoiseFourOffset.x) * scale3, (yWithOffset + NoiseFourOffset.y) * scale3)) / 2
 						, 0.3f);
 
 			}
@@ -507,12 +506,12 @@ public class LevelGenerator : MonoBehaviour
 					norm = Vector3.Cross(
 						new Vector3(0,
 						2 * offset,
-						HeightMap(xLocation, yLocation - offset) - HeightMap(xLocation, yLocation + offset)
+						HeightMap(xLocation, yLocation - offset,x,y-1) - HeightMap(xLocation, yLocation + offset, x, y+1)
 						),
 						new Vector3(
 						2 * offset,
 						0,
-						HeightMap(xLocation - offset, yLocation) - HeightMap(xLocation + offset, yLocation))
+						HeightMap(xLocation - offset, yLocation, x-1, y) - HeightMap(xLocation + offset, yLocation, x+1, y))
 						).normalized;
 					normals[index] = new Vector4(norm.x, norm.y, norm.z, 0) / 2 + new Vector4(0.5f, 0.5f, 0.5f, 0.9f);
 				}
@@ -548,22 +547,21 @@ public class LevelGenerator : MonoBehaviour
 
 		AssetDatabase.StartAssetEditing();
 		Vector2 location;
-		Texture2D newMap;
+		Texture2D baseHeightMap;
 		foreach(var pair in floorTiles)
 		{
 			location = pair.Key;
-			newMap = null;
+			baseHeightMap = null;
 			for (int i = 0; i < fullNames.Length; i++)
 			{
 				string fullName = fullNames[i];
 				if (pair.Value.name.StartsWith(fullName))
 				{
-					newMap = CreateNormalMap(location,heightMaps[fullName]);
+					baseHeightMap = heightMaps[fullName];
 					break;
 				}
 			}
-			if(!newMap)
-				newMap = CreateNormalMap(location);
+			Texture2D newMap = CreateNormalMap(location,baseHeightMap);
 
 			InitMaterials(location);
 			AddNormalMapToDatabase(location, newMap);
