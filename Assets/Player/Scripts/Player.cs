@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    const float SPEED = 4.0f;
     public GameObject playerGameObject; //Player Game Object
     public GameObject fireballPrefab; //Fireball Prefab
     public GameObject bulletPrefab;  //Bullet Prefab
@@ -14,42 +13,66 @@ public class Player : MonoBehaviour
     public bool invincible = false; //Used for shield
     private bool isDashing = false; //Used for dash
     private const float gunshotSpeed = 15f; //Usedd for gunshot projectile speed
+
+    // Adjust the amount of force we apply
+    [SerializeField]
+    float speed;
+    // Holds the player's rigidbody so we can apply forces to it
+    private Rigidbody rb;
     
     // Start is called before the first frame update
     void Start()
     {
         playerStamina = GetComponent<Stamina>();
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        MovementCheck();
         CheckRoation();
         CheckAction();
-        
-        
+    }
+
+    // We use fixedupdate because it is more reliable specifically for physics interactions
+    private void FixedUpdate()
+    {
+        MovementCheck();
     }
 
     //This will check if W A S or D are pressed and move in the corresponding direction
     void MovementCheck()
     {
+        // We create a vector which is modified by key presses so that holding A and W for example does not give you an increase in velocity.
+        // This method only applies one force to the player while the original method I tried would apply one for each key press, leading to that behavior.
+        Vector3 frameMovement = new Vector3(0, 0, 0);
+
         if(Input.GetKey(KeyCode.W) == true)
         {
-            playerGameObject.transform.Translate(new Vector3(0, Time.deltaTime * SPEED, 0), Space.World);
+            frameMovement += new Vector3(0, 1, 0);
+            //MovePlayer(new Vector3(0, speed, 0));
         }
         if(Input.GetKey(KeyCode.A) == true)
         {
-            playerGameObject.transform.Translate(new Vector3( Time.deltaTime * -SPEED, 0, 0), Space.World);
+            frameMovement += new Vector3(-1, 0, 0);
+            //MovePlayer(new Vector3(-speed, 0, 0));
         }
         if (Input.GetKey(KeyCode.S) == true)
         {
-            playerGameObject.transform.Translate(new Vector3(0, Time.deltaTime * -SPEED, 0), Space.World);
+            frameMovement += new Vector3(0, -1, 0);
+            //MovePlayer(new Vector3(0, -speed, 0));
         }
         if (Input.GetKey(KeyCode.D) == true)
         {
-            playerGameObject.transform.Translate(new Vector3(Time.deltaTime * SPEED, 0, 0), Space.World);
+            frameMovement += new Vector3(1, 0, 0);
+            //MovePlayer(new Vector3(speed, 0, 0));
         }
+
+        // Now we normalize the temporary vector, to get our direction which will always be the same magnitude
+        frameMovement.Normalize();
+
+        // Actually apply the force here
+        rb.AddForce(frameMovement * speed);
     }
     /// <summary>
     /// This will check the rotation the sprite should be facing
@@ -77,6 +100,9 @@ public class Player : MonoBehaviour
                 {
                     invincible = true;
                     playerGameObject.GetComponent<SpriteRenderer>().color = Color.blue; //Test for invincible color
+
+                    // Just a note from when Will is reading thru here, if we get a chance we should take GetComponent<> out of update cause it may cause performance issues
+                    // Although this is labeled as a test so I'm guessing you already knew that lol
                 }
             }
             //Shield Hold
@@ -189,4 +215,9 @@ public class Player : MonoBehaviour
        
     }
 
+    // Method to apply force to the player
+    private void MovePlayer(Vector3 movement)
+    {
+        rb.AddForce(movement);
+    }
 }

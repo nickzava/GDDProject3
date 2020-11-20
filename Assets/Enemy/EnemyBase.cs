@@ -14,6 +14,7 @@ public class EnemyBase : MonoBehaviour
     GameObject target;
     [SerializeField]
     GameObject goal;
+    Rigidbody rb;
     // Bool to indicate if we are actively seeking a pathfinding node
     bool seekingNode;
 
@@ -35,6 +36,9 @@ public class EnemyBase : MonoBehaviour
         // Hunting set to false by default, will switch on if player gets too close
         hunting = false;
 
+        // Gets our rigidbody
+        rb = gameObject.GetComponent<Rigidbody>();
+
         // If player exists, set it to the target
         try
         {
@@ -52,6 +56,12 @@ public class EnemyBase : MonoBehaviour
     {
         LocateTarget();
         SeekTarget();
+        
+    }
+
+    // Fixedupdate is better for physics operations
+    private void FixedUpdate()
+    {
         DoMovement();
     }
 
@@ -80,7 +90,14 @@ public class EnemyBase : MonoBehaviour
     {
         // Cast to vec3
         Vector3 tempMove = movement;
-        gameObject.transform.position += tempMove;
+        // Ignores if movement vector is too small
+        if (movement.magnitude <= .01f)
+        {
+            return;
+        }
+        // Rotate to face movement 
+        gameObject.transform.LookAt(transform.position + tempMove);
+        rb.AddForce(transform.forward * speed);
     }
 
     // Helper method to find distance between two gameobjects
