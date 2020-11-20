@@ -19,6 +19,7 @@ public class LevelGenerator : MonoBehaviour
 	public bool generateNormalMaps;
 	public Texture2D defaultNormalMap;
 	public Material defaultMaterial;
+	public GameObject railsPref;
 	private string materialFolderPath;
 	private List<KeyValuePair<Vector2, GameObject>> floorTiles;
 	[Header("Path Finding")]
@@ -43,11 +44,13 @@ public class LevelGenerator : MonoBehaviour
 	void GenerateLevel()
 	{
 		// Scan whole Texture and get positions of objects
+		int id = 0;
 		for (int i = 0; i < mapTexture.width; i++)
 		{
 			for (int j = 0; j < mapTexture.height; j++)
 			{
-				GenerateObject(i, j, false);
+				GenerateObject(i, j, false, id);
+				id++;
 			}
 		}
 
@@ -83,7 +86,7 @@ public class LevelGenerator : MonoBehaviour
 		return true;
 	}
 
-	void GenerateObject(int x, int y, bool decoration)
+	void GenerateObject(int x, int y, bool decoration, int id = 0)
 	{
 		if (!decoration)
 		{
@@ -102,6 +105,7 @@ public class LevelGenerator : MonoBehaviour
 
 			foreach (PixelToObject pixelColorMapping in pixelColorMappings)
 			{
+				GameObject floor = null;
 				// Scan pixelColorMappings Array for matching color maping
 				if (pixelColorMapping.pixelColor.Equals(pixelColor))
 				{
@@ -109,7 +113,7 @@ public class LevelGenerator : MonoBehaviour
 					{
 						Vector2 position = new Vector2(x, y);
 
-						GameObject floor = Instantiate(floorPrefab, position, Quaternion.identity, transform);     //if not a wall, floor needs to be 
+						floor = Instantiate(floorPrefab, position, Quaternion.identity, transform);     //if not a wall, floor needs to be 
 																										//spawned in addition to other objects
 						if (generateNormalMaps) //add tile to data structure to create normals later
 							floorTiles.Add(new KeyValuePair<Vector2, GameObject>(position, floor));
@@ -203,6 +207,17 @@ public class LevelGenerator : MonoBehaviour
 							if (y > 0)
 								botPixel = mapTexture.GetPixel(x, y - 1);
 
+							void RenameFloor(string floorType)
+							{
+								if (!floor)
+								{
+									floor = Instantiate(floorPrefab, position, Quaternion.identity, transform);
+									if (generateNormalMaps) //add tile to data structure to create normals later
+										floorTiles.Add(new KeyValuePair<Vector2, GameObject>(position, floor));
+								}
+								floor.name = floorType + "-" + id.ToString();
+							}
+
 
 							// 0 = straightRail
 							// 1 = cornerRail
@@ -212,50 +227,50 @@ public class LevelGenerator : MonoBehaviour
 							//xRail
 							if (rightPixel == Color.green && topPixel == Color.green && leftPixel == Color.green && botPixel == Color.green)
 							{
-								Instantiate(pixelColorMapping.prefab[3], position, Quaternion.identity, transform);
+								RenameFloor("Cross");
 							}
 							//tRails
 							else if (botPixel == Color.green && rightPixel == Color.green && topPixel == Color.green)
 							{
-								Instantiate(pixelColorMapping.prefab[2], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 0.0f));
+								RenameFloor("T");
 							}
 							else if (rightPixel == Color.green && topPixel == Color.green && leftPixel == Color.green)
 							{
-								Instantiate(pixelColorMapping.prefab[2], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
+								RenameFloor("T90");
 							}
 							else if (topPixel == Color.green && leftPixel == Color.green && botPixel == Color.green)
 							{
-								Instantiate(pixelColorMapping.prefab[2], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 180.0f));
+								RenameFloor("T180");
 							}
 							else if (leftPixel == Color.green && botPixel == Color.green && rightPixel == Color.green)
 							{
-								Instantiate(pixelColorMapping.prefab[2], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 270.0f));
+								RenameFloor("T270");
 							}
 							//corner Rails
 							else if (botPixel == Color.green && rightPixel == Color.green)
 							{
-								Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 0.0f));
+								RenameFloor("L");
 							}
 							else if (rightPixel == Color.green && topPixel == Color.green)
 							{
-								Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
+								RenameFloor("L90");
 							}
 							else if (topPixel == Color.green && leftPixel == Color.green)
 							{
-								Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 180.0f));
+								RenameFloor("L180");
 							}
 							else if (leftPixel == Color.green && botPixel == Color.green)
 							{
-								Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 270.0f));
+								RenameFloor("L270");
 							}
 							//straight rails
 							else if (botPixel == Color.green || topPixel == Color.green)
 							{
-								Instantiate(pixelColorMapping.prefab[0], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 0.0f));
+								RenameFloor("I");
 							}
 							else if (rightPixel == Color.green || leftPixel == Color.green)
 							{
-								Instantiate(pixelColorMapping.prefab[0], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
+								RenameFloor("I90");
 							}
 						}
 						#endregion
@@ -392,15 +407,54 @@ public class LevelGenerator : MonoBehaviour
 		Vector2 NoiseFourOffset = new Vector2((Random.value - .5f) * 10, (Random.value - .5f) * 10);
 		Color[] normals = null;
 
+		Dictionary<string, Texture2D> heightMaps = new Dictionary<string, Texture2D>();
+		Dictionary<string, Texture2D> colors = new Dictionary<string, Texture2D>();
+		string[] fullNames = {
+			"Cross",
+			"I90",
+			"L90",
+			"L180",
+			"L270",
+			"T90",
+			"T180",
+			"T270",
+			"I",
+			"L",
+			"T",
+		};
+
+		Texture2D loaded;
+		for(int i = 0; i < fullNames.Length; i++)
+		{
+			string fullName = fullNames[i];
+			//load hmaps
+			loaded = railsPref.transform.Find(fullName + "HM").GetComponent<SpriteRenderer>().sprite.texture;
+			if (loaded)
+			{
+				heightMaps.Add(fullName, loaded);
+				//load textures
+				colors.Add(fullName, railsPref.transform.Find(fullName + "Main").GetComponent<SpriteRenderer>().sprite.texture);
+			}
+		}
+
 		//create new assets
 		void InitMaterials(Vector2 pos)
 		{
 			string assetName = '/' + name + pos.x.ToString() + '_' + pos.y.ToString();
 			AssetDatabase.CopyAsset(AssetDatabase.GetAssetPath(defaultMaterial), materialFolderPath + assetName + ".mat");
 		}
-		Texture2D CreateNormalMap(Vector2 pos)
+		Texture2D CreateNormalMap(Vector2 pos, Texture2D geometryHeightMap = null)
 		{
-			Texture2D normal = new Texture2D(defaultNormalMap.width, defaultNormalMap.height);
+			Texture2D normal = new Texture2D(400, 400, TextureFormat.RGBA32, false);
+
+			Color[] loadedNormals = null;
+			Color defaultColor = new Color();
+			bool useLoaded = geometryHeightMap != null;
+			if (useLoaded)
+			{
+				loadedNormals = geometryHeightMap.GetPixels();
+				defaultColor = loadedNormals[0];
+			}
 
 			//modify normals
 			int width = normal.width;
@@ -417,6 +471,17 @@ public class LevelGenerator : MonoBehaviour
 				const float scale = 30;
 				const float scale2 = 3;
 				const float scale3 = 45;
+
+				if (useLoaded)
+				{
+					int size = (int)(x + y * width);
+					if (size < loadedNormals.Length && loadedNormals[size] != defaultColor)
+					{
+						float toReturn = loadedNormals[size][0];
+						return toReturn;
+					}
+				}
+
 				//return (Mathf.Atan((Mathf.PerlinNoise(x * scale2 + NoiseThreeOffset.x, y * scale2 + NoiseThreeOffset.y) - .5f) * 100)/ Mathf.PI + .5f);
 				return Mathf.Min(
 						(
@@ -470,41 +535,65 @@ public class LevelGenerator : MonoBehaviour
 			string assetName = '/' + name + pos.x.ToString() + '_' + pos.y.ToString() + ".png";
 			return AssetDatabase.LoadAssetAtPath<Texture2D>(materialFolderPath + assetName);
 		}
-		Material LoadMaterial(Vector2 pos, Texture2D normalMap)
+		Material LoadMaterial(Vector2 pos, Texture2D normalMap, Texture2D main)
 		{
 			string assetName = '/' + name + pos.x.ToString() + '_' + pos.y.ToString();
 			Material newMat = AssetDatabase.LoadAssetAtPath<Material>(materialFolderPath + assetName + ".mat");
 			newMat.SetTexture("_BumpMap", AssetDatabase.LoadAssetAtPath<Texture2D>(materialFolderPath + assetName + ".png"));
+			if(main != null)
+				newMat.SetTexture("_MainTex", main);
 			return newMat;
 		}
 
 
 		AssetDatabase.StartAssetEditing();
 		Vector2 location;
+		Texture2D newMap;
 		foreach(var pair in floorTiles)
 		{
 			location = pair.Key;
+			newMap = null;
+			for (int i = 0; i < fullNames.Length; i++)
+			{
+				string fullName = fullNames[i];
+				if (pair.Value.name.StartsWith(fullName))
+				{
+					newMap = CreateNormalMap(location,heightMaps[fullName]);
+					break;
+				}
+			}
+			if(!newMap)
+				newMap = CreateNormalMap(location);
+
 			InitMaterials(location);
-			AddNormalMapToDatabase(location, CreateNormalMap(location));
+			AddNormalMapToDatabase(location, newMap);
 		}
 		AssetDatabase.StopAssetEditing();
 		AssetDatabase.Refresh();
 
 		AssetDatabase.StartAssetEditing();
-		Texture2D loadedImage; 
+		Texture2D loadedNormalMap; 
 		foreach (var pair in floorTiles)
 		{
 			location = pair.Key;
-			loadedImage = LoadNormalMap(location);
-			pair.Value.GetComponent<MeshRenderer>().material = LoadMaterial(location, loadedImage);
+			loadedNormalMap = LoadNormalMap(location);
+
+			Texture2D main = null;
+			for (int i = 0; i < fullNames.Length; i++)
+			{
+				string fullName = fullNames[i];
+				if (pair.Value.name.StartsWith(fullName))
+				{
+					main = colors[fullName];
+					break;
+				}
+			}
+
+			pair.Value.GetComponent<MeshRenderer>().material = LoadMaterial(location, loadedNormalMap,main);
 		}
 		AssetDatabase.StopAssetEditing();
 		AssetDatabase.Refresh();
 		AssetDatabase.SaveAssets();
-
-
-		
-		
 	}
 }
 
