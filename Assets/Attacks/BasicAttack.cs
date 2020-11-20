@@ -60,7 +60,7 @@ public class BasicAttack : MonoBehaviour
     }
 
     // Activates when another collider enters this hitbox, 
-    private void OnTriggerEnter(Collider other)
+    protected void OnTriggerEnter(Collider other)
     {
         // If hit object is player, do damage
         if (other.GetComponentInParent<Player>() != null)

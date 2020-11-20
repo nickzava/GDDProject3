@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public bool invincible = false; //Used for shield
     private bool isDashing = false; //Used for dash
     private const float gunshotSpeed = 15f; //Usedd for gunshot projectile speed
+    private int health = 3;
 
     // Adjust the amount of force we apply
     [SerializeField]
@@ -37,7 +38,17 @@ public class Player : MonoBehaviour
     // We use fixedupdate because it is more reliable specifically for physics interactions
     private void FixedUpdate()
     {
-        MovementCheck();
+        if(isDashing == false)
+        {
+            MovementCheck();
+        }
+        
+    }
+
+    public int Health
+    {
+        get { return health; }
+        set { health = value; }
     }
 
     //This will check if W A S or D are pressed and move in the corresponding direction

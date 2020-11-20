@@ -15,4 +15,12 @@ public class WindAttack : BasicAttack
     {
         
     }
+
+    protected new void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponentInParent<EnemyBase>() != null)
+        {
+            other.attachedRigidbody.AddForce(Quaternion.Inverse(other.transform.rotation) * new Vector3(1, 1, 0));
+        }
+    }
 }
