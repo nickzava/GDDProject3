@@ -15,6 +15,10 @@ public class Player : MonoBehaviour
     private const float gunshotSpeed = 15f; //Usedd for gunshot projectile speed
     private int health = 3;
 
+    // We create a vector which is modified by key presses so that holding A and W for example does not give you an increase in velocity.
+    // This method only applies one force to the player while the original method I tried would apply one for each key press, leading to that behavior.
+    Vector3 frameMovement = new Vector3(0, 0, 0);
+
     // Adjust the amount of force we apply
     [SerializeField]
     float speed;
@@ -54,9 +58,8 @@ public class Player : MonoBehaviour
     //This will check if W A S or D are pressed and move in the corresponding direction
     void MovementCheck()
     {
-        // We create a vector which is modified by key presses so that holding A and W for example does not give you an increase in velocity.
-        // This method only applies one force to the player while the original method I tried would apply one for each key press, leading to that behavior.
-        Vector3 frameMovement = new Vector3(0, 0, 0);
+        // Reset framemovement
+        frameMovement = Vector3.zero;
 
         if(Input.GetKey(KeyCode.W) == true)
         {
@@ -207,17 +210,14 @@ public class Player : MonoBehaviour
         isDashing = true; 
 
         float secondsElapsed = 0;
-        //Getting target position
-        Vector3 mouse_pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouse_pos.z = playerGameObject.transform.position.z;
-        Vector3 initalPosition = (playerGameObject.transform.position);
-        Vector3 targetPosition = (mouse_pos- initalPosition).normalized;
 
-        //Dash loop to make it smooth
+        // Add dashing force
+        rb.AddForce(frameMovement * 1000);
+
+        //Dash loop for duration
         while(secondsElapsed < .3f)
         {
             secondsElapsed += Time.deltaTime;
-            playerGameObject.transform.position = Vector3.MoveTowards(playerGameObject.transform.position, mouse_pos, .04f);
             yield return null;
         }
 

@@ -7,7 +7,7 @@ public class Gunshot : Projectile
     protected override void OnCollisionEnter(Collision collision)
     {
         //check the type of collision before exploding
-        if (collision.collider.CompareTag("enemy") || collision.collider.CompareTag("floor"))
+        if (collision.gameObject.CompareTag("enemy") || collision.gameObject.CompareTag("floor") || collision.gameObject.CompareTag("wall"))
         {
             Hit(collision.gameObject.GetComponent<EnemyBase>());
         }
@@ -20,10 +20,7 @@ public class Gunshot : Projectile
         {
             //directHitTakesDamage
 
-            //Do fireball things
-
-
-            //destroy the projectile
+            directHitTarget.health -= 1;
             
         }
 

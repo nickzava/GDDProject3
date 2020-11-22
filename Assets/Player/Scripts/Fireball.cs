@@ -23,7 +23,7 @@ public class Fireball : Projectile
         explosion.GetComponent<BasicAttack>().init(gameObject, 1, 1, new Vector3(1, 1, 1), 1f);
         if (directHitTarget)
         {
-            //directHitTakesDamage            
+            directHitTarget.health -= 1;           
 
         }
         //Do fireball things        

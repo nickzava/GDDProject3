@@ -22,7 +22,7 @@ public class EnemyBase : MonoBehaviour
     [SerializeField]
     float speed;
     [SerializeField]
-    int health;
+    public int health;
     [SerializeField]
     float visionRange;
     [SerializeField]
@@ -56,7 +56,7 @@ public class EnemyBase : MonoBehaviour
     {
         LocateTarget();
         SeekTarget();
-        
+        CheckPulse();
     }
 
     // Fixedupdate is better for physics operations
@@ -145,6 +145,17 @@ public class EnemyBase : MonoBehaviour
         }
 
 
+    }
+
+    // Checks if dead
+    void CheckPulse()
+    {
+        if (health <= 0)
+        {
+            // Would be cool to just leave dead enemy corpses
+            //Destroy(this);
+            Destroy(gameObject);
+        }
     }
 
     // Gets the closest pathfinding node

@@ -13,14 +13,14 @@ public class WindAttack : BasicAttack
     // Update is called once per frame
     void Update()
     {
-        
+        base.Update();
     }
 
-    protected new void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponentInParent<EnemyBase>() != null)
+        if (other.gameObject.CompareTag("enemy"))
         {
-            other.attachedRigidbody.AddForce(Quaternion.Inverse(other.transform.rotation) * new Vector3(1, 1, 0));
+            other.attachedRigidbody.AddForce(-(other.transform.forward) * 1000);
         }
     }
 }

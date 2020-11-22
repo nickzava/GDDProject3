@@ -12,7 +12,7 @@ public class BasicAttack : MonoBehaviour
     float hitboxTime;
     float elapsedTime;
     // Reference to the hitbox trigger
-    PolygonCollider2D hitBox;
+    Collider hitBox;
     
 
     /// <summary>
@@ -30,7 +30,7 @@ public class BasicAttack : MonoBehaviour
         dist = _dist;
         hitboxTime = _hitBoxTime;
 
-        hitBox = gameObject.GetComponent<PolygonCollider2D>();
+        hitBox = gameObject.GetComponent<Collider>();
 
 
         // Set up the basic properties of the hitbox, displace it according to distance paramater
@@ -41,7 +41,7 @@ public class BasicAttack : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         if (elapsedTime < hitboxTime || hitboxTime == -1f)
         {
@@ -54,22 +54,20 @@ public class BasicAttack : MonoBehaviour
         else
         {
             Destroy(gameObject);
-            Debug.Log("Death");
         }
         elapsedTime += Time.deltaTime;
     }
 
     // Activates when another collider enters this hitbox, 
-    protected void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         // If hit object is player, do damage
         if (other.GetComponentInParent<Player>() != null)
         {
             // Reduce health here other.GetComponentInParent<Player>().
+        } else if (other.gameObject.CompareTag("enemy"))
+        {
+            other.gameObject.GetComponent<EnemyBase>().health -= 1;
         }
-
-
-        // Delete the hitbox projectile
-        Destroy(gameObject);
     }
 }
