@@ -113,8 +113,8 @@ public class LevelGenerator : MonoBehaviour
 					{
 						Vector2 position = new Vector2(x, y);
 
-						floor = Instantiate(floorPrefab, position, Quaternion.identity, transform);     //if not a wall, floor needs to be 
-																										//spawned in addition to other objects
+						//floor = Instantiate(floorPrefab, position, Quaternion.identity, transform);     //if not a wall, floor needs to be 
+																										  //spawned in addition to other objects
 						if (generateNormalMaps) //add tile to data structure to create normals later
 							floorTiles.Add(new KeyValuePair<Vector2, GameObject>(position, floor));
 
@@ -296,6 +296,7 @@ public class LevelGenerator : MonoBehaviour
 
 			#region Color Glossary
 			// black = wires
+			// yellow = lights
 			#endregion
 
 			foreach (PixelToObject pixelColorMapping in decorationColorMappings)
