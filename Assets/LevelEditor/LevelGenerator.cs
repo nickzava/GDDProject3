@@ -500,14 +500,32 @@ public class LevelGenerator : MonoBehaviour
 				const float scale2 = 3;
 				const float scale3 = 45;
 
-				int size = x+ y * width;
-				if (useLoaded && 
-					size >= 0 && 
-					size < loadedNormals.Length)
+				if (useLoaded)
 				{
-					if(loadedNormals[size] != defaultColor)
+					x = x < 0 ? 0 : x;
+					x = x >= width ? width - 1 : x;
+					y = y < 0 ? 0 : y;
+					y = y >= height ? height - 1 : y;
+					int size = x + y * width;
+					if (!(size >= 0 && size < loadedNormals.Length))
+					{
+						Debug.Log(x + ',' + y);
+						return 0;
+					}
+					if (loadedNormals[size] != defaultColor)
+					{
 						return loadedNormals[size][0];
+					}
 				}
+
+				//int size = x+ y * width;
+				//if (useLoaded && 
+				//	size >= 0 && 
+				//	size < loadedNormals.Length)
+				//{
+				//	if(loadedNormals[size] != defaultColor)
+				//		return loadedNormals[size][0];
+				//}
 
 				//return (Mathf.Atan((Mathf.PerlinNoise(x * scale2 + NoiseThreeOffset.x, y * scale2 + NoiseThreeOffset.y) - .5f) * 100)/ Mathf.PI + .5f);
 				return Mathf.Min(
