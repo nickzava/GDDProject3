@@ -119,7 +119,16 @@ public class LevelGenerator : MonoBehaviour
 							floorTiles.Add(new KeyValuePair<Vector2, GameObject>(position, floor));
 
 						if (pixelColorMapping.prefab[0])
-							Instantiate(pixelColorMapping.prefab[0], position, Quaternion.identity, transform); //spawning any other object
+						{
+							if (pixelColorMapping.pixelColor != new Color(1, 1, 0, 1))
+							{
+								Instantiate(pixelColorMapping.prefab[0], position, Quaternion.identity, transform); //spawning any other object
+							}
+							else
+							{
+								Instantiate(pixelColorMapping.prefab[0], new Vector3(position.x, position.y, -0.3f), Quaternion.identity, transform); //player needs to be spawned slightly higher
+							}
+						}
 					}
 					else    //for deciding which wall type to create
 					{
@@ -310,59 +319,78 @@ public class LevelGenerator : MonoBehaviour
 					if (y > 0)
 						botPixel = decorationLayer.GetPixel(x, y - 1);
 
+					bool rightBool = false;
+					if (rightPixel == Color.black || rightPixel == new Color(1, 1, 0, 1))
+						rightBool = true;
+					bool topBool = false;
+					if (topPixel == Color.black || topPixel == new Color(1, 1, 0, 1))
+						topBool = true;
+					bool leftBool = false;
+					if (leftPixel == Color.black || leftPixel == new Color(1, 1, 0, 1))
+						leftBool = true;
+					bool botBool = false;
+					if (botPixel == Color.black || botPixel == new Color(1, 1, 0, 1))
+						botBool = true;
 
 					// 0 = straightWire
 					// 1 = cornerWire
 					// 2 = tWire
 					// 3 = xWire
 
+
 					//xRail
-					if (rightPixel == Color.black && topPixel == Color.black && leftPixel == Color.black && botPixel == Color.black)
+					if (rightBool && topBool && leftBool && botBool)
 					{
 						Instantiate(pixelColorMapping.prefab[3], position, Quaternion.identity, transform);
 					}
 					//tRails
-					else if (botPixel == Color.black && rightPixel == Color.black && topPixel == Color.black)
+					else if (botBool && rightBool && topBool)
 					{
 						Instantiate(pixelColorMapping.prefab[2], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 0.0f));
 					}
-					else if (rightPixel == Color.black && topPixel == Color.black && leftPixel == Color.black)
+					else if (rightBool && topBool && leftBool)
 					{
 						Instantiate(pixelColorMapping.prefab[2], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
 					}
-					else if (topPixel == Color.black && leftPixel == Color.black && botPixel == Color.black)
+					else if (topBool && leftBool && botBool)
 					{
 						Instantiate(pixelColorMapping.prefab[2], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 180.0f));
 					}
-					else if (leftPixel == Color.black && botPixel == Color.black && rightPixel == Color.black)
+					else if (leftBool && botBool && rightBool)
 					{
 						Instantiate(pixelColorMapping.prefab[2], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 270.0f));
 					}
 					//corner Rails
-					else if (botPixel == Color.black && rightPixel == Color.black)
+					else if (botBool && rightBool)
 					{
 						Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 0.0f));
 					}
-					else if (rightPixel == Color.black && topPixel == Color.black)
+					else if (rightBool && topBool)
 					{
 						Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
 					}
-					else if (topPixel == Color.black && leftPixel == Color.black)
+					else if (topBool && leftBool)
 					{
 						Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 180.0f));
 					}
-					else if (leftPixel == Color.black && botPixel == Color.black)
+					else if (leftBool && botBool)
 					{
 						Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 270.0f));
 					}
 					//straight rails
-					else if (botPixel == Color.black || topPixel == Color.black)
+					else if (botBool && topBool)
 					{
 						Instantiate(pixelColorMapping.prefab[0], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 0.0f));
 					}
-					else if (rightPixel == Color.black || leftPixel == Color.black)
+					else if (rightBool && leftBool)
 					{
 						Instantiate(pixelColorMapping.prefab[0], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
+					}
+
+					//putting in lights as well if color is yellow
+					if (pixelColorMapping.pixelColor.Equals(new Color(1,1,0,1)))
+					{
+						Instantiate(pixelColorMapping.prefab[4], position, Quaternion.identity, transform);
 					}
 					#endregion
 				}

@@ -216,6 +216,71 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelGenerator
       objectReference: {fileID: 0}
+    - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
+        type: 3}
+      propertyPath: decorationColorMappings.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
+        type: 3}
+      propertyPath: decorationColorMappings.Array.data[1].prefab.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
+        type: 3}
+      propertyPath: levelName
+      value: LiamTest
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
+        type: 3}
+      propertyPath: decorationColorMappings.Array.data[1].pixelColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
+        type: 3}
+      propertyPath: decorationColorMappings.Array.data[1].prefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 6031658599321993993, guid: 317fa35ff1b32054b80ef17e1b66f769,
+        type: 3}
+    - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
+        type: 3}
+      propertyPath: decorationColorMappings.Array.data[1].prefab.Array.data[1]
+      value: 
+      objectReference: {fileID: 3142016711951667174, guid: e5967bb2f3aeb4b4088c0d2e3ab66199,
+        type: 3}
+    - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
+        type: 3}
+      propertyPath: decorationColorMappings.Array.data[1].prefab.Array.data[2]
+      value: 
+      objectReference: {fileID: 7315139112769415623, guid: 32861b98fdd20da4a8b791a6de058c18,
+        type: 3}
+    - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
+        type: 3}
+      propertyPath: decorationColorMappings.Array.data[1].prefab.Array.data[3]
+      value: 
+      objectReference: {fileID: 47749541939643357, guid: ce6cca0299dd01245af42fd97b5f3208,
+        type: 3}
+    - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
+        type: 3}
+      propertyPath: decorationColorMappings.Array.data[1].pixelColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
+        type: 3}
+      propertyPath: decorationColorMappings.Array.data[1].pixelColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
+        type: 3}
+      propertyPath: decorationColorMappings.Array.data[1].pixelColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
+        type: 3}
+      propertyPath: decorationColorMappings.Array.data[1].prefab.Array.data[4]
+      value: 
+      objectReference: {fileID: 608024319504505086, guid: 1491494cb99188846adfd8420ea5b9fb,
+        type: 3}
     - target: {fileID: 2809726895599832327, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
       propertyPath: m_LocalPosition.x
