@@ -296,6 +296,7 @@ public class LevelGenerator : MonoBehaviour
 
 			#region Color Glossary
 			// black = wires
+			// yellow = lights
 			#endregion
 
 			foreach (PixelToObject pixelColorMapping in decorationColorMappings)
