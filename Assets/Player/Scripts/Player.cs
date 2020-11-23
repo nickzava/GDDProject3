@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private bool isDashing = false; //Used for dash
     private const float gunshotSpeed = 15f; //Usedd for gunshot projectile speed
     private int health = 3;
+	public bool paused = false;		//disables player input when paused
 
     // We create a vector which is modified by key presses so that holding A and W for example does not give you an increase in velocity.
     // This method only applies one force to the player while the original method I tried would apply one for each key press, leading to that behavior.
@@ -28,15 +29,18 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerStamina = GetComponent<Stamina>();
-        rb = gameObject.GetComponent<Rigidbody>();
+		playerStamina = GetComponent<Stamina>();
+		rb = gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
-    {
-        CheckRoation();
-        CheckAction();
+	{
+		if (!paused)
+		{
+			CheckRoation();
+			CheckAction();
+		}
     }
 
     // We use fixedupdate because it is more reliable specifically for physics interactions
