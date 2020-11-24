@@ -35,11 +35,20 @@ public class ShowTextBox : MonoBehaviour
 		{
 			tutorialTip.SetActive(true);
 			tipText.text = tutorialText;
-			player.GetComponent<Player>().paused = true;
-			Time.timeScale = 0;
+			//player.GetComponent<Player>().paused = true;
+			//Time.timeScale = 0;
 		}
 	}
 
+	private void OnTriggerExit(Collider other)
+	{
+		tutorialTip.SetActive(false);
+		//Time.timeScale = 1;
+		//player.GetComponent<Player>().paused = false;
+		//this.gameObject.SetActive(false);
+	}
+
+	//only used if we have a click to close text box
 	public void CloseTip()
 	{
 		tutorialTip.SetActive(false);
