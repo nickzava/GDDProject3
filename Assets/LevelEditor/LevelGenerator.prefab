@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelName: 
-  saveLevel: 0
+  saveLevel: 1
   mapTexture: {fileID: 2800000, guid: 8cbe0d6cd02a7a54393f6514d86f38db, type: 3}
-  floorPrefab: {fileID: 1998550009473507075, guid: 0d6d2e252c4ca46438b2d42f3435661f,
+  floorPrefab: {fileID: 3435668351620480561, guid: c02e6c8f6f7d3a44a9076662884370c0,
     type: 3}
   pixelColorMappings:
   - pixelColor: {r: 0, g: 0, b: 0, a: 1}
@@ -59,7 +59,7 @@ MonoBehaviour:
     - {fileID: 5985957107751883631, guid: 97b51891ea2f6754d935513accabf434, type: 3}
   - pixelColor: {r: 1, g: 1, b: 1, a: 1}
     prefab:
-    - {fileID: 1998550009473507075, guid: 0d6d2e252c4ca46438b2d42f3435661f, type: 3}
+    - {fileID: 0}
   - pixelColor: {r: 0, g: 0, b: 0, a: 0}
     prefab:
     - {fileID: 8570167094157080027, guid: b54b1a0946763de4da37811f6a581e9b, type: 3}
@@ -84,8 +84,10 @@ MonoBehaviour:
     - {fileID: 7315139112769415623, guid: 32861b98fdd20da4a8b791a6de058c18, type: 3}
     - {fileID: 47749541939643357, guid: ce6cca0299dd01245af42fd97b5f3208, type: 3}
   generateNormalMaps: 0
-  defaultNormalMap: {fileID: 0}
-  defaultMaterial: {fileID: 0}
+  defaultNormalMap: {fileID: 2800000, guid: 362abf0081f5186418fbb71021093a5b, type: 3}
+  defaultMaterial: {fileID: 2100000, guid: d3ec429a1facd0142a62d781857a3f36, type: 2}
+  railsPref: {fileID: 2512001039027884157, guid: be62872b5a91abe4bad9e8a0a086fc35,
+    type: 3}
   pathFindingNode: {fileID: 4264912831294452105, guid: 116f67cc0aca1d9419022f18c4540053,
     type: 3}
   nodeList: []

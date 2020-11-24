@@ -113,7 +113,7 @@ public class LevelGenerator : MonoBehaviour
 					{
 						Vector2 position = new Vector2(x, y);
 
-						//floor = Instantiate(floorPrefab, position, Quaternion.identity, transform);     //if not a wall, floor needs to be 
+						floor = Instantiate(floorPrefab, position, Quaternion.identity, transform);     //if not a wall, floor needs to be 
 																										  //spawned in addition to other objects
 						if (generateNormalMaps) //add tile to data structure to create normals later
 							floorTiles.Add(new KeyValuePair<Vector2, GameObject>(position, floor));
@@ -419,7 +419,7 @@ public class LevelGenerator : MonoBehaviour
 				Debug.LogError("Invalid Path");
 				return false;
 			}
-
+			AssetDatabase.Refresh();
 			return true;
 		}
 		catch(System.Exception e)
@@ -467,11 +467,6 @@ public class LevelGenerator : MonoBehaviour
 		}
 
 		//create new assets
-		void InitMaterials(Vector2 pos)
-		{
-			string assetName = '/' + name + pos.x.ToString() + '_' + pos.y.ToString();
-			AssetDatabase.CopyAsset(AssetDatabase.GetAssetPath(defaultMaterial), materialFolderPath + assetName + ".mat");
-		}
 		Texture2D CreateNormalMap(Vector2 pos, Texture2D geometryHeightMap = null)
 		{
 			Texture2D normal = new Texture2D(400, 400, TextureFormat.RGBA32, false);
@@ -570,6 +565,11 @@ public class LevelGenerator : MonoBehaviour
 		}
 
 		//load assets
+		void InitMaterials(Vector2 pos)
+		{
+			string assetName = '/' + name + pos.x.ToString() + '_' + pos.y.ToString();
+			AssetDatabase.CopyAsset(AssetDatabase.GetAssetPath(defaultMaterial), materialFolderPath + assetName + ".mat");
+		}
 		void AddNormalMapToDatabase(Vector2 pos, Texture2D toSave)
 		{
 			string assetName = '/' + name + pos.x.ToString() + '_' + pos.y.ToString() + ".png";
