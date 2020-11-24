@@ -114,6 +114,10 @@ MonoBehaviour:
   visionRange: 10
   maxVisionRange: 15
   approachRadius: 1
+  attackPrefab: {fileID: 4502691572742088903, guid: a17ee7c99cfd3ff42a756131c48f8ec4,
+    type: 3}
+  attackWarmup: 0.2
+  attackCooldown: 0.5
 --- !u!54 &6918961997801821254
 Rigidbody:
   m_ObjectHideFlags: 0

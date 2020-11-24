@@ -7,12 +7,19 @@ public class BasicAttack : MonoBehaviour
     // Stats of the attack
     int damage;
     float dist;
-    Vector3 size;
     GameObject source;
     float hitboxTime;
     float elapsedTime;
     // Reference to the hitbox trigger
     Collider hitBox;
+
+    public int Damage
+    {
+        get
+        {
+            return damage;
+        }
+    }    
     
 
     /// <summary>
@@ -21,12 +28,10 @@ public class BasicAttack : MonoBehaviour
     /// <param name="source">The gameobject source of the hitbox, this is where the hitbox will center on</param>
     /// <param name="_dam">Integer damage value</param>
     /// <param name="dist">Distance in front of the source, 0 will overlap with source</param>
-    /// <param name="_size">Size of the hitbox</param>
-    public void init(GameObject _source, int _dam, float _dist, Vector3 _size, float _hitBoxTime = -1f)
+    public void init(GameObject _source, int _dam, float _dist, float _hitBoxTime = -1f)
     {
         source = _source;
         damage = _dam;
-        size = _size;
         dist = _dist;
         hitboxTime = _hitBoxTime;
 

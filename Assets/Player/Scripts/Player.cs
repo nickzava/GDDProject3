@@ -68,22 +68,18 @@ public class Player : MonoBehaviour
         if(Input.GetKey(KeyCode.W) == true)
         {
             frameMovement += new Vector3(0, 1, 0);
-            //MovePlayer(new Vector3(0, speed, 0));
         }
         if(Input.GetKey(KeyCode.A) == true)
         {
             frameMovement += new Vector3(-1, 0, 0);
-            //MovePlayer(new Vector3(-speed, 0, 0));
         }
         if (Input.GetKey(KeyCode.S) == true)
         {
             frameMovement += new Vector3(0, -1, 0);
-            //MovePlayer(new Vector3(0, -speed, 0));
         }
         if (Input.GetKey(KeyCode.D) == true)
         {
             frameMovement += new Vector3(1, 0, 0);
-            //MovePlayer(new Vector3(speed, 0, 0));
         }
 
         // Now we normalize the temporary vector, to get our direction which will always be the same magnitude
@@ -188,7 +184,7 @@ public class Player : MonoBehaviour
                         playerGameObject.transform.rotation);
                     //Instantiate New Hitbox
                     BasicAttack caneAttack = newCane.GetComponent<BasicAttack>();
-                    caneAttack.init(playerGameObject, 1, .15f, new Vector3(0, 0, 0), .1f);
+                    caneAttack.init(playerGameObject, 1, .15f, .1f);
                 }
             }
             //Wind Attack
@@ -202,7 +198,7 @@ public class Player : MonoBehaviour
                         playerGameObject.transform.rotation);
                     //Instantiate new Hitbox
                     BasicAttack caneAttack = newWind.GetComponent<BasicAttack>();
-                    caneAttack.init(playerGameObject, 1, 0f, new Vector3(0, 0, 0), .2f);
+                    caneAttack.init(playerGameObject, 1, 0f, .2f);
                 }
             }
         }
@@ -216,7 +212,7 @@ public class Player : MonoBehaviour
         float secondsElapsed = 0;
 
         // Add dashing force
-        rb.AddForce(frameMovement * 1000);
+        rb.AddForce(frameMovement * 500);
 
         //Dash loop for duration
         while(secondsElapsed < .3f)

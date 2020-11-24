@@ -20,7 +20,7 @@ public class Fireball : Projectile
     {
         GameObject explosion = Instantiate(attack, gameObject.transform);
         //Do bonus damage to direct hits
-        explosion.GetComponent<BasicAttack>().init(gameObject, 1, 1, new Vector3(1, 1, 1), 1f);
+        explosion.GetComponent<BasicAttack>().init(gameObject, 1, 1, 1f);
         if (directHitTarget)
         {
             directHitTarget.health -= 1;           
