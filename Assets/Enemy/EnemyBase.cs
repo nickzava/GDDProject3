@@ -15,6 +15,8 @@ public class EnemyBase : MonoBehaviour
     [SerializeField]
     GameObject goal;
     Rigidbody rb;
+    [SerializeField]
+    GameObject[] nodes;
     // Bool to indicate if we are actively seeking a pathfinding node
     bool seekingNode;
     // Tracks if the enemy is on attack cooldown
@@ -60,6 +62,9 @@ public class EnemyBase : MonoBehaviour
 
             Debug.LogWarning("Player not found in scene!");
         }
+
+        // Populates the array with every pathfinding node in scene
+        nodes = GameObject.FindGameObjectsWithTag("node");
     }
 
     // Update is called once per frame
@@ -176,7 +181,21 @@ public class EnemyBase : MonoBehaviour
     // Gets the closest pathfinding node
     GameObject GetPathfindNode()
     {
-        return GameObject.Find("pathfindingNode");
+        // Holds the current lowest distance
+        float dist = float.MaxValue;
+        GameObject currNode = null;
+
+        // Iterates through each node, once done the closest one will be stored in currNode
+        foreach (GameObject i in nodes)
+        {
+            if (GetDist(goal, i) < dist)
+            {
+                dist = GetDist(goal, i);
+                currNode = i;
+            }
+        }
+
+        return currNode;
     }
 
     // Attack coroutine

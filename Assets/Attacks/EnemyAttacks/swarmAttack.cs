@@ -17,12 +17,11 @@ public class swarmAttack : BasicAttack
     }
 
     // Triggers when we hit another hitbox. Check if it's a player, then damage them if so
-    protected void OnCollisionEnter(Collision collision)
+    protected override void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Player>().Health -= 1;
-            Debug.Log("HIT PLAYER");
         }
     }
 }

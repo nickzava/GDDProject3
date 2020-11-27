@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 756749874403966022}
   - component: {fileID: 1384055114010728228}
-  - component: {fileID: 2164509252629900775}
+  - component: {fileID: 3264557327230994794}
   m_Layer: 0
   m_Name: sEnemyAttack
   m_TagString: Untagged
@@ -45,7 +45,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5264304, y: 1, z: 1}
   m_Center: {x: 0.26078263, y: 0, z: 0}
---- !u!114 &2164509252629900775
+--- !u!114 &3264557327230994794
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,6 +54,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 4502691572742088903}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df60fce7c2f11b14898a65184a986b68, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b156f1103f221f44940496ebd5a8d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

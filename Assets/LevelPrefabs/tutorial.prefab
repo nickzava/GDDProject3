@@ -3134,7 +3134,7 @@ GameObject:
   - component: {fileID: 3176367380953873611}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4441,7 +4441,7 @@ GameObject:
   - component: {fileID: 2004108492829237338}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4723,7 +4723,7 @@ GameObject:
   - component: {fileID: 5794774862390105063}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5787,7 +5787,7 @@ GameObject:
   - component: {fileID: 1906891795602760034}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10403,7 +10403,7 @@ GameObject:
   - component: {fileID: 4413645911602556821}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12536,7 +12536,7 @@ GameObject:
   - component: {fileID: 4860945369188940259}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13679,7 +13679,7 @@ GameObject:
   - component: {fileID: 918305608050662876}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17180,7 +17180,7 @@ GameObject:
   - component: {fileID: 7220879547574826293}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18084,7 +18084,7 @@ GameObject:
   - component: {fileID: 1842756964857166195}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18277,7 +18277,7 @@ GameObject:
   - component: {fileID: 242381717237711513}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19629,7 +19629,7 @@ GameObject:
   - component: {fileID: 2051247262361158701}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24177,7 +24177,7 @@ GameObject:
   - component: {fileID: 5257792710786755578}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29133,7 +29133,7 @@ GameObject:
   - component: {fileID: 5110013599342902306}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29527,7 +29527,7 @@ GameObject:
   - component: {fileID: 1047940083734062746}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29720,7 +29720,7 @@ GameObject:
   - component: {fileID: 7232749960651896205}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33450,7 +33450,7 @@ GameObject:
   - component: {fileID: 4476207090521869847}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33922,7 +33922,7 @@ GameObject:
   - component: {fileID: 8790884871558459043}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35925,7 +35925,7 @@ GameObject:
   - component: {fileID: 2117065651826190192}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40681,7 +40681,7 @@ GameObject:
   - component: {fileID: 1093084181077423692}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44150,7 +44150,7 @@ GameObject:
   - component: {fileID: 7372500988415765018}
   m_Layer: 0
   m_Name: pathfindingNode(Clone)
-  m_TagString: Untagged
+  m_TagString: node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
