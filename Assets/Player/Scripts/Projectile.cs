@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour
     private Rigidbody rb;
 
     // Start is called before the first frame update
-    protected void Start()
+    protected virtual void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
         rb.velocity = transform.right * speed;

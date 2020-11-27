@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6966245967659234443}
   - component: {fileID: 8014316296044558013}
   - component: {fileID: 5521112910155991031}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FireballPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
