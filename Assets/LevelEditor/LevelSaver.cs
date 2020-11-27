@@ -1,11 +1,11 @@
-﻿using System.Collections;
+﻿#if (UNITY_EDITOR)
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
 public class LevelSaver : MonoBehaviour
 {
-
     public void SaveLevel(GameObject level, string path)
     {
         Destroy(level.GetComponent<LevelGenerator>());
@@ -19,3 +19,4 @@ public class LevelSaver : MonoBehaviour
         StartCoroutine(SaveLevel());
     }
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿# if (UNITY_EDITOR)
+using System.Collections.Generic;
 using System.Net.Http.Headers;
 using UnityEngine;
 using UnityEditor;
@@ -641,5 +642,6 @@ public class LevelGenerator : MonoBehaviour
 		AssetDatabase.SaveAssets();
 	}
 }
+#endif
 
 
