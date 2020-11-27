@@ -13,8 +13,10 @@ public class Player : MonoBehaviour
     public bool invincible = false; //Used for shield
     private bool isDashing = false; //Used for dash
     private const float gunshotSpeed = 15f; //Usedd for gunshot projectile speed
-    private int health = 3;
 	public bool paused = false;		//disables player input when paused
+
+    private int health = 3;
+    private ParticleSystem dashParticles;
 
     // We create a vector which is modified by key presses so that holding A and W for example does not give you an increase in velocity.
     // This method only applies one force to the player while the original method I tried would apply one for each key press, leading to that behavior.
@@ -31,6 +33,7 @@ public class Player : MonoBehaviour
     {
 		playerStamina = GetComponent<Stamina>();
 		rb = gameObject.GetComponent<Rigidbody>();
+        dashParticles = transform.Find("DashTrail").GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -213,6 +216,7 @@ public class Player : MonoBehaviour
 
         // Add dashing force
         rb.AddForce(frameMovement * 500);
+        dashParticles.Play();
 
         //Dash loop for duration
         while(secondsElapsed < .3f)

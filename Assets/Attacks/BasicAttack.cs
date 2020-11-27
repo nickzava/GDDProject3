@@ -46,7 +46,7 @@ public class BasicAttack : MonoBehaviour
     }
 
     // Update is called once per frame
-    protected void Update()
+    protected virtual void Update()
     {
         if (elapsedTime < hitboxTime || hitboxTime == -1f)
         {
