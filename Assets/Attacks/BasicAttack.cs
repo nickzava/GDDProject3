@@ -5,11 +5,11 @@ using UnityEngine;
 public class BasicAttack : MonoBehaviour
 {
     // Stats of the attack
-    int damage;
-    float dist;
-    GameObject source;
-    float hitboxTime;
-    float elapsedTime;
+    protected int damage;
+    protected float dist;
+    protected GameObject source;
+    protected float hitboxTime;
+    protected float elapsedTime;
     // Reference to the hitbox trigger
     Collider hitBox;
 
