@@ -659,6 +659,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: TutorialTipUI
       objectReference: {fileID: 0}
+    - target: {fileID: 885979425485809073, guid: 906666899f4219a43806f28e282b841c,
+        type: 3}
+      propertyPath: m_FontData.m_VerticalOverflow
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 885979425485809086, guid: 906666899f4219a43806f28e282b841c,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 352.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 885979425485809086, guid: 906666899f4219a43806f28e282b841c,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 118.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 906666899f4219a43806f28e282b841c, type: 3}
 --- !u!1001 &912263442

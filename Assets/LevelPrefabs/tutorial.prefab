@@ -54210,11 +54210,6 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: -0.08426857
       objectReference: {fileID: 0}
-    - target: {fileID: 5785646751214537771, guid: 4db9e4354e6f35a4bbe496f6d87c4d03,
-        type: 3}
-      propertyPath: tutorialText
-      value: Press Q to use Windblast. The force blasts enemies away from you.
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4db9e4354e6f35a4bbe496f6d87c4d03, type: 3}
 --- !u!4 &33840616648534535 stripped
@@ -54595,7 +54590,7 @@ PrefabInstance:
     - target: {fileID: 5785646751214537771, guid: 4db9e4354e6f35a4bbe496f6d87c4d03,
         type: 3}
       propertyPath: tutorialText
-      value: Press E to cast a fireball. The blast damages enemies in an area and
+      value: Press Q to cast a fireball. The blast damages enemies in an area and
         does extra damage to enemies hit directly with it.
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -42,7 +42,9 @@ public class ShowTextBox : MonoBehaviour
 
 	private void OnTriggerExit(Collider other)
 	{
-		tutorialTip.SetActive(false);
+		//check to make sure another tip isn't using the text box
+		if(tipText.text == tutorialText)
+			tutorialTip.SetActive(false);
 		//Time.timeScale = 1;
 		//player.GetComponent<Player>().paused = false;
 		//this.gameObject.SetActive(false);

@@ -57,5 +57,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6169e2eb600c7174781402aca4c8fd5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialTip: {fileID: 0}
-  tutorialText: This is the test edit text.
+  tutorialText: Press E to use Windblast. The force blasts enemies away from you.
