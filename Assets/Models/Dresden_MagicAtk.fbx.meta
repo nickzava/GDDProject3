@@ -1,29 +1,11 @@
 fileFormatVersion: 2
-guid: dadf3b3395be6ef4e977dae8a9c76eaf
+guid: 3c4c0a36b66cee84ca3bd0fb31b6380e
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
   - first:
-      74: -3100369314251171874
-    second: Idle
-  - first:
-      74: 5522812681064789136
-    second: Run
-  - first:
-      74: 7849272648206702947
-    second: DodgeLeft
-  - first:
-      74: 4761915719394628313
-    second: DodgeRight
-  - first:
-      74: 8483789914421338940
-    second: CaneSweep
-  - first:
       74: 4145935388774265494
     second: MagicAtk
-  - first:
-      74: -5174506884631773375
-    second: Revolver
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -55,7 +37,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 3
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -102,7 +84,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.03
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

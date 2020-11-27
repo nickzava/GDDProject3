@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
     private Transform gunshotLocation;
 	public bool paused = false;		//disables player input when paused
 
+    public GameObject playerModel; //Reference to Model Object for Animator
+    private Animator playerAnimator; //Animator Object
+
     private int health = 3;
     private ParticleSystem dashParticles;
     private List<ParticleSystem> gunParticles;
@@ -40,6 +43,7 @@ public class Player : MonoBehaviour
         gunParticles = new List<ParticleSystem>();
         gunParticles.Add(gunshotLocation.Find("cone").GetComponent<ParticleSystem>());
         gunParticles.Add(gunshotLocation.Find("line").GetComponent<ParticleSystem>());
+        playerAnimator = playerModel.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -96,6 +100,15 @@ public class Player : MonoBehaviour
 
         // Actually apply the force here
         rb.AddForce(frameMovement * speed);
+
+        //Setting animation for idle or moving
+        if (frameMovement == Vector3.zero)
+        {
+            playerAnimator.SetBool("isMoving", false);
+        } else if(frameMovement != Vector3.zero)
+        {
+            playerAnimator.SetBool("isMoving", true);
+        }
     }
     /// <summary>
     /// This will check the rotation the sprite should be facing
@@ -123,6 +136,7 @@ public class Player : MonoBehaviour
                 {
                     invincible = true;
                     playerGameObject.GetComponent<SpriteRenderer>().color = Color.blue; //Test for invincible color
+                    playerAnimator.SetTrigger("MagicAtk");
 
                     // Just a note from when Will is reading thru here, if we get a chance we should take GetComponent<> out of update cause it may cause performance issues
                     // Although this is labeled as a test so I'm guessing you already knew that lol
@@ -159,6 +173,8 @@ public class Player : MonoBehaviour
                         playerGameObject.transform.position + transform.right * 1f,
                         playerGameObject.transform.rotation);
                     Fireball newFireball = newObject.GetComponent<Fireball>();
+                    //Magic Attack animation
+                    playerAnimator.SetTrigger("MagicAtk");
                 }
             }
             //REVOLVER
@@ -176,6 +192,8 @@ public class Player : MonoBehaviour
                     {
                         ps.Play();
                     }
+                    //Revolver Animation
+                    playerAnimator.SetTrigger("Revolver");
                 }
             }
             //DASH 
@@ -184,6 +202,7 @@ public class Player : MonoBehaviour
                 if (playerStamina.Attack(20, true))
                 {
                     StartCoroutine("Dash");
+                    playerAnimator.SetTrigger("DodgeRight");
                 }
             }
             //CANE
@@ -198,6 +217,7 @@ public class Player : MonoBehaviour
                     //Instantiate New Hitbox
                     BasicAttack caneAttack = newCane.GetComponent<BasicAttack>();
                     caneAttack.init(playerGameObject, 1, .15f, .1f);
+                    playerAnimator.SetTrigger("CaneSweep");
                 }
             }
             //Wind Attack
@@ -212,6 +232,7 @@ public class Player : MonoBehaviour
                     //Instantiate new Hitbox
                     BasicAttack caneAttack = newWind.GetComponent<BasicAttack>();
                     caneAttack.init(playerGameObject, 1, 0f, .2f);
+                    playerAnimator.SetTrigger("MagicAtk");
                 }
             }
         }
