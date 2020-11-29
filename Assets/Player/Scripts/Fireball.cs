@@ -10,7 +10,7 @@ public class Fireball : Projectile
     {
         //check the type of collision before exploding
         
-        if(/*collision.collider.CompareTag("enemy") ||*/ collision.collider.CompareTag("floor"))
+        if(collision.collider.CompareTag("enemy") || collision.collider.CompareTag("floor"))
         {
             Explode(collision.gameObject.GetComponent<EnemyBase>());
         }
@@ -18,19 +18,27 @@ public class Fireball : Projectile
 
     private void Explode(EnemyBase directHitTarget = null)
     {
-        GameObject explosion = Instantiate(attack, gameObject.transform);
+        
+
         //Do bonus damage to direct hits
-        explosion.GetComponent<BasicAttack>().init(gameObject, 1, 1, 1f);
         if (directHitTarget)
         {
-            directHitTarget.health -= 1;           
+            directHitTarget.health -= 2;           
 
         }
         //Do fireball things        
 
-        Debug.Log("we in here");
+
+        Vector3 tempVec = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+        
+        attack = Instantiate(attack, tempVec, Quaternion.identity);
+
+        attack.GetComponent<FireballAttack>().init(gameObject, 1, 1, 1f);
+
         //destroy the projectile
+
         Destroy(gameObject);
+
         
     }
 }
