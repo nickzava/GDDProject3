@@ -308,6 +308,10 @@ public class Player : MonoBehaviour
             const float flashTime = .25f;
             mRenderer.material.mainTexture = playerDamagedTex;
             yield return new WaitForSeconds(flashTime);
+			if (health <= 0)	//brings up death UI and pauses game if player is out of health
+			{
+				Camera.main.GetComponent<Buttons>().PlayerDeathUI();
+			}
             mRenderer.material.mainTexture = playerDefaultTex;
             yield return null;
         }

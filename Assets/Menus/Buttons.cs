@@ -10,6 +10,8 @@ public class Buttons : MonoBehaviour
 
 	private GameObject pauseUI;
 	private bool paused = false;
+	public bool pausable = false;
+	private GameObject deathUI;
 
 	private GameObject player;
 
@@ -23,6 +25,7 @@ public class Buttons : MonoBehaviour
 		else if (SceneManager.GetActiveScene().name == "_Main")
 		{ 
 			pauseUI = GameObject.Find("PauseMenu");
+			deathUI = GameObject.Find("DeathMenu");
 			player = GameObject.FindGameObjectWithTag("Player");
 		}
 	}
@@ -37,18 +40,22 @@ public class Buttons : MonoBehaviour
 		else if (SceneManager.GetActiveScene().name == "_Main")
 		{
 			pauseUI.SetActive(false);
+			deathUI.SetActive(false);
 		}
 	}
 
     // Update is called once per frame
     void Update()
     {
-		if (Input.GetKeyDown(KeyCode.Escape))
+		if (pausable)
 		{
-			if (paused)
-				UnPause();
-			else
-				PauseGame();
+			if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				if (paused)
+					UnPause();
+				else
+					PauseGame();
+			}
 		}
     }
 
@@ -56,6 +63,9 @@ public class Buttons : MonoBehaviour
 	public void StartGame()
 	{
 		SceneManager.LoadScene("_Main", LoadSceneMode.Single);
+		Time.timeScale = 1;
+		//player.GetComponent<Player>().paused = false;
+		paused = false;
 	}
 
 	//opens credit UI
@@ -100,5 +110,13 @@ public class Buttons : MonoBehaviour
 		Time.timeScale = 1;
 		player.GetComponent<Player>().paused = false;
 		paused = false;
+	}
+
+	public void PlayerDeathUI()
+	{
+		deathUI.SetActive(true);
+		Time.timeScale = 0;
+		player.GetComponent<Player>().paused = true;
+		pausable = false;
 	}
 }
