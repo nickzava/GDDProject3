@@ -32,9 +32,10 @@ public class WindAttack : BasicAttack
     {
         if (other.gameObject.CompareTag("enemy"))
         {
+            Vector3 forceDirection = other.transform.position - transform.position;
             //increase force as hitbox grows
             other.attachedRigidbody.AddForce(
-                (other.transform.position-transform.position).normalized 
+                new Vector3(forceDirection.x,0,forceDirection.z).normalized 
                 * Mathf.Min(averageForce * (hitboxTime - elapsedTime)/hitboxTime , averageForce) );
         }
     }

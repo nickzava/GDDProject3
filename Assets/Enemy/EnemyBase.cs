@@ -80,6 +80,9 @@ public class EnemyBase : MonoBehaviour
         Texture2D temp = new Texture2D(1, 1, TextureFormat.ARGB32, false);
         temp.SetPixel(0, 0, new Color(1, 0, 0, 1));
         damagedTex = temp;
+
+        //make speed independant of mass
+        speed *= rb.mass;
     }
 
     // Update is called once per frame
