@@ -32,6 +32,7 @@ public class WindAttack : BasicAttack
     {
         if (other.gameObject.CompareTag("enemy"))
         {
+            other.GetComponent<EnemyBase>().Stun(.5f);
             Vector3 forceDirection = other.transform.position - transform.position;
             //increase force as hitbox grows
             other.attachedRigidbody.AddForce(

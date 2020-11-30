@@ -48,6 +48,20 @@ public class EnemyBase : MonoBehaviour
     public Texture damagedTex;
     private Texture mainTex;
 
+    //stun
+    bool isStunned = false;
+
+    public void Stun(float seconds)
+    {
+        IEnumerator StunRoutine()
+        {
+            isStunned = true;
+            yield return new WaitForSeconds(seconds);
+            isStunned = false;
+        }
+        StartCoroutine(StunRoutine());
+    }
+
     // Start is called before the first frame update
     protected void Start()
     {
@@ -88,8 +102,11 @@ public class EnemyBase : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
-        LocateTarget();
-        SeekTarget();
+        if (!isStunned)
+        {
+            LocateTarget();
+            SeekTarget();
+        }
         CheckPulse();
     }
 
