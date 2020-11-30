@@ -27,6 +27,7 @@ public class EnemyBase : MonoBehaviour
     float speed;
     [SerializeField]
     public int health;
+    private int healthTracker;
     [SerializeField]
     float visionRange;
     [SerializeField]
@@ -41,6 +42,11 @@ public class EnemyBase : MonoBehaviour
     float attackWarmup;
     [SerializeField]
     float attackCooldown;
+
+    //Model Feilds
+    private Renderer mRenderer;
+    public Texture damagedTex;
+    private Texture mainTex;
 
     // Start is called before the first frame update
     protected void Start()
@@ -65,6 +71,15 @@ public class EnemyBase : MonoBehaviour
 
         // Populates the array with every pathfinding node in scene
         nodes = GameObject.FindGameObjectsWithTag("node");
+
+        healthTracker = health;
+
+        mRenderer = GetComponent<Renderer>();
+        mainTex = mRenderer.material.mainTexture;
+        //create a texture, should be replaced later 
+        Texture2D temp = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+        temp.SetPixel(0, 0, new Color(1, 0, 0, 1));
+        damagedTex = temp;
     }
 
     // Update is called once per frame
@@ -170,6 +185,21 @@ public class EnemyBase : MonoBehaviour
     // Checks if dead
     void CheckPulse()
     {
+        //bad code, health should be made private with a setter method where damagedRoutine
+        //would be called to avoid the health tracker
+        if(health != healthTracker)
+        {
+            IEnumerator DamagedRoutine()
+            {
+                const float flashTime = .25f;
+                mRenderer.material.mainTexture = damagedTex;
+                yield return new WaitForSeconds(flashTime);
+                mRenderer.material.mainTexture = mainTex;
+                yield return null;
+            }
+            StartCoroutine(DamagedRoutine());
+            healthTracker = health;
+        }
         if (health <= 0)
         {
             // Would be cool to just leave dead enemy corpses

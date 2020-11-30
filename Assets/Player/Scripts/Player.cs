@@ -19,6 +19,10 @@ public class Player : MonoBehaviour
     public GameObject playerModel; //Reference to Model Object for Animator
     private Animator playerAnimator; //Animator Object
 
+    public Texture playerDamagedTex;
+    private Texture playerDefaultTex;
+    Renderer mRenderer;
+
     private int health = 3;
     private ParticleSystem dashParticles;
     private List<ParticleSystem> gunParticles;
@@ -43,7 +47,9 @@ public class Player : MonoBehaviour
         gunParticles = new List<ParticleSystem>();
         gunParticles.Add(gunshotLocation.Find("cone").GetComponent<ParticleSystem>());
         gunParticles.Add(gunshotLocation.Find("line").GetComponent<ParticleSystem>());
-        playerAnimator = playerModel.GetComponent<Animator>();
+        playerAnimator = GetComponentInChildren<Animator>();
+        mRenderer = transform.Find("DresdenBody").Find("Dresden").Find("Body").GetComponent<Renderer>();
+        playerDefaultTex = mRenderer.material.mainTexture;
     }
 
     // Update is called once per frame
@@ -69,7 +75,11 @@ public class Player : MonoBehaviour
     public int Health
     {
         get { return health; }
-        set { health = value; }
+        set {
+            if (value < health)
+                Damaged();
+            health = value; 
+        }
     }
 
     //This will check if W A S or D are pressed and move in the corresponding direction
@@ -265,5 +275,18 @@ public class Player : MonoBehaviour
     private void MovePlayer(Vector3 movement)
     {
         rb.AddForce(movement);
+    }
+
+    private void Damaged()
+    {
+        IEnumerator DamagedRoutine()
+        {
+            const float flashTime = .25f;
+            mRenderer.material.mainTexture = playerDamagedTex;
+            yield return new WaitForSeconds(flashTime);
+            mRenderer.material.mainTexture = playerDefaultTex;
+            yield return null;
+        }
+        StartCoroutine(DamagedRoutine());
     }
 }
