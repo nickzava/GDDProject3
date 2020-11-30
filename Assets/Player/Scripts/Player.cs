@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private Stamina playerStamina; //Stamina Object
     public bool invincible = false; //Used for shield
     private bool isDashing = false; //Used for dash
+    private bool isSwingng = false; //Used for cane attack
     private const float gunshotSpeed = 15f; //Usedd for gunshot projectile speed
     private Transform gunshotLocation;
 	public bool paused = false;		//disables player input when paused
@@ -226,15 +227,20 @@ public class Player : MonoBehaviour
             //CANE
             else if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                if (playerStamina.Attack(15, true))
+                void CaneAttack()
                 {
-                    //Paramater for rotation
                     GameObject newCane = Instantiate(canePrefab,
                         playerGameObject.transform.position + transform.right * 1f,
                         playerGameObject.transform.rotation);
                     //Instantiate New Hitbox
                     BasicAttack caneAttack = newCane.GetComponent<BasicAttack>();
                     caneAttack.init(playerGameObject, 1, .15f, .1f);
+                }
+                if (playerStamina.Attack(15, true) )
+                {
+                    //Paramater for rotation
+                    
+                    DelayMethod(.3f, CaneAttack);
                     playerAnimator.SetTrigger("CaneSweep");
                 }
             }
