@@ -176,33 +176,41 @@ public class Player : MonoBehaviour
             //FIREBALL
             if (Input.GetKeyDown(KeyCode.Q) == true)
             {
-                if (playerStamina.Attack(20, false))
+                void SpawnFireBall()
                 {
                     //Paramater for rotation
                     GameObject newObject = Instantiate(fireballPrefab,
                         playerGameObject.transform.position + transform.right * 1f,
                         playerGameObject.transform.rotation);
                     Fireball newFireball = newObject.GetComponent<Fireball>();
+                }
+                if (playerStamina.Attack(20, false))
+                {
                     //Magic Attack animation
                     playerAnimator.SetTrigger("MagicAtk");
+                    DelayMethod(0.25f, SpawnFireBall);
                 }
             }
             //REVOLVER
             else if (Input.GetKeyDown(KeyCode.Mouse1) == true)
             {
-                if (playerStamina.Attack(20, true))
+                void Gunshot()
                 {
                     //Paramater for rotation
                     GameObject newObject = Instantiate(bulletPrefab,
                         playerGameObject.transform.position + transform.right * 1f,
-                        playerGameObject.transform.rotation);                    
+                        playerGameObject.transform.rotation);
                     Gunshot newGunshot = newObject.GetComponent<Gunshot>();
                     newGunshot.speed = gunshotSpeed; //Changes the speed of the gunshot to the proper amount.
-                    foreach(ParticleSystem ps in gunParticles)
+                    foreach (ParticleSystem ps in gunParticles)
                     {
                         ps.Play();
                     }
+                }
+                if (playerStamina.Attack(20, true))
+                {
                     //Revolver Animation
+                    DelayMethod(.25f, Gunshot);
                     playerAnimator.SetTrigger("Revolver");
                 }
             }
@@ -233,7 +241,7 @@ public class Player : MonoBehaviour
             //Wind Attack
             else if (Input.GetKeyDown(KeyCode.E))
             {
-                if (playerStamina.Attack(15, false))
+                void WindAttack()
                 {
                     //Paramater for rotation
                     GameObject newWind = Instantiate(windPrefab,
@@ -242,6 +250,10 @@ public class Player : MonoBehaviour
                     //Instantiate new Hitbox
                     BasicAttack caneAttack = newWind.GetComponent<BasicAttack>();
                     caneAttack.init(playerGameObject, 1, 0f, .2f);
+                }
+                if (playerStamina.Attack(15, false))
+                {
+                    DelayMethod(.25f, WindAttack);
                     playerAnimator.SetTrigger("MagicAtk");
                 }
             }
@@ -275,6 +287,18 @@ public class Player : MonoBehaviour
     private void MovePlayer(Vector3 movement)
     {
         rb.AddForce(movement);
+    }
+
+    delegate void AttackMethod();
+    private void DelayMethod(float seconds, AttackMethod method)
+    {
+        IEnumerator Delay()
+        {
+            yield return new WaitForSeconds(seconds);
+            method();
+            yield return null;
+        }
+        StartCoroutine(Delay());
     }
 
     private void Damaged()
