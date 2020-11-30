@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour
+public abstract class EnemyBase : MonoBehaviour
 {
     // Some basic vars that all enemies have
     Vector2 movement;
@@ -18,9 +18,9 @@ public class EnemyBase : MonoBehaviour
     [SerializeField]
     GameObject[] nodes;
     // Bool to indicate if we are actively seeking a pathfinding node
-    bool seekingNode;
+    protected bool seekingNode;
     // Tracks if the enemy is on attack cooldown
-    bool attacking;
+    protected bool attacking;
 
     // Stats which can be set in prefabs
     [SerializeField]
@@ -29,19 +29,19 @@ public class EnemyBase : MonoBehaviour
     public int health;
     private int healthTracker;
     [SerializeField]
-    float visionRange;
+    protected float visionRange;
     [SerializeField]
-    float maxVisionRange;
+    protected float maxVisionRange;
     [SerializeField]
-    float approachRadius;
+    protected float approachRadius;
 
     // Stats for this unit's attacks
     [SerializeField]
-    GameObject attackPrefab;
+    protected GameObject attackPrefab;
     [SerializeField]
-    float attackWarmup;
+    protected float attackWarmup;
     [SerializeField]
-    float attackCooldown;
+    protected float attackCooldown;
 
     //Model Feilds
     private Renderer mRenderer;
@@ -133,7 +133,7 @@ public class EnemyBase : MonoBehaviour
             movement = Vector2.ClampMagnitude(target.transform.position - gameObject.transform.position, speed);
         } else if (!seekingNode)
         {
-            StartCoroutine("Attack");
+            DoAttack();
         } else
         {
             movement = new Vector2(0, 0);
@@ -248,32 +248,6 @@ public class EnemyBase : MonoBehaviour
         return currNode;
     }
 
-    // Attack coroutine
-    IEnumerator Attack()
-    {
-        attacking = true;
-        float timePassed = 0;
-
-        // Wait for the attack warmup
-        while (timePassed <= attackWarmup)
-        {
-            timePassed += Time.deltaTime;
-            yield return null;
-        }
-        timePassed = 0;
-
-        // Attacking Code
-        BasicAttack attackBox = Instantiate(attackPrefab, gameObject.transform).GetComponent<BasicAttack>();
-        attackBox.init(gameObject, 1, .5f, .3f);
-
-        // Wait for attack cooldown
-        while (timePassed <= attackCooldown)
-        {
-            timePassed += Time.deltaTime;
-            yield return null;
-        }
-
-        attacking = false;
-        yield break;
-    }
+    // Placeholder method for attacks, will be added in the child classes
+    protected abstract void DoAttack();
 }
