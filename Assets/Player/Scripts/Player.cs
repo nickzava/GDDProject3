@@ -189,7 +189,7 @@ public class Player : MonoBehaviour
                 {
                     //Magic Attack animation
                     playerAnimator.SetTrigger("MagicAtk");
-                    DelayMethod(0.25f, SpawnFireBall);
+                    DelayAttack(0.3f, SpawnFireBall,.5f);
                 }
             }
             //REVOLVER
@@ -211,7 +211,7 @@ public class Player : MonoBehaviour
                 if (playerStamina.Attack(20, true))
                 {
                     //Revolver Animation
-                    DelayMethod(.25f, Gunshot);
+                    DelayAttack(.25f, Gunshot);
                     playerAnimator.SetTrigger("Revolver");
                 }
             }
@@ -225,7 +225,7 @@ public class Player : MonoBehaviour
                 }
             }
             //CANE
-            else if (Input.GetKeyDown(KeyCode.Mouse0))
+            else if (Input.GetKeyDown(KeyCode.Mouse0) && !isSwingng)
             {
                 void CaneAttack()
                 {
@@ -236,11 +236,17 @@ public class Player : MonoBehaviour
                     BasicAttack caneAttack = newCane.GetComponent<BasicAttack>();
                     caneAttack.init(playerGameObject, 1, .15f, .1f);
                 }
+                void NotSwinging()
+                {
+                    isSwingng = false;
+                }
                 if (playerStamina.Attack(15, true) )
                 {
+                    isSwingng = true;
                     //Paramater for rotation
                     
-                    DelayMethod(.3f, CaneAttack);
+                    DelayAttack(.3f, CaneAttack);
+                    DelayAttack(.8f, NotSwinging);
                     playerAnimator.SetTrigger("CaneSweep");
                 }
             }
@@ -259,7 +265,7 @@ public class Player : MonoBehaviour
                 }
                 if (playerStamina.Attack(15, false))
                 {
-                    DelayMethod(.25f, WindAttack);
+                    DelayAttack(.5f, WindAttack,1);
                     playerAnimator.SetTrigger("MagicAtk");
                 }
             }
@@ -296,7 +302,10 @@ public class Player : MonoBehaviour
     }
 
     delegate void AttackMethod();
-    private void DelayMethod(float seconds, AttackMethod method)
+
+    //slow factor determines the percentage the player will be slowed by BEFORE the 
+    //attack, with 1 being a full stop
+    private void DelayAttack(float seconds, AttackMethod method, float slowfactor=0)
     {
         IEnumerator Delay()
         {
@@ -304,7 +313,24 @@ public class Player : MonoBehaviour
             method();
             yield return null;
         }
-        StartCoroutine(Delay());
+        IEnumerator DelayWithSlow()
+        {
+            float elapsedTime = 0;
+            float currentSpeed = rb.velocity.magnitude;
+            float targetSpeed = currentSpeed * (1 - slowfactor);
+            //lerp to target speed over the delay
+            while (elapsedTime < seconds)
+            {
+                elapsedTime += Time.deltaTime;
+                rb.velocity = rb.velocity.normalized * Mathf.Lerp(currentSpeed, targetSpeed, elapsedTime / seconds);
+                yield return null;
+            }
+            method();
+        }
+        if (slowfactor > 0)
+            StartCoroutine(DelayWithSlow());
+        else
+            StartCoroutine(Delay());
     }
 
     private void Damaged()
