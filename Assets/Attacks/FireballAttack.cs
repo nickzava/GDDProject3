@@ -29,7 +29,7 @@ public class FireballAttack : BasicAttack
     {
         if (other.GetComponentInParent<EnemyBase>() != null)
         {
-            Debug.Log("Hi");
+           
             other.attachedRigidbody.AddForce(Quaternion.Inverse(other.transform.rotation) * new Vector3(1, 1, 0));
             other.gameObject.GetComponent<EnemyBase>().health -= 4;
             

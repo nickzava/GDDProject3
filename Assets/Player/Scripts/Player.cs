@@ -139,6 +139,7 @@ public class Player : MonoBehaviour
     {
         if (isDashing == false)
         {
+            /*
             //SHIELD
             //Inital Press
             if (Input.GetKeyDown(KeyCode.Space))
@@ -174,6 +175,7 @@ public class Player : MonoBehaviour
                 playerGameObject.GetComponent<SpriteRenderer>().color = Color.white;
 
             }
+            */
             //FIREBALL
             if (Input.GetKeyDown(KeyCode.Q) == true)
             {
