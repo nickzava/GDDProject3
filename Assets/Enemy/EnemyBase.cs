@@ -8,6 +8,11 @@ public abstract class EnemyBase : MonoBehaviour
     // Some basic vars that all enemies have
     Vector2 movement;
     bool hunting;
+
+    //Animation
+    public GameObject enemyModel;
+    private Animator enemyAnimator;
+
     // Target is the current object we are pathfinding to, goal is the overall target (The player).
     // Target will change when we pathfind, goal should always be the same thing
     [SerializeField]
@@ -88,8 +93,10 @@ public abstract class EnemyBase : MonoBehaviour
 
         healthTracker = health;
 
-        mRenderer = GetComponent<Renderer>();
-        mainTex = mRenderer.material.mainTexture;
+        //mRenderer = GetComponent<Renderer>();
+        //mainTex = mRenderer.material.mainTexture;
+        enemyAnimator = GetComponentInChildren<Animator>();
+
         //create a texture, should be replaced later 
         Texture2D temp = new Texture2D(1, 1, TextureFormat.ARGB32, false);
         temp.SetPixel(0, 0, new Color(1, 0, 0, 1));
@@ -106,6 +113,14 @@ public abstract class EnemyBase : MonoBehaviour
         {
             LocateTarget();
             SeekTarget();
+            if (hunting)
+            {
+                enemyAnimator.SetBool("isMoving", true);
+            }
+            else
+            {
+                enemyAnimator.SetBool("isMoving", false);
+            }
         }
         CheckPulse();
     }
@@ -134,6 +149,7 @@ public abstract class EnemyBase : MonoBehaviour
         } else if (!seekingNode)
         {
             DoAttack();
+            enemyAnimator.SetTrigger("Attack");
         } else
         {
             movement = new Vector2(0, 0);
@@ -211,10 +227,10 @@ public abstract class EnemyBase : MonoBehaviour
         {
             IEnumerator DamagedRoutine()
             {
-                const float flashTime = .25f;
-                mRenderer.material.mainTexture = damagedTex;
-                yield return new WaitForSeconds(flashTime);
-                mRenderer.material.mainTexture = mainTex;
+                //const float flashTime = .25f;
+                //mRenderer.material.mainTexture = damagedTex;
+                //yield return new WaitForSeconds(flashTime);
+                //mRenderer.material.mainTexture = mainTex;
                 yield return null;
             }
             StartCoroutine(DamagedRoutine());

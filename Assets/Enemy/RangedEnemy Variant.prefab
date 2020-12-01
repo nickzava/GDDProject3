@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa606cec7788124d8a43b30eeb85c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyModel: {fileID: 1568602606459508679}
   target: {fileID: 0}
   goal: {fileID: 0}
   nodes: []
@@ -87,10 +88,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2064250378649220051, guid: 6cc0c7d45d78ae149bae6b6ccf68fee8,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 2.534968
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064250378649220051, guid: 6cc0c7d45d78ae149bae6b6ccf68fee8,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 1.2002685
+      objectReference: {fileID: 0}
     - target: {fileID: 5574215703820519441, guid: 6cc0c7d45d78ae149bae6b6ccf68fee8,
         type: 3}
       propertyPath: m_Name
-      value: RangedEnemy
+      value: RangedEnemy Variant
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7531260597189993842, guid: 6cc0c7d45d78ae149bae6b6ccf68fee8, type: 3}
@@ -98,6 +109,12 @@ PrefabInstance:
 --- !u!1 &7649469023203955444 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5574215703820519441, guid: 6cc0c7d45d78ae149bae6b6ccf68fee8,
+    type: 3}
+  m_PrefabInstance: {fileID: 2842835874256607973}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1568602606459508679 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3654393918004923682, guid: 6cc0c7d45d78ae149bae6b6ccf68fee8,
     type: 3}
   m_PrefabInstance: {fileID: 2842835874256607973}
   m_PrefabAsset: {fileID: 0}
