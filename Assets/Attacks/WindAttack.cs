@@ -36,7 +36,7 @@ public class WindAttack : BasicAttack
             Vector3 forceDirection = other.transform.position - transform.position;
             //increase force as hitbox grows
             other.attachedRigidbody.AddForce(
-                new Vector3(forceDirection.x,0,forceDirection.z).normalized 
+                new Vector3(forceDirection.x,forceDirection.y).normalized 
                 * Mathf.Min(averageForce * (hitboxTime - elapsedTime)/hitboxTime , averageForce) );
         }
     }
