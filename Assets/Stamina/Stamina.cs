@@ -12,7 +12,7 @@ public class Stamina : MonoBehaviour
     [SerializeField]
     //how much of spent universal stamina is converted into special stamina
     float conversionPercentage;
-
+    int maxStamina = 50;
     [Header("Experimental")]
     //TEMP values for testing
     [SerializeField]
@@ -121,9 +121,9 @@ public class Stamina : MonoBehaviour
     void Update()
     {
         //stamina regen
-        if(universalStamina < 100)
+        if(universalStamina < maxStamina)
         {
-            universalStamina = Mathf.Min(100, Time.deltaTime * staminaPerSecond + universalStamina);
+            universalStamina = Mathf.Min(maxStamina, Time.deltaTime * staminaPerSecond + universalStamina);
             if(regenOverSpecial && universalStamina > 0)
             {
                 if (physicalStamina > 0)
@@ -141,11 +141,11 @@ public class Stamina : MonoBehaviour
             }
         }
         //cap total stamina at 100
-        physicalStamina = Mathf.Min(100 - universalStamina, physicalStamina);
-        magicStamina = Mathf.Min(100 - magicStamina, magicStamina);
+        physicalStamina = Mathf.Min(maxStamina - universalStamina, physicalStamina);
+        magicStamina = Mathf.Min(maxStamina - magicStamina, magicStamina);
 
         
-        ui.UpdateValues(universalStamina / 100, physicalStamina / 100, magicStamina / 100);
+        ui.UpdateValues(universalStamina / maxStamina, physicalStamina / maxStamina, magicStamina / maxStamina);
 
         if (debugClicks)
         {
@@ -162,7 +162,7 @@ public class Stamina : MonoBehaviour
 
     private void Awake()
     {
-        universalStamina = 100;
+        universalStamina = maxStamina;
         magicStamina = 0;
         physicalStamina = 0;
         
