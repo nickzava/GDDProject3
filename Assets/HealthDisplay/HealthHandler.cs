@@ -5,18 +5,21 @@ using UnityEngine;
 public class HealthHandler : MonoBehaviour
 {
     // Holds references to relevant gameobjects
-    GameObject heart1;
-    GameObject heart2;
-    GameObject heart3;
+    UnityEngine.UI.Image heartObj;
     Player player;
+
+    [SerializeField]
+    Sprite full;
+    [SerializeField]
+    Sprite hurt;
+    [SerializeField]
+    Sprite dying;
 
     // Start is called before the first frame update
     void Start()
     {
         // Fills references
-        heart1 = GameObject.Find("Heart1");
-        heart2 = GameObject.Find("Heart2");
-        heart3 = GameObject.Find("Heart3");
+        heartObj = GameObject.Find("Heart1").GetComponent<UnityEngine.UI.Image>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
@@ -27,24 +30,16 @@ public class HealthHandler : MonoBehaviour
         switch (player.Health)
         {
             case 3:
-                heart1.SetActive(true);
-                heart2.SetActive(true);
-                heart3.SetActive(true);
+                heartObj.sprite = full;
                 break;
             case 2:
-                heart1.SetActive(true);
-                heart2.SetActive(true);
-                heart3.SetActive(false);
+                heartObj.sprite = hurt;
                 break;
             case 1:
-                heart1.SetActive(true);
-                heart2.SetActive(false);
-                heart3.SetActive(false);
+                heartObj.sprite = dying;
                 break;
             case 0:
-                heart1.SetActive(false);
-                heart2.SetActive(false);
-                heart3.SetActive(false);
+                heartObj.sprite = null;
                 break;
             default:
                 Debug.LogError("HEALTH OUT OF BOUNDS");
