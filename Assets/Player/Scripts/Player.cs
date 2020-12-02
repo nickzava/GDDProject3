@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     private bool isSwingng = false; //Used for cane attack
     private const float gunshotSpeed = 15f; //Usedd for gunshot projectile speed
     private Transform gunshotLocation;
+    private Light gunLight;
 	public bool paused = false;		//disables player input when paused
 
     public GameObject playerModel; //Reference to Model Object for Animator
@@ -51,6 +52,8 @@ public class Player : MonoBehaviour
         playerAnimator = GetComponentInChildren<Animator>();
         mRenderer = transform.Find("DresdenBody").Find("Dresden").Find("Body").GetComponent<Renderer>();
         playerDefaultTex = mRenderer.material.mainTexture;
+        gunLight = GetComponentInChildren<Light>();
+        gunLight.enabled = false;
     }
 
     // Update is called once per frame
