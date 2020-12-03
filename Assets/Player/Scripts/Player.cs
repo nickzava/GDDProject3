@@ -11,12 +11,12 @@ public class Player : MonoBehaviour
     public GameObject windPrefab; //Windblast Attack Prefab
     private Stamina playerStamina; //Stamina Object
     public bool invincible = false; //Used for shield
-    private bool isDashing = false; //Used for dash
-    private bool isSwingng = false; //Used for cane attack
     private const float gunshotSpeed = 15f; //Usedd for gunshot projectile speed
     private Transform gunshotLocation;
     private Light gunLight;
 	public bool paused = false;		//disables player input when paused
+
+    private bool performingAction = false; //Used to lock player during attacks
 
     public GameObject playerModel; //Reference to Model Object for Animator
     private Animator playerAnimator; //Animator Object
@@ -24,6 +24,20 @@ public class Player : MonoBehaviour
     public Texture playerDamagedTex;
     private Texture playerDefaultTex;
     Renderer mRenderer;
+
+
+
+   [Header("GameFeel")]
+    public float windInTime;
+    public float windOutTime;
+    public float dashInTime;
+    public float dashOutTime;
+    public float gunInTime;
+    public float gunOutTime;
+    public float fireballInTime;
+    public float fireballOutTime;
+    public float caneInTime;
+    public float caneOutTime;
 
     private int health = 3;
     private ParticleSystem dashParticles;
@@ -35,7 +49,9 @@ public class Player : MonoBehaviour
 
     // Adjust the amount of force we apply
     [SerializeField]
-    float speed;
+    float acceletation;
+    [SerializeField]
+    float maxSpeed;
     // Holds the player's rigidbody so we can apply forces to it
     private Rigidbody rb;
     
@@ -69,11 +85,7 @@ public class Player : MonoBehaviour
     // We use fixedupdate because it is more reliable specifically for physics interactions
     private void FixedUpdate()
     {
-        if(isDashing == false)
-        {
-            MovementCheck();
-        }
-        
+            MovementCheck();        
     }
 
     public int Health
@@ -89,6 +101,10 @@ public class Player : MonoBehaviour
     //This will check if W A S or D are pressed and move in the corresponding direction
     void MovementCheck()
     {
+        rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+        if (acceletation == 0)
+            return;
+
         // Reset framemovement
         frameMovement = Vector3.zero;
 
@@ -113,7 +129,7 @@ public class Player : MonoBehaviour
         frameMovement.Normalize();
 
         // Actually apply the force here
-        rb.AddForce(frameMovement * speed);
+        rb.AddForce(frameMovement * acceletation);
 
         //Setting animation for idle or moving
         if (frameMovement == Vector3.zero)
@@ -140,164 +156,159 @@ public class Player : MonoBehaviour
     //This will check if the user has pressed an "Action Key" which includes firing a weapon, ability or some other use
     void CheckAction()
     {
-        if (isDashing == false)
+        if (performingAction)
+            return;
+        /*
+        //SHIELD
+        //Inital Press
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            /*
-            //SHIELD
-            //Inital Press
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (playerStamina.Attack(15, false))
             {
-                if (playerStamina.Attack(15, false))
-                {
-                    invincible = true;
-                    playerGameObject.GetComponent<SpriteRenderer>().color = Color.blue; //Test for invincible color
-                    playerAnimator.SetTrigger("MagicAtk");
+                invincible = true;
+                playerGameObject.GetComponent<SpriteRenderer>().color = Color.blue; //Test for invincible color
+                playerAnimator.SetTrigger("MagicAtk");
 
-                    // Just a note from when Will is reading thru here, if we get a chance we should take GetComponent<> out of update cause it may cause performance issues
-                    // Although this is labeled as a test so I'm guessing you already knew that lol
-                }
+                // Just a note from when Will is reading thru here, if we get a chance we should take GetComponent<> out of update cause it may cause performance issues
+                // Although this is labeled as a test so I'm guessing you already knew that lol
             }
-            //Shield Hold
-            else if (Input.GetKey(KeyCode.Space))
+        }
+        //Shield Hold
+        else if (Input.GetKey(KeyCode.Space))
+        {
+            //Invincible == true makes it so that this attack can not be the first press of shield.
+            if (invincible == true && playerStamina.Attack(60f * Time.deltaTime, false))
             {
-                //Invincible == true makes it so that this attack can not be the first press of shield.
-                if (invincible == true && playerStamina.Attack(60f * Time.deltaTime, false))
-                {
-                }
-                //This will stop the hold from mattering until shield is pressed again
-                else
-                {
-                    invincible = false;
-                    playerGameObject.GetComponent<SpriteRenderer>().color = Color.white; //Test for invincible color
-                }
             }
-            //Shield End
-            else if (Input.GetKeyUp(KeyCode.Space))
+            //This will stop the hold from mattering until shield is pressed again
+            else
             {
                 invincible = false;
-                playerGameObject.GetComponent<SpriteRenderer>().color = Color.white;
-
-            }
-            */
-            //FIREBALL
-            if (Input.GetKeyDown(KeyCode.Q) == true)
-            {
-                void SpawnFireBall()
-                {
-                    //Paramater for rotation
-                    GameObject newObject = Instantiate(fireballPrefab,
-                        playerGameObject.transform.position + transform.right * 1f,
-                        playerGameObject.transform.rotation);
-                    Fireball newFireball = newObject.GetComponent<Fireball>();
-                }
-                if (playerStamina.Attack(20, false))
-                {
-                    //Magic Attack animation
-                    playerAnimator.SetTrigger("MagicAtk");
-                    DelayAttack(0.3f, SpawnFireBall,.5f);
-                }
-            }
-            //REVOLVER
-            else if (Input.GetKeyDown(KeyCode.Mouse1) == true)
-            {
-                void Gunshot()
-                {
-                    //Paramater for rotation
-                    GameObject newObject = Instantiate(bulletPrefab,
-                        playerGameObject.transform.position + transform.right * 1f,
-                        playerGameObject.transform.rotation);
-                    Gunshot newGunshot = newObject.GetComponent<Gunshot>();
-                    newGunshot.speed = gunshotSpeed; //Changes the speed of the gunshot to the proper amount.
-                    foreach (ParticleSystem ps in gunParticles)
-                    {
-                        ps.Play();
-                    }
-                }
-                if (playerStamina.Attack(20, true))
-                {
-                    //Revolver Animation
-                    DelayAttack(.25f, Gunshot);
-                    playerAnimator.SetTrigger("Revolver");
-                }
-            }
-            //DASH 
-            else if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                if (playerStamina.Attack(20, true))
-                {
-                    StartCoroutine("Dash");
-                    playerAnimator.SetTrigger("DodgeRight");
-                }
-            }
-            //CANE
-            else if (Input.GetKeyDown(KeyCode.Mouse0) && !isSwingng)
-            {
-                void CaneAttack()
-                {
-                    GameObject newCane = Instantiate(canePrefab,
-                        playerGameObject.transform.position + transform.right * 1f,
-                        playerGameObject.transform.rotation);
-                    //Instantiate New Hitbox
-                    BasicAttack caneAttack = newCane.GetComponent<BasicAttack>();
-                    caneAttack.init(playerGameObject, 1, .15f, .1f);
-                }
-                void NotSwinging()
-                {
-                    isSwingng = false;
-                }
-                if (playerStamina.Attack(15, true) )
-                {
-                    isSwingng = true;
-                    //Paramater for rotation
-                    
-                    DelayAttack(.3f, CaneAttack);
-                    DelayAttack(.8f, NotSwinging);
-                    playerAnimator.SetTrigger("CaneSweep");
-                }
-            }
-            //Wind Attack
-            else if (Input.GetKeyDown(KeyCode.E))
-            {
-                void WindAttack()
-                {
-                    //Paramater for rotation
-                    GameObject newWind = Instantiate(windPrefab,
-                        playerGameObject.transform.position + transform.right * 1f,
-                        playerGameObject.transform.rotation);
-                    //Instantiate new Hitbox
-                    BasicAttack caneAttack = newWind.GetComponent<BasicAttack>();
-                    caneAttack.init(playerGameObject, 1, 0f, .2f);
-                }
-                if (playerStamina.Attack(15, false))
-                {
-                    DelayAttack(.5f, WindAttack,1);
-                    playerAnimator.SetTrigger("MagicAtk");
-                }
+                playerGameObject.GetComponent<SpriteRenderer>().color = Color.white; //Test for invincible color
             }
         }
-    }
-
-    //Dash Coroutine
-    IEnumerator Dash()
-    {
-        isDashing = true; 
-
-        float secondsElapsed = 0;
-
-        // Add dashing force
-        rb.AddForce(frameMovement * 500);
-        dashParticles.Play();
-
-        //Dash loop for duration
-        while(secondsElapsed < .3f)
+        //Shield End
+        else if (Input.GetKeyUp(KeyCode.Space))
         {
-            secondsElapsed += Time.deltaTime;
-            yield return null;
-        }
+            invincible = false;
+            playerGameObject.GetComponent<SpriteRenderer>().color = Color.white;
 
-        isDashing = false;
-        yield break;
-       
+        }
+        */
+        //FIREBALL
+        if (Input.GetKeyDown(KeyCode.Q) == true)
+        {
+            void SpawnFireBall()
+            {
+                //Paramater for rotation
+                GameObject newObject = Instantiate(fireballPrefab,
+                    playerGameObject.transform.position + transform.right * 1f,
+                    playerGameObject.transform.rotation);
+                Fireball newFireball = newObject.GetComponent<Fireball>();
+            }
+            if (playerStamina.Attack(20, false))
+            {
+                //Magic Attack animation
+                playerAnimator.SetTrigger("MagicAtk");
+                DelayAttack(fireballInTime, fireballOutTime, SpawnFireBall, .5f);
+            }
+        }
+        //REVOLVER
+        else if (Input.GetKeyDown(KeyCode.Mouse1) == true)
+        {
+            void Gunshot()
+            {
+                //Paramater for rotation
+                GameObject newObject = Instantiate(bulletPrefab,
+                    playerGameObject.transform.position + transform.right * 1f,
+                    playerGameObject.transform.rotation);
+                Gunshot newGunshot = newObject.GetComponent<Gunshot>();
+                newGunshot.speed = gunshotSpeed; //Changes the speed of the gunshot to the proper amount.
+                foreach (ParticleSystem ps in gunParticles)
+                {
+                    ps.Play();
+                }
+            }
+            if (playerStamina.Attack(20, true))
+            {
+                //Revolver Animation
+                DelayAttack(gunInTime, gunOutTime, Gunshot);
+                playerAnimator.SetTrigger("Revolver");
+            }
+        }
+        //DASH 
+        else if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            IEnumerator Dash()
+            {
+                performingAction = true;
+                float baseAccel = acceletation;
+                float baseMax = maxSpeed;
+                maxSpeed *= 2;
+                acceletation = 0;
+
+                float secondsElapsed = 0;
+
+                // Add dashing force
+                dashParticles.Play();
+
+                //Dash loop for duration
+                while (secondsElapsed < .3f)
+                {
+                    rb.AddForce(frameMovement * baseAccel * 3);
+                    secondsElapsed += Time.deltaTime;
+                    yield return null;
+                }
+
+                performingAction = false;
+                acceletation = baseAccel;
+                maxSpeed = baseMax;
+                yield break;
+
+            }
+            if (playerStamina.Attack(20, true))
+            {
+                StartCoroutine(Dash());
+                playerAnimator.SetTrigger("DodgeRight");
+            }
+        }
+        //CANE
+        else if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            void CaneAttack()
+            {
+                GameObject newCane = Instantiate(canePrefab,
+                    playerGameObject.transform.position + transform.right * 1f,
+                    playerGameObject.transform.rotation);
+                //Instantiate New Hitbox
+                BasicAttack caneAttack = newCane.GetComponent<BasicAttack>();
+                caneAttack.init(playerGameObject, 1, .15f, .1f);
+            }
+            if (playerStamina.Attack(15, true))
+            {
+                DelayAttack(caneInTime, caneOutTime, CaneAttack);
+                playerAnimator.SetTrigger("CaneSweep");
+            }
+        }
+        //Wind Attack
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            void WindAttack()
+            {
+                //Paramater for rotation
+                GameObject newWind = Instantiate(windPrefab,
+                    playerGameObject.transform.position + transform.right * 1f,
+                    playerGameObject.transform.rotation);
+                //Instantiate new Hitbox
+                BasicAttack caneAttack = newWind.GetComponent<BasicAttack>();
+                caneAttack.init(playerGameObject, 1, 0f, .2f);
+            }
+            if (playerStamina.Attack(15, false))
+            {
+                DelayAttack(windInTime, windOutTime, WindAttack, 1);
+                playerAnimator.SetTrigger("MagicAtk");
+            }
+        }
     }
 
     // Method to apply force to the player
@@ -310,27 +321,39 @@ public class Player : MonoBehaviour
 
     //slow factor determines the percentage the player will be slowed by BEFORE the 
     //attack, with 1 being a full stop
-    private void DelayAttack(float seconds, AttackMethod method, float slowfactor=0)
+    private void DelayAttack(float inSeconds, float outSeconds, AttackMethod method, float slowfactor=0)
     {
+        performingAction = true;
         IEnumerator Delay()
         {
-            yield return new WaitForSeconds(seconds);
+            yield return new WaitForSeconds(inSeconds);
             method();
+            yield return new WaitForSeconds(outSeconds);
+            performingAction = false;
             yield return null;
         }
         IEnumerator DelayWithSlow()
         {
             float elapsedTime = 0;
-            float currentSpeed = rb.velocity.magnitude;
-            float targetSpeed = currentSpeed * (1 - slowfactor);
-            //lerp to target speed over the delay
-            while (elapsedTime < seconds)
+            float baseSpeed = maxSpeed;
+            float targetSpeed = maxSpeed * (1 - slowfactor);
+            //lerp to target maxSpeed over the delay
+            while (elapsedTime < inSeconds)
             {
                 elapsedTime += Time.deltaTime;
-                rb.velocity = rb.velocity.normalized * Mathf.Lerp(currentSpeed, targetSpeed, elapsedTime / seconds);
+                maxSpeed = Mathf.Lerp(baseSpeed, targetSpeed, elapsedTime / inSeconds);
                 yield return null;
             }
             method();
+            elapsedTime = 0;
+            while (elapsedTime < outSeconds)
+            {
+                elapsedTime += Time.deltaTime;
+                maxSpeed = Mathf.Lerp(targetSpeed, baseSpeed, elapsedTime / outSeconds);
+                yield return null;
+            }
+            maxSpeed = baseSpeed;
+            performingAction = false;
         }
         if (slowfactor > 0)
             StartCoroutine(DelayWithSlow());

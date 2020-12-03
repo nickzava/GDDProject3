@@ -154,7 +154,18 @@ MonoBehaviour:
   paused: 0
   playerModel: {fileID: 7810280851437701841}
   playerDamagedTex: {fileID: 2800000, guid: ad6add794d81cc5408db5921275d9991, type: 3}
-  speed: 20
+  windInTime: 0
+  windOutTime: 0
+  dashInTime: 0
+  dashOutTime: 0
+  gunInTime: 0
+  gunOutTime: 0
+  fireballInTime: 0
+  fireballOutTime: 0
+  caneInTime: 0
+  caneOutTime: 0
+  acceletation: 30
+  maxSpeed: 3
 --- !u!114 &527160759768324401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,7 +206,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 527160759768324397}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 787671d442e04ec43b14e826e2d750ec, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

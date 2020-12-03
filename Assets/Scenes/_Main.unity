@@ -2386,6 +2386,56 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6086828881906014664, guid: 9ab18ac489e9e964fb8180ff27074aa8,
+        type: 3}
+      propertyPath: windInTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6086828881906014664, guid: 9ab18ac489e9e964fb8180ff27074aa8,
+        type: 3}
+      propertyPath: windOutTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6086828881906014664, guid: 9ab18ac489e9e964fb8180ff27074aa8,
+        type: 3}
+      propertyPath: dashInTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6086828881906014664, guid: 9ab18ac489e9e964fb8180ff27074aa8,
+        type: 3}
+      propertyPath: dashOutTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6086828881906014664, guid: 9ab18ac489e9e964fb8180ff27074aa8,
+        type: 3}
+      propertyPath: gunInTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6086828881906014664, guid: 9ab18ac489e9e964fb8180ff27074aa8,
+        type: 3}
+      propertyPath: gunOutTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6086828881906014664, guid: 9ab18ac489e9e964fb8180ff27074aa8,
+        type: 3}
+      propertyPath: fireballInTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6086828881906014664, guid: 9ab18ac489e9e964fb8180ff27074aa8,
+        type: 3}
+      propertyPath: fireballOutTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6086828881906014664, guid: 9ab18ac489e9e964fb8180ff27074aa8,
+        type: 3}
+      propertyPath: caneInTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6086828881906014664, guid: 9ab18ac489e9e964fb8180ff27074aa8,
+        type: 3}
+      propertyPath: caneOutTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6086828881906014666, guid: 9ab18ac489e9e964fb8180ff27074aa8,
         type: 3}
       propertyPath: m_LocalRotation.x
