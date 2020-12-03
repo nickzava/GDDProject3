@@ -154,12 +154,12 @@ MonoBehaviour:
   paused: 0
   playerModel: {fileID: 7810280851437701841}
   playerDamagedTex: {fileID: 2800000, guid: ad6add794d81cc5408db5921275d9991, type: 3}
-  windInTime: 0
-  windOutTime: 0
-  dashInTime: 0
-  dashOutTime: 0
-  gunInTime: 0
-  gunOutTime: 0
+  windInTime: 3
+  windOutTime: 1
+  dashInTime: 4
+  dashOutTime: 4
+  gunInTime: 2
+  gunOutTime: 3
   fireballInTime: 0
   fireballOutTime: 0
   caneInTime: 0
