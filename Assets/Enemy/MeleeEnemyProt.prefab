@@ -86,7 +86,7 @@ MonoBehaviour:
   goal: {fileID: 0}
   nodes: []
   speed: 20
-  health: 2
+  health: 3
   visionRange: 10
   maxVisionRange: 15
   approachRadius: 1
