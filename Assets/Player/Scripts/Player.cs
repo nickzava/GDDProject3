@@ -25,7 +25,8 @@ public class Player : MonoBehaviour
     private Texture playerDefaultTex;
     Renderer mRenderer;
 
-
+	public PlayAudioClips audioClips;
+	private float walkAudioCooldown;
 
    [Header("GameFeel")]
     public float windInTime;
@@ -70,6 +71,7 @@ public class Player : MonoBehaviour
         playerDefaultTex = mRenderer.material.mainTexture;
         gunLight = GetComponentInChildren<Light>();
         gunLight.enabled = false;
+		audioClips = GetComponent<PlayAudioClips>();
     }
 
     // Update is called once per frame
@@ -131,6 +133,8 @@ public class Player : MonoBehaviour
         // Actually apply the force here
         rb.AddForce(frameMovement * acceletation);
 
+		
+
         //Setting animation for idle or moving
         if (frameMovement == Vector3.zero)
         {
@@ -138,7 +142,18 @@ public class Player : MonoBehaviour
         } else if(frameMovement != Vector3.zero)
         {
             playerAnimator.SetBool("isMoving", true);
-        }
+
+			//play sound
+			if (walkAudioCooldown > 1.1f)
+			{
+				audioClips.PlayAudio(6);
+				walkAudioCooldown = 0;
+			}
+			else
+			{
+				walkAudioCooldown += Time.deltaTime;
+			}
+		}
     }
     /// <summary>
     /// This will check the rotation the sprite should be facing
@@ -205,7 +220,9 @@ public class Player : MonoBehaviour
                     playerGameObject.transform.position + transform.right * 1f,
                     playerGameObject.transform.rotation);
                 Fireball newFireball = newObject.GetComponent<Fireball>();
-            }
+				//play sound
+				audioClips.PlayAudio(3);
+			}
             if (playerStamina.Attack(20, false))
             {
                 //Magic Attack animation
@@ -228,7 +245,9 @@ public class Player : MonoBehaviour
                 {
                     ps.Play();
                 }
-            }
+				//play sound
+				audioClips.PlayAudio(2);
+			}
             if (playerStamina.Attack(20, true))
             {
                 //Revolver Animation
@@ -251,6 +270,8 @@ public class Player : MonoBehaviour
 
                 // Add dashing force
                 dashParticles.Play();
+				//play sound
+				audioClips.PlayAudio(5);
 
                 //Dash loop for duration
                 while (secondsElapsed < .3f)
@@ -283,6 +304,8 @@ public class Player : MonoBehaviour
                 //Instantiate New Hitbox
                 BasicAttack caneAttack = newCane.GetComponent<BasicAttack>();
                 caneAttack.init(playerGameObject, 1, .15f, .1f);
+				//play sound
+				audioClips.PlayAudio(1);
             }
             if (playerStamina.Attack(15, true))
             {
@@ -302,7 +325,9 @@ public class Player : MonoBehaviour
                 //Instantiate new Hitbox
                 BasicAttack caneAttack = newWind.GetComponent<BasicAttack>();
                 caneAttack.init(playerGameObject, 1, 0f, .2f);
-            }
+				//play sound
+				audioClips.PlayAudio(4);
+			}
             if (playerStamina.Attack(15, false))
             {
                 DelayAttack(windInTime, windOutTime, WindAttack, 1);
@@ -366,6 +391,7 @@ public class Player : MonoBehaviour
         IEnumerator DamagedRoutine()
         {
             const float flashTime = .25f;
+			audioClips.PlayAudio(0);
             mRenderer.material.mainTexture = playerDamagedTex;
             yield return new WaitForSeconds(flashTime);
 			if (health <= 0)	//brings up death UI and pauses game if player is out of health

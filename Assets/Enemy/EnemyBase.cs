@@ -56,6 +56,9 @@ public abstract class EnemyBase : MonoBehaviour
     //stun
     bool isStunned = false;
 
+	//sounds
+	protected PlayAudioClips audioClips;
+
     public void Stun(float seconds)
     {
         IEnumerator StunRoutine()
@@ -104,6 +107,8 @@ public abstract class EnemyBase : MonoBehaviour
 
         //make speed independant of mass
         speed *= rb.mass;
+
+		audioClips = GetComponent<PlayAudioClips>();
     }
 
     // Update is called once per frame
@@ -234,6 +239,7 @@ public abstract class EnemyBase : MonoBehaviour
                 yield return null;
             }
             StartCoroutine(DamagedRoutine());
+			audioClips.PlayAudio(0);	//plays grunt sound
             healthTracker = health;
         }
         if (health <= 0)

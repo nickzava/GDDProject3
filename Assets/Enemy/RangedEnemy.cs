@@ -37,6 +37,7 @@ public class RangedEnemy : EnemyBase
 
         // Attacking Code
         BasicAttack attackBox = Instantiate(attackPrefab, gameObject.transform).GetComponent<BasicAttack>();
+		audioClips.PlayAudio(1);
 
         // Wait for attack cooldown
         while (timePassed <= attackCooldown)
