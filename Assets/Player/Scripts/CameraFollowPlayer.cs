@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraFollowPlayer : MonoBehaviour
 {
 	public GameObject player;
-	public float camDistance = -10.0f;
+	public float camDistance = -4.0f;
 
     // Start is called before the first frame update
     void Start()
