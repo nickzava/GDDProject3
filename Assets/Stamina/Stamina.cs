@@ -12,7 +12,7 @@ public class Stamina : MonoBehaviour
     [SerializeField]
     //how much of spent universal stamina is converted into special stamina
     float conversionPercentage;
-    int maxStamina = 50;
+    int maxStamina = 40;
     [Header("Experimental")]
     //TEMP values for testing
     [SerializeField]

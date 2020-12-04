@@ -223,7 +223,7 @@ public class Player : MonoBehaviour
 				//play sound
 				audioClips.PlayAudio(3);
 			}
-            if (playerStamina.Attack(20, false))
+            if (playerStamina.Attack(25, false))
             {
                 //Magic Attack animation
                 playerAnimator.SetTrigger("MagicAtk");
