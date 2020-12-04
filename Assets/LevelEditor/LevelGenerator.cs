@@ -26,6 +26,8 @@ public class LevelGenerator : MonoBehaviour
 	[Header("Path Finding")]
 	public GameObject pathFindingNode;
 	public List<GameObject> nodeList;
+	private int wallNum = 0;
+
 	void Start()
 	{
 		if (!ValidateName())
@@ -136,10 +138,10 @@ public class LevelGenerator : MonoBehaviour
 						#region Picking Correct Wall Tile
 						if (pixelColorMapping.pixelColor.Equals(Color.black))
 						{
-							Color rightPixel = Color.black;   //pixel to right of current
-							Color topPixel = Color.black;     //pixel above current
-							Color leftPixel = Color.black;    //pixel to left of current
-							Color botPixel = Color.black;     //pixel below current
+							Color rightPixel = Color.white;   //pixel to right of current
+							Color topPixel = Color.white;     //pixel above current
+							Color leftPixel = Color.white;    //pixel to left of current
+							Color botPixel = Color.white;     //pixel below current
 
 							Vector2 position = new Vector2(x, y);
 
@@ -152,49 +154,52 @@ public class LevelGenerator : MonoBehaviour
 							if (y > 0)
 								botPixel = mapTexture.GetPixel(x, y - 1);
 
-							// 0 = oneSided
-							// 1 = twoSidedCorner
-							// 2 = blank
+							GameObject wall = pixelColorMapping.prefab[0];
+							wall.transform.GetChild(0).gameObject.SetActive(true);	//right side
+							wall.transform.GetChild(1).gameObject.SetActive(true);	//top side
+							wall.transform.GetChild(2).gameObject.SetActive(true);	//left side
+							wall.transform.GetChild(3).gameObject.SetActive(true);	//bottom side
 
+							//deciding which walls don't need to exist
+							if (rightPixel == Color.black)
+							{
+								wall.transform.GetChild(0).gameObject.SetActive(false);
+							}
+							if (topPixel == Color.black)
+							{
+								wall.transform.GetChild(1).gameObject.SetActive(false);
+							}
+							if (leftPixel == Color.black)
+							{
+								wall.transform.GetChild(2).gameObject.SetActive(false);
+							}
+							if (botPixel == Color.black)
+							{
+								wall.transform.GetChild(3).gameObject.SetActive(false);
+							}
+
+							wall.name = "Wall" + wallNum;
+							wallNum++;
+							Instantiate(wall, position, Quaternion.identity, transform);
+							if (generateNormalMaps)
+								floorTiles.Add(new KeyValuePair<Vector2, GameObject>(new Vector2(-position.x - 5, -position.y - 5), wall));
+
+							//placing pathfinding nodes
 							if (rightPixel != Color.black && topPixel != Color.black)
 							{
-								Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 0.0f));
 								nodeList.Add(Instantiate(pathFindingNode, new Vector2(x + 1, y + 1), Quaternion.identity, transform));	//adds pathfinding node on corner
 							}
 							else if (topPixel != Color.black && leftPixel != Color.black)
 							{
-								Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
 								nodeList.Add(Instantiate(pathFindingNode, new Vector2(x - 1, y + 1), Quaternion.identity, transform));  //adds pathfinding node on corner
 							}
 							else if (leftPixel != Color.black && botPixel != Color.black)
 							{
-								Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 180.0f));
 								nodeList.Add(Instantiate(pathFindingNode, new Vector2(x - 1, y - 1), Quaternion.identity, transform));  //adds pathfinding node on corner
 							}
 							else if (botPixel != Color.black && rightPixel != Color.black)
 							{
-								Instantiate(pixelColorMapping.prefab[1], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 270.0f));
 								nodeList.Add(Instantiate(pathFindingNode, new Vector2(x + 1, y - 1), Quaternion.identity, transform));  //adds pathfinding node on corner
-							}
-							else if (rightPixel != Color.black)
-							{
-								Instantiate(pixelColorMapping.prefab[0], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 0.0f));
-							}
-							else if (topPixel != Color.black)
-							{
-								Instantiate(pixelColorMapping.prefab[0], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
-							}
-							else if (leftPixel != Color.black)
-							{
-								Instantiate(pixelColorMapping.prefab[0], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 180.0f));
-							}
-							else if (botPixel != Color.black)
-							{
-								Instantiate(pixelColorMapping.prefab[0], position, Quaternion.identity, transform).transform.Rotate(new Vector3(0.0f, 0.0f, 270.0f));
-							}
-							else
-							{
-								Instantiate(pixelColorMapping.prefab[2], position, Quaternion.identity, transform);
 							}
 						}
 						#endregion

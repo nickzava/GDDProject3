@@ -1380,7 +1380,7 @@ PrefabInstance:
     - target: {fileID: 7984192517150998800, guid: 9ab18ac489e9e964fb8180ff27074aa8,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7984192517150998802, guid: 9ab18ac489e9e964fb8180ff27074aa8,
         type: 3}
@@ -4761,7 +4761,7 @@ PrefabInstance:
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
       propertyPath: levelName
-      value: NewTutorial1
+      value: WallTest
       objectReference: {fileID: 0}
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
@@ -4826,12 +4826,12 @@ PrefabInstance:
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
       propertyPath: saveLevel
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
       propertyPath: generateNormalMaps
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
@@ -4843,13 +4843,13 @@ PrefabInstance:
         type: 3}
       propertyPath: pixelColorMappings.Array.data[0].prefab.Array.data[0]
       value: 
-      objectReference: {fileID: 5748041942927132612, guid: 6a6de066dc93d9f41876764d83f5a8f3,
+      objectReference: {fileID: 1895919508334493251, guid: fb96f428a5485e24caf8d0ce2ae3c240,
         type: 3}
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
       propertyPath: pixelColorMappings.Array.data[0].prefab.Array.data[1]
       value: 
-      objectReference: {fileID: 4036806261749615967, guid: a5d276ea3f4006a48a28b7db7316d1fa,
+      objectReference: {fileID: 1895919508334493251, guid: fb96f428a5485e24caf8d0ce2ae3c240,
         type: 3}
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
