@@ -172,7 +172,10 @@ public abstract class EnemyBase : MonoBehaviour
             return;
         }
         // Rotate to face movement 
-        gameObject.transform.LookAt(transform.position + tempMove);
+        float angle = Mathf.Atan2(tempMove.x, tempMove.y) * Mathf.Rad2Deg;
+        gameObject.transform.rotation = Quaternion.Euler(new Vector3(angle - 90, 90, 0));
+
+
         rb.AddForce(transform.forward * speed);
     }
 
