@@ -144,6 +144,7 @@ public abstract class EnemyBase : MonoBehaviour
         if (!hunting || attacking)
         {
             movement = new Vector2(0, 0);
+            DoRotation(target.transform.position - transform.position);
             return;
         }
         // Else, set our movement vector to a seeking vector only if we are not within seeking radius
@@ -154,6 +155,7 @@ public abstract class EnemyBase : MonoBehaviour
         } else if (!seekingNode)
         {
             DoAttack();
+            DoRotation(target.transform.position - transform.position);
             enemyAnimator.SetTrigger("Attack");
         } else
         {
@@ -171,10 +173,8 @@ public abstract class EnemyBase : MonoBehaviour
         {
             return;
         }
-        // Rotate to face movement 
-        float angle = Mathf.Atan2(tempMove.x, tempMove.y) * Mathf.Rad2Deg;
-        gameObject.transform.rotation = Quaternion.Euler(new Vector3(angle - 90, 90, 0));
 
+        DoRotation(tempMove);
 
         rb.AddForce(transform.forward * speed);
     }
@@ -271,6 +271,13 @@ public abstract class EnemyBase : MonoBehaviour
         }
 
         return currNode;
+    }
+
+    // Rotates to face movement direction, constrains to an upright position
+    void DoRotation(Vector2 _tempMove)
+    {
+        float angle = Mathf.Atan2(_tempMove.x, _tempMove.y) * Mathf.Rad2Deg;
+        gameObject.transform.rotation = Quaternion.Euler(new Vector3(angle - 90, 90, 0));
     }
 
     // Placeholder method for attacks, will be added in the child classes
