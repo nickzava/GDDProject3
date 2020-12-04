@@ -227,7 +227,7 @@ public class Player : MonoBehaviour
             {
                 //Magic Attack animation
                 playerAnimator.SetTrigger("MagicAtk");
-                DelayAttack(fireballInTime, fireballOutTime, SpawnFireBall, .5f);
+                DelayAttack(fireballInTime, fireballOutTime, SpawnFireBall, .1f);
             }
         }
         //REVOLVER
