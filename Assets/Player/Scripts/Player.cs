@@ -241,10 +241,20 @@ public class Player : MonoBehaviour
                     playerGameObject.transform.rotation);
                 Gunshot newGunshot = newObject.GetComponent<Gunshot>();
                 newGunshot.speed = gunshotSpeed; //Changes the speed of the gunshot to the proper amount.
+
+                //FX
                 foreach (ParticleSystem ps in gunParticles)
                 {
                     ps.Play();
                 }
+                IEnumerator flash()
+                {
+                    gunLight.enabled = true;
+                    yield return new WaitForSeconds(0.07f);
+                    gunLight.enabled = false;
+                }
+                StartCoroutine(flash());
+
 				//play sound
 				audioClips.PlayAudio(2);
 			}
