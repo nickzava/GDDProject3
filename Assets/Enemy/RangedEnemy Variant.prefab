@@ -25,7 +25,7 @@ MonoBehaviour:
     type: 3}
   attackWarmup: 0.5
   attackCooldown: 1.5
-  damagedTex: {fileID: 0}
+  damagedTex: {fileID: 2800000, guid: 8e7dbe546db8e9249b8b01d62c0d5db7, type: 3}
 --- !u!95 &2269250749147211694
 Animator:
   serializedVersion: 3
