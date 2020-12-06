@@ -94,7 +94,7 @@ MonoBehaviour:
     type: 3}
   attackWarmup: 0.2
   attackCooldown: 0.5
-  damagedTex: {fileID: 0}
+  damagedTex: {fileID: 2800000, guid: 7abf5f8d3fdf8c14c8621fa4c7f7a6cd, type: 3}
 --- !u!54 &6918961997801821254
 Rigidbody:
   m_ObjectHideFlags: 0

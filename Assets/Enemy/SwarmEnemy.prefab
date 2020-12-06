@@ -203,6 +203,11 @@ PrefabInstance:
       propertyPath: enemyModel
       value: 
       objectReference: {fileID: 6437661642579690126}
+    - target: {fileID: 7531260597189993842, guid: 6cc0c7d45d78ae149bae6b6ccf68fee8,
+        type: 3}
+      propertyPath: damagedTex
+      value: 
+      objectReference: {fileID: 2800000, guid: 01e321025e855ed4797a56b1baad0ba8, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cc0c7d45d78ae149bae6b6ccf68fee8, type: 3}
 --- !u!4 &4658124068979137653 stripped

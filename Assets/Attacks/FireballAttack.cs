@@ -8,9 +8,8 @@ public class FireballAttack : BasicAttack
     // Start is called before the first frame update
     void Start()
     {
-        
-        Instantiate(particleSystem, transform.position, transform.rotation)
-            .GetComponent<ParticleSystem>().Play();
+
+        Instantiate(particleSystem, transform.position, transform.rotation);
         
     }
 

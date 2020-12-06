@@ -96,14 +96,9 @@ public abstract class EnemyBase : MonoBehaviour
 
         healthTracker = health;
 
-        //mRenderer = GetComponent<Renderer>();
-        //mainTex = mRenderer.material.mainTexture;
+        mRenderer = GetComponentInChildren<Renderer>();
+        mainTex = mRenderer.material.mainTexture;
         enemyAnimator = GetComponentInChildren<Animator>();
-
-        //create a texture, should be replaced later 
-        Texture2D temp = new Texture2D(1, 1, TextureFormat.ARGB32, false);
-        temp.SetPixel(0, 0, new Color(1, 0, 0, 1));
-        damagedTex = temp;
 
         //make speed independant of mass
         speed *= rb.mass;
@@ -117,7 +112,8 @@ public abstract class EnemyBase : MonoBehaviour
         if (!isStunned)
         {
             LocateTarget();
-            SeekTarget();
+            if(target)
+                SeekTarget();
             if (hunting)
             {
                 enemyAnimator.SetBool("isMoving", true);
@@ -174,7 +170,8 @@ public abstract class EnemyBase : MonoBehaviour
             return;
         }
 
-        DoRotation(tempMove);
+        if(target)
+            DoRotation(tempMove);
 
         rb.AddForce(transform.forward * speed);
     }
@@ -235,10 +232,10 @@ public abstract class EnemyBase : MonoBehaviour
         {
             IEnumerator DamagedRoutine()
             {
-                //const float flashTime = .25f;
-                //mRenderer.material.mainTexture = damagedTex;
-                //yield return new WaitForSeconds(flashTime);
-                //mRenderer.material.mainTexture = mainTex;
+                const float flashTime = .25f;
+                mRenderer.material.mainTexture = damagedTex;
+                yield return new WaitForSeconds(flashTime);
+                mRenderer.material.mainTexture = mainTex;
                 yield return null;
             }
             StartCoroutine(DamagedRoutine());
