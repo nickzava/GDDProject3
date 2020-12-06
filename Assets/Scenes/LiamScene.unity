@@ -4761,7 +4761,7 @@ PrefabInstance:
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
       propertyPath: levelName
-      value: WallTest
+      value: tutorialFinal
       objectReference: {fileID: 0}
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
@@ -4826,12 +4826,12 @@ PrefabInstance:
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
       propertyPath: saveLevel
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
       propertyPath: generateNormalMaps
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
