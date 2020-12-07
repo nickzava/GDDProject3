@@ -12475,7 +12475,7 @@ PrefabInstance:
     - target: {fileID: 527160759768324402, guid: 56ee9b15e9b1d3f4e84024d0da150818,
         type: 3}
       propertyPath: caneInTime
-      value: 0.1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 527160759768324402, guid: 56ee9b15e9b1d3f4e84024d0da150818,
         type: 3}
