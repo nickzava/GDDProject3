@@ -187,11 +187,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23dfddcf262d236488caae298abaff1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  staminaPerSecond: 10
+  staminaPerSecond: 7.5
   conversionPercentage: 0.5
   debugClicks: 0
   regenOverSpecial: 0
-  allowNegitiveStamina: 0
+  allowNegitiveStamina: 1
 --- !u!54 &527160759768324407
 Rigidbody:
   m_ObjectHideFlags: 0
