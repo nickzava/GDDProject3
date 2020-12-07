@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour
 {
     public float speed = 3.0f;
     public float damage = 0;
-    private Rigidbody rb;
+    protected Rigidbody rb;
 
     // Start is called before the first frame update
     protected virtual void Start()

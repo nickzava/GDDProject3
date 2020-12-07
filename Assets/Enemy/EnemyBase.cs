@@ -122,6 +122,10 @@ public abstract class EnemyBase : MonoBehaviour
             {
                 enemyAnimator.SetBool("isMoving", false);
             }
+        } else
+        {
+            // Keeps upright while stunned
+            DoRotation(transform.forward);
         }
         CheckPulse();
     }

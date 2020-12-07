@@ -4,23 +4,30 @@ using UnityEngine;
 
 public class blastAttack : Projectile
 {
-    protected override void OnCollisionEnter(Collision collision)
+    protected void OnTriggerEnter(Collider collision)
     {
+        Debug.Log("Projectile hit something");
         //check the type of collision before exploding
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("wall"))
         {
-            Hit(collision.gameObject.GetComponent<EnemyBase>());
+            Hit(collision.gameObject.GetComponent<Player>());
         }
     }
 
-    private void Hit(EnemyBase directHitTarget = null)
+    protected override void Start()
+    {
+        rb = gameObject.GetComponent<Rigidbody>();
+        rb.velocity = transform.forward * speed;
+    }
+
+    private void Hit(Player directHitTarget = null)
     {
         //Do bonus damage to direct hits
         if (directHitTarget)
         {
             //directHitTakesDamage
 
-            directHitTarget.health -= 1;
+            directHitTarget.Health -= 1;
 
         }
 
