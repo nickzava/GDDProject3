@@ -5,11 +5,12 @@ using UnityEngine;
 public class FireballAttack : BasicAttack
 {
     public GameObject particleSystem;
+    public GameObject particles;
     // Start is called before the first frame update
     void Start()
     {
 
-        Instantiate(particleSystem, new Vector3(transform.position.x, transform.position.y, transform.position.z-1), transform.rotation);
+        particles = Instantiate(particleSystem, new Vector3(transform.position.x, transform.position.y, transform.position.z-1), transform.rotation);
         
     }
 
@@ -22,6 +23,7 @@ public class FireballAttack : BasicAttack
         else
         {
             Destroy(gameObject);
+            Destroy(particles);
         }
         elapsedTime += Time.deltaTime;
     }
