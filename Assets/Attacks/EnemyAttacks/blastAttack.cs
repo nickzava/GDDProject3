@@ -23,7 +23,7 @@ public class blastAttack : Projectile
     private void Hit(Player directHitTarget = null)
     {
         //Do bonus damage to direct hits
-        if (directHitTarget)
+        if (directHitTarget && directHitTarget.invincible == false)
         {
             //directHitTakesDamage
 
