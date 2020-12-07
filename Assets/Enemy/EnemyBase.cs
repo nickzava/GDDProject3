@@ -152,6 +152,7 @@ public abstract class EnemyBase : MonoBehaviour
         if (GetDist(gameObject, target) > approachRadius || seekingNode)
         {
             movement = Vector2.ClampMagnitude(target.transform.position - gameObject.transform.position, speed);
+            DoRotation(target.transform.position - transform.position);
         } else if (!seekingNode)
         {
             DoAttack();
