@@ -9,7 +9,7 @@ public class FireballAttack : BasicAttack
     void Start()
     {
 
-        Instantiate(particleSystem, transform.position, transform.rotation);
+        Instantiate(particleSystem, new Vector3(transform.position.x, transform.position.y, transform.position.z-1), transform.rotation);
         
     }
 
