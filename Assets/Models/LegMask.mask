@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AttackMask
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000000000000000000000000000000000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Dresden
+    m_Weight: 1
+  - m_Path: Dresden/Body
+    m_Weight: 1
+  - m_Path: Dresden/Cane
+    m_Weight: 1
+  - m_Path: Dresden/Coat
+    m_Weight: 1
+  - m_Path: root
+    m_Weight: 1
+  - m_Path: root/base
+    m_Weight: 1
+  - m_Path: root/base/LHip
+    m_Weight: 0
+  - m_Path: root/base/LHip/LKnee
+    m_Weight: 1
+  - m_Path: root/base/LHip/LKnee/LAnkle
+    m_Weight: 1
+  - m_Path: root/base/LHip/LKnee/LAnkle/LFoot
+    m_Weight: 1
+  - m_Path: root/base/RHip
+    m_Weight: 0
+  - m_Path: root/base/RHip/RKnee
+    m_Weight: 1
+  - m_Path: root/base/RHip/RKnee/RAnkle
+    m_Weight: 1
+  - m_Path: root/base/RHip/RKnee/RAnkle/RFoot
+    m_Weight: 1
+  - m_Path: root/base/upperSpine
+    m_Weight: 1
+  - m_Path: root/base/upperSpine/LShoulder
+    m_Weight: 1
+  - m_Path: root/base/upperSpine/LShoulder/LElbow
+    m_Weight: 1
+  - m_Path: root/base/upperSpine/LShoulder/LElbow/LWrist
+    m_Weight: 1
+  - m_Path: root/base/upperSpine/LShoulder/LElbow/LWrist/joint3
+    m_Weight: 1
+  - m_Path: root/base/upperSpine/LShoulder/LElbow/LWrist/joint3/joint4
+    m_Weight: 1
+  - m_Path: root/base/upperSpine/Neck
+    m_Weight: 1
+  - m_Path: root/base/upperSpine/Neck/Head
+    m_Weight: 1
+  - m_Path: root/base/upperSpine/RShoulder
+    m_Weight: 1
+  - m_Path: root/base/upperSpine/RShoulder/RElbow
+    m_Weight: 1
+  - m_Path: root/base/upperSpine/RShoulder/RElbow/RWrist
+    m_Weight: 1
+  - m_Path: root/base/upperSpine/RShoulder/RElbow/RWrist/joint1
+    m_Weight: 1
+  - m_Path: root/base/upperSpine/RShoulder/RElbow/RWrist/joint2
+    m_Weight: 1
