@@ -133,8 +133,6 @@ public class Player : MonoBehaviour
         // Actually apply the force here
         rb.AddForce(frameMovement * acceletation);
 
-		
-
         //Setting animation for idle or moving
         if (frameMovement == Vector3.zero)
         {
@@ -401,6 +399,7 @@ public class Player : MonoBehaviour
         IEnumerator DamagedRoutine()
         {
             const float flashTime = .25f;
+            invincible = true;
 			audioClips.PlayAudio(0);
             mRenderer.material.mainTexture = playerDamagedTex;
             yield return new WaitForSeconds(flashTime);
@@ -409,6 +408,7 @@ public class Player : MonoBehaviour
 				Camera.main.GetComponent<Buttons>().PlayerDeathUI();
 			}
             mRenderer.material.mainTexture = playerDefaultTex;
+            invincible = false;
             yield return null;
         }
         StartCoroutine(DamagedRoutine());

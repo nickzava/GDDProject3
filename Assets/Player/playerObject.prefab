@@ -163,16 +163,16 @@ MonoBehaviour:
   playerModel: {fileID: 7810280851437701841}
   playerDamagedTex: {fileID: 2800000, guid: ad6add794d81cc5408db5921275d9991, type: 3}
   audioClips: {fileID: 0}
-  windInTime: 3
-  windOutTime: 1
-  dashInTime: 4
-  dashOutTime: 4
-  gunInTime: 2
-  gunOutTime: 3
-  fireballInTime: 0
-  fireballOutTime: 0
-  caneInTime: 0
-  caneOutTime: 0
+  windInTime: 0.1
+  windOutTime: 0.7
+  dashInTime: 0.5
+  dashOutTime: 0.7
+  gunInTime: 0.2
+  gunOutTime: 0.6
+  fireballInTime: 0.3
+  fireballOutTime: 0.6
+  caneInTime: 0.3
+  caneOutTime: 0.8
   acceletation: 30
   maxSpeed: 3
 --- !u!114 &527160759768324401

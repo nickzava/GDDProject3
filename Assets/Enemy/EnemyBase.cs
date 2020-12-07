@@ -152,6 +152,7 @@ public abstract class EnemyBase : MonoBehaviour
         if (GetDist(gameObject, target) > approachRadius || seekingNode)
         {
             movement = Vector2.ClampMagnitude(target.transform.position - gameObject.transform.position, speed);
+            DoRotation(target.transform.position - transform.position);
         } else if (!seekingNode)
         {
             DoAttack();
@@ -207,7 +208,7 @@ public abstract class EnemyBase : MonoBehaviour
             RaycastHit hitInfo;
             int rayLength = 10;
 
-            if (Physics.Raycast(gameObject.transform.position, (goal.transform.position - gameObject.transform.position), out hitInfo, rayLength))
+            if (Physics.Raycast(gameObject.transform.position, (goal.transform.position - gameObject.transform.position), out hitInfo, rayLength, -5, QueryTriggerInteraction.Ignore))
             {
                 if (hitInfo.collider.gameObject.tag == "Player")
                 {
