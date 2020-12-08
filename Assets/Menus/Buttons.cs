@@ -10,8 +10,11 @@ public class Buttons : MonoBehaviour
 
 	private GameObject pauseUI;
 	private bool paused = false;
-	public bool pausable = false;
+	public static bool pausable = false;
 	private GameObject deathUI;
+	private GameObject winUI;
+
+	public GameObject[] levels;
 
 	private GameObject player;
 
@@ -26,7 +29,20 @@ public class Buttons : MonoBehaviour
 		{ 
 			pauseUI = GameObject.Find("PauseMenu");
 			deathUI = GameObject.Find("DeathMenu");
+			winUI = GameObject.Find("WinMenu");
 			player = GameObject.FindGameObjectWithTag("Player");
+
+			for (int i = 0; i < levels.Length; i++)
+			{
+				if (i != NextLevel.currentLevel)
+				{
+					levels[i].SetActive(false);
+				}
+				else
+				{
+					levels[i].SetActive(true);
+				}
+			}
 		}
 	}
 
@@ -41,6 +57,12 @@ public class Buttons : MonoBehaviour
 		{
 			pauseUI.SetActive(false);
 			deathUI.SetActive(false);
+			winUI.SetActive(false);
+
+			//for (int i = 1; i < levels.Length; i++)
+			//{
+			//	levels[i].SetActive(false);
+			//}
 		}
 	}
 
@@ -63,8 +85,31 @@ public class Buttons : MonoBehaviour
 	public void StartGame()
 	{
 		SceneManager.LoadScene("_Main", LoadSceneMode.Single);
+		NextLevel.currentLevel = 0;
+		for (int i = 1; i < levels.Length; i++)
+		{
+			levels[i].SetActive(false);
+		}
 		Time.timeScale = 1;
 		//player.GetComponent<Player>().paused = false;
+		paused = false;
+	}
+
+	public void RestartLevel()
+	{
+		SceneManager.LoadScene("_Main", LoadSceneMode.Single);
+		for (int i = 0; i < levels.Length; i++)
+		{
+			if (i != NextLevel.currentLevel)
+			{
+				levels[i].SetActive(false);
+			}
+			else
+			{
+				levels[i].SetActive(true);
+			}
+		}
+		Time.timeScale = 1;
 		paused = false;
 	}
 

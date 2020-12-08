@@ -5,12 +5,22 @@ using UnityEngine;
 public class NextLevel : MonoBehaviour
 {
 	public GameObject[] levels;
-	public static int currentLevel;
+	public static int currentLevel = 0;
+	private GameObject winUI;
 
-    // Start is called before the first frame update
-    void Start()
+	private GameObject player;
+	public GameObject tutorialTipUI;
+
+	private void Awake()
+	{
+		DontDestroyOnLoad(this);
+		winUI = GameObject.Find("WinMenu");
+	}
+
+	// Start is called before the first frame update
+	void Start()
     {
-		currentLevel = 0;
+		player = GameObject.FindGameObjectWithTag("Player");
 		//for(int i = 1; i < levels.Length; i++)	//di
 		//{
 		//	if (i != currentLevel)
@@ -18,12 +28,12 @@ public class NextLevel : MonoBehaviour
 		//		levels[i].SetActive(false);
 		//	}
 		//}
-    }
+	}
 
     // Update is called once per frame
     void Update()
     {
-        
+		Debug.Log(currentLevel);
     }
 
 	private void OnTriggerEnter(Collider other)
@@ -31,9 +41,21 @@ public class NextLevel : MonoBehaviour
 		if (other.tag == "Player")
 		{
 			SetActiveAllChildren(levels[currentLevel].transform, false);
+			tutorialTipUI.SetActive(true);
 			currentLevel++;
-			SetActiveAllChildren(levels[currentLevel].transform, true);
-			Camera.main.GetComponent<CameraFollowPlayer>().player = GameObject.FindGameObjectWithTag("Player");
+
+			if (currentLevel != levels.Length)	//if not on final level
+			{
+				SetActiveAllChildren(levels[currentLevel].transform, true);
+				Camera.main.GetComponent<CameraFollowPlayer>().player = GameObject.FindGameObjectWithTag("Player");
+			}
+			else			//if on final level
+			{
+				winUI.SetActive(true);
+				Time.timeScale = 0;
+				player.GetComponent<Player>().paused = true;
+				Buttons.pausable = false;
+			}
 		}
 	}
 
@@ -44,9 +66,8 @@ public class NextLevel : MonoBehaviour
 		transform.gameObject.SetActive(value);
 		foreach (Transform child in transform)
 		{
-			child.gameObject.SetActive(value);
-
 			SetActiveAllChildren(child, value);
+			child.gameObject.SetActive(value);
 		}
 	}
 }
