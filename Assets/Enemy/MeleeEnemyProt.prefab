@@ -87,8 +87,8 @@ MonoBehaviour:
   nodes: []
   speed: 20
   health: 3
-  visionRange: 10
-  maxVisionRange: 15
+  maxVisionRange: 10
+  visionRange: 5
   approachRadius: 0.5
   attackPrefab: {fileID: 4502691572742088903, guid: a17ee7c99cfd3ff42a756131c48f8ec4,
     type: 3}

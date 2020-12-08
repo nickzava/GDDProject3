@@ -193,8 +193,11 @@ public abstract class EnemyBase : MonoBehaviour
     // Checks if player is within sight range, Then decides to seek them or a pathfinding node
     void LocateTarget()
     {
+        RaycastHit hitInfo = new RaycastHit();
+        int rayLength = 10;
+        Physics.Raycast(gameObject.transform.position, (goal.transform.position - gameObject.transform.position), out hitInfo, rayLength, -5, QueryTriggerInteraction.Ignore);
         // Checks to see if the target is within vision range, drops target if not
-        if (GetDist(gameObject, goal) <= visionRange)
+        if (GetDist(gameObject, goal) <= visionRange && hitInfo.collider.gameObject.tag == "Player")
         {
             hunting = true;
         }
@@ -206,23 +209,17 @@ public abstract class EnemyBase : MonoBehaviour
         // If we are hunting, figure out if player is within target range
         if (hunting)
         {
-            RaycastHit hitInfo;
-            int rayLength = 10;
-
-            if (Physics.Raycast(gameObject.transform.position, (goal.transform.position - gameObject.transform.position), out hitInfo, rayLength, -5, QueryTriggerInteraction.Ignore))
+            if (hitInfo.collider.gameObject.tag == "Player")
             {
-                if (hitInfo.collider.gameObject.tag == "Player")
-                {
-                    // Player is within range, and is not obstructed
-                    target = goal;
-                    seekingNode = false;
-                }
-                else
-                {
-                    // Player is within range, but IS obstructed, set target to closest node
-                    target = GetPathfindNode();
-                    seekingNode = true;
-                }
+                // Player is within range, and is not obstructed
+                target = goal;
+                seekingNode = false;
+            }
+            else
+            {
+                // Player is within range, but IS obstructed, set target to closest node
+                target = GetPathfindNode();
+                seekingNode = true;
             }
         }
 

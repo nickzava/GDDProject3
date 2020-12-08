@@ -15,6 +15,8 @@ public class HealthHandler : MonoBehaviour
     [SerializeField]
     Sprite dying;
 
+	private int levelChange = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,11 @@ public class HealthHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (levelChange != NextLevel.currentLevel)
+		{
+			player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+			levelChange = NextLevel.currentLevel;
+		}
         // Checks health and updates UI
         switch (player.Health)
         {
