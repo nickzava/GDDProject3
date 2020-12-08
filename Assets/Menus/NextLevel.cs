@@ -14,7 +14,7 @@ public class NextLevel : MonoBehaviour
 	private void Awake()
 	{
 		DontDestroyOnLoad(this);
-		winUI = GameObject.Find("WinMenu");
+		//winUI = GameObject.Find("WinMenu");
 	}
 
 	// Start is called before the first frame update
