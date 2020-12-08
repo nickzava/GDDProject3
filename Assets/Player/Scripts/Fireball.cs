@@ -10,7 +10,7 @@ public class Fireball : Projectile
     {
         //check the type of collision before exploding
         
-        if(collision.collider.CompareTag("enemy") || collision.collider.CompareTag("floor"))
+        if(collision.collider.CompareTag("enemy") || collision.collider.CompareTag("floor") || collision.collider.CompareTag("wall"))
         {
             Explode(collision.gameObject.GetComponent<EnemyBase>());
         }
