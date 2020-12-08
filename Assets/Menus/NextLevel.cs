@@ -37,6 +37,8 @@ public class NextLevel : MonoBehaviour
 		}
 	}
 
+
+
 	private void SetActiveAllChildren(Transform transform, bool value)
 	{
 		transform.gameObject.SetActive(value);

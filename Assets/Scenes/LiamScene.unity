@@ -4761,7 +4761,7 @@ PrefabInstance:
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
       propertyPath: levelName
-      value: tutorialFinal
+      value: level2
       objectReference: {fileID: 0}
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
@@ -4817,12 +4817,12 @@ PrefabInstance:
         type: 3}
       propertyPath: mapTexture
       value: 
-      objectReference: {fileID: 2800000, guid: 41721ee2c50513c408d6814167c32925, type: 3}
+      objectReference: {fileID: 2800000, guid: 3ba3c15f150f9614e9de496633f59130, type: 3}
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
       propertyPath: decorationLayer
       value: 
-      objectReference: {fileID: 2800000, guid: b2461c2fdeafe69468a0ee81d68ce72a, type: 3}
+      objectReference: {fileID: 2800000, guid: a43045d92477c184695ba1983973a327, type: 3}
     - target: {fileID: 2809726895599832326, guid: 2f9676b923fe0844d8842acc8a6330e9,
         type: 3}
       propertyPath: saveLevel
