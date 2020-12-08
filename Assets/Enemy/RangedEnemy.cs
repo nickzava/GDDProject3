@@ -36,7 +36,12 @@ public class RangedEnemy : EnemyBase
         timePassed = 0;
 
         // Attacking Code
-        BasicAttack attackBox = Instantiate(attackPrefab, gameObject.transform).GetComponent<BasicAttack>();
+
+        // We store the enemy transform information here so we can instantiate NOT as a child of the enemy
+        Vector3 pos = transform.position;
+        Quaternion rot = transform.rotation;
+
+        Instantiate(attackPrefab, pos, rot).GetComponent<BasicAttack>();
 		audioClips.PlayAudio(1);
 
         // Wait for attack cooldown
