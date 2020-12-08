@@ -25,7 +25,7 @@ public class CaneAttack : BasicAttack
             Vector3 forceDirection = other.transform.position - transform.position;
             //increase force as hitbox grows
             other.attachedRigidbody.AddForce(
-                new Vector3(forceDirection.x, forceDirection.y).normalized * 1000f);
+                new Vector3(forceDirection.x, forceDirection.y).normalized * 350f);
         }
     }
 }
