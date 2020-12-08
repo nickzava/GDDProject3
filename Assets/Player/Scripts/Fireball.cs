@@ -38,7 +38,5 @@ public class Fireball : Projectile
         //destroy the projectile
 
         Destroy(gameObject);
-
-        
     }
 }

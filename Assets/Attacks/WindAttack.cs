@@ -25,7 +25,7 @@ public class WindAttack : BasicAttack
     {
         base.Update();
         //grow rad to max rad based on elapsed time
-        sc.radius = initalRad * elapsedTime / hitboxTime;
+        sc.radius = initalRad * (elapsedTime / hitboxTime)/2 + .5f;
     }
 
     protected override void OnTriggerEnter(Collider other)

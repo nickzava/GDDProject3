@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5596874161534339900}
   - component: {fileID: 4113334771797310761}
+  - component: {fileID: 2132568388839430216}
   m_Layer: 0
   m_Name: ExplosionPFX
   m_TagString: Untagged
@@ -44,8 +45,8 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0.36320752, b: 0.36320752, a: 1}
-  m_Intensity: 2.19
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Intensity: 2
   m_Range: 5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -94,6 +95,18 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &2132568388839430216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5241795101520147094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acada049ed2ef2f4dbd80a4c1350d615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7412951966899300344
 GameObject:
   m_ObjectHideFlags: 0
@@ -1069,7 +1082,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 60
+        scalar: 80
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -6285,7 +6298,7 @@ ParticleSystem:
         ctime7: 0
         atime0: 0
         atime1: 65535
-        atime2: 0
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -9655,7 +9668,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a0a5cbf3bb4bb3e48854de9c6be99a71, type: 2}
+  - {fileID: 2100000, guid: c70b689f07317a2419d517154d6fe9e5, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0

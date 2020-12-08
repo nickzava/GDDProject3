@@ -133,7 +133,8 @@ public abstract class EnemyBase : MonoBehaviour
     // Fixedupdate is better for physics operations
     private void FixedUpdate()
     {
-        DoMovement();
+        if(!isStunned)
+            DoMovement();
     }
 
     // Sets our movement vector so we can move towards the target

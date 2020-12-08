@@ -37,7 +37,7 @@ public class MeleeEnemy : EnemyBase
 
         // Attacking Code
         BasicAttack attackBox = Instantiate(attackPrefab, gameObject.transform).GetComponent<BasicAttack>();
-        attackBox.init(gameObject, 1, .5f, .3f);
+        attackBox.init(gameObject, 1, .5f, .1f);
 		audioClips.PlayAudio(1);	//plays attack sound
 
         // Wait for attack cooldown

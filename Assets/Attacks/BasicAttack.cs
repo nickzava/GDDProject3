@@ -10,6 +10,7 @@ public class BasicAttack : MonoBehaviour
     protected GameObject source;
     protected float hitboxTime;
     protected float elapsedTime;
+    public float stunAmount = 0;
     // Reference to the hitbox trigger
     Collider hitBox;
 
@@ -73,6 +74,8 @@ public class BasicAttack : MonoBehaviour
         } else if (other.gameObject.CompareTag("enemy"))
         {
             other.gameObject.GetComponent<EnemyBase>().health -= 1;
+            if(stunAmount > 0)
+                other.GetComponent<EnemyBase>().Stun(stunAmount);
         }
     }
 }

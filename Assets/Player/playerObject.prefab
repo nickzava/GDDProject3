@@ -159,6 +159,7 @@ MonoBehaviour:
   windPrefab: {fileID: 3535090283280941769, guid: 6d32f08c63593464f87cd4cb1cf6bd48,
     type: 3}
   invincible: 0
+  fireballLocation: {fileID: 5329879952921229220}
   paused: 0
   playerModel: {fileID: 7810280851437701841}
   playerDamagedTex: {fileID: 2800000, guid: ad6add794d81cc5408db5921275d9991, type: 3}
@@ -1012,6 +1013,12 @@ Transform:
 --- !u!4 &4225534169720539279 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2563874435053896722, guid: 2dbc04b6f40a7094cba5f3938e074130,
+    type: 3}
+  m_PrefabInstance: {fileID: 1815138419129453725}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5329879952921229220 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5820659880561244985, guid: 2dbc04b6f40a7094cba5f3938e074130,
     type: 3}
   m_PrefabInstance: {fileID: 1815138419129453725}
   m_PrefabAsset: {fileID: 0}

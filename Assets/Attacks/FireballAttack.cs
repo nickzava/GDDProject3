@@ -23,7 +23,6 @@ public class FireballAttack : BasicAttack
         else
         {
             Destroy(gameObject);
-            Destroy(particles);
         }
         elapsedTime += Time.deltaTime;
     }

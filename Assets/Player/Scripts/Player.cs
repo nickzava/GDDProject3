@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public bool invincible = false; //Used for shield
     private const float gunshotSpeed = 15f; //Usedd for gunshot projectile speed
     private Transform gunshotLocation;
+    public GameObject fireballLocation;
     private Light gunLight;
 	public bool paused = false;		//disables player input when paused
 
@@ -215,7 +216,7 @@ public class Player : MonoBehaviour
             {
                 //Paramater for rotation
                 GameObject newObject = Instantiate(fireballPrefab,
-                    playerGameObject.transform.position + transform.right * 1f,
+                    fireballLocation.transform.position,
                     playerGameObject.transform.rotation);
                 Fireball newFireball = newObject.GetComponent<Fireball>();
 				//play sound
@@ -311,6 +312,7 @@ public class Player : MonoBehaviour
                     playerGameObject.transform.rotation);
                 //Instantiate New Hitbox
                 BasicAttack caneAttack = newCane.GetComponent<BasicAttack>();
+                caneAttack.stunAmount = 0.3f;
                 caneAttack.init(playerGameObject, 1, .15f, .1f);
 				//play sound
 				audioClips.PlayAudio(1);

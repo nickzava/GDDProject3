@@ -89,10 +89,10 @@ MonoBehaviour:
   health: 3
   visionRange: 10
   maxVisionRange: 15
-  approachRadius: 1
+  approachRadius: 0.5
   attackPrefab: {fileID: 4502691572742088903, guid: a17ee7c99cfd3ff42a756131c48f8ec4,
     type: 3}
-  attackWarmup: 0.2
+  attackWarmup: 0.5
   attackCooldown: 0.5
   damagedTex: {fileID: 2800000, guid: 7abf5f8d3fdf8c14c8621fa4c7f7a6cd, type: 3}
 --- !u!54 &6918961997801821254
