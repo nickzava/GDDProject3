@@ -6,7 +6,7 @@ public class NextLevel : MonoBehaviour
 {
 	public GameObject[] levels;
 	public static int currentLevel = 0;
-	private GameObject winUI;
+	public GameObject winUI;
 
 	private GameObject player;
 	public GameObject tutorialTipUI;
@@ -54,7 +54,7 @@ public class NextLevel : MonoBehaviour
 				winUI.SetActive(true);
 				Time.timeScale = 0;
 				player.GetComponent<Player>().paused = true;
-				Buttons.pausable = false;
+				Camera.main.GetComponent<Buttons>().pausable = false;
 			}
 		}
 	}

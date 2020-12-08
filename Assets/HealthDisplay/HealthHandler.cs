@@ -14,6 +14,8 @@ public class HealthHandler : MonoBehaviour
     Sprite hurt;
     [SerializeField]
     Sprite dying;
+    [SerializeField]
+    Sprite dead;
 
 	private int levelChange = 0;
 
@@ -28,7 +30,7 @@ public class HealthHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (levelChange != NextLevel.currentLevel)
+		if (levelChange != NextLevel.currentLevel && NextLevel.currentLevel < 2)		//hard coded max level, change this if I ever come back
 		{
 			player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 			levelChange = NextLevel.currentLevel;
@@ -46,7 +48,7 @@ public class HealthHandler : MonoBehaviour
                 heartObj.sprite = dying;
                 break;
             case 0:
-                heartObj.sprite = null;
+                heartObj.sprite = dead;
                 break;
             default:
                 Debug.LogError("HEALTH OUT OF BOUNDS");

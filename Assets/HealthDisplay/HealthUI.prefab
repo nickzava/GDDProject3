@@ -52,6 +52,7 @@ MonoBehaviour:
   full: {fileID: 21300000, guid: 117bba3cabf1bf2478d9cdf98611083c, type: 3}
   hurt: {fileID: 21300000, guid: ee40641f16f9f644ea7ac168a045c4a6, type: 3}
   dying: {fileID: 21300000, guid: 6ac6578670fa1c2428d4b0012d91eb8b, type: 3}
+  dead: {fileID: 21300000, guid: ba2a3bf244f4fef4f89ec64af86ecb2f, type: 3}
 --- !u!1 &5783427366876608761
 GameObject:
   m_ObjectHideFlags: 0
