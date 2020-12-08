@@ -10,7 +10,7 @@ public class Buttons : MonoBehaviour
 
 	private GameObject pauseUI;
 	private bool paused = false;
-	public static bool pausable = false;
+	public bool pausable = true;
 	private GameObject deathUI;
 	private GameObject winUI;
 

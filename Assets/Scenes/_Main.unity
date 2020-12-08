@@ -2371,6 +2371,11 @@ PrefabInstance:
       propertyPath: currentLevel
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4590986660477106208, guid: 6867f7ee68f831c4aab050f1cbcaad1c,
+        type: 3}
+      propertyPath: winUI
+      value: 
+      objectReference: {fileID: 37029606}
     - target: {fileID: 4647340956684887172, guid: 6867f7ee68f831c4aab050f1cbcaad1c,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -4839,6 +4844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 671541bc6c0aa6644b352e1e88b6147e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pausable: 1
   levels:
   - {fileID: 2057918507}
   - {fileID: 1470883468}
@@ -17045,6 +17051,7 @@ MonoBehaviour:
   levels:
   - {fileID: 265244975}
   - {fileID: 1864600271}
+  winUI: {fileID: 0}
   tutorialTipUI: {fileID: 0}
 --- !u!1001 &813441958
 PrefabInstance:
@@ -19507,6 +19514,11 @@ PrefabInstance:
       propertyPath: currentLevel
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 462936192309824919, guid: 7896a08436dbd004bb826d197ff33ccd,
+        type: 3}
+      propertyPath: winUI
+      value: 
+      objectReference: {fileID: 37029606}
     - target: {fileID: 831087124249264637, guid: 7896a08436dbd004bb826d197ff33ccd,
         type: 3}
       propertyPath: m_Name
@@ -19515,7 +19527,7 @@ PrefabInstance:
     - target: {fileID: 831087124249264637, guid: 7896a08436dbd004bb826d197ff33ccd,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 831087124249264639, guid: 7896a08436dbd004bb826d197ff33ccd,
         type: 3}

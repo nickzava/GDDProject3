@@ -30,7 +30,7 @@ public class HealthHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (levelChange != NextLevel.currentLevel)
+		if (levelChange != NextLevel.currentLevel && NextLevel.currentLevel < 2)		//hard coded max level, change this if I ever come back
 		{
 			player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 			levelChange = NextLevel.currentLevel;
