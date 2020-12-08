@@ -14,6 +14,8 @@ public class HealthHandler : MonoBehaviour
     Sprite hurt;
     [SerializeField]
     Sprite dying;
+    [SerializeField]
+    Sprite dead;
 
 	private int levelChange = 0;
 
@@ -46,7 +48,7 @@ public class HealthHandler : MonoBehaviour
                 heartObj.sprite = dying;
                 break;
             case 0:
-                heartObj.sprite = null;
+                heartObj.sprite = dead;
                 break;
             default:
                 Debug.LogError("HEALTH OUT OF BOUNDS");
