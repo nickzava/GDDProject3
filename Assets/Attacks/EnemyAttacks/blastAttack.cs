@@ -6,12 +6,15 @@ public class blastAttack : Projectile
 {
     protected void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("Projectile hit something");
         //check the type of collision before exploding
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("wall"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             Hit(collision.gameObject.GetComponent<Player>());
+        } else if(collision.gameObject.CompareTag("Untagged"))
+        {
+            Destroy(gameObject);
         }
+        
     }
 
     protected override void Start()
